@@ -182,7 +182,7 @@
     position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     font-size: 0.65rem; letter-spacing: 0.2em; text-transform: center;
-    color: rgba(200,216,240,0.4); animation: fadeUp 1s 0.8s ease both;
+    color: rgba(255,255,255,0.4); animation: fadeUp 1s 0.8s ease both;
   }
   .scroll-line {
     width: 1px; height: 50px;
@@ -385,7 +385,7 @@
   .burger-modal-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
   .burger-modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; }
   .burger-modal-title em { color: var(--glow); font-style: italic; }
-  .burger-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,216,240,0.55); margin-top: 10px; }
+  .burger-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.55); margin-top: 10px; }
   .burger-modal-close {
     background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
     color: var(--silver); width: 44px; height: 44px;
@@ -405,7 +405,7 @@
   .burger-subtabs { display: flex; gap: 8px; min-width: max-content; }
   .bsub-btn {
     padding: 9px 20px; background: transparent;
-    border: 1px solid rgba(77,159,255,0.2); color: rgba(200,216,240,0.5);
+    border: 1px solid rgba(77,159,255,0.2); color: rgba(255,255,255,0.5);
     font-family: 'Montserrat', sans-serif; font-size: 0.68rem;
     letter-spacing: 0.12em; text-transform: uppercase;
     border-radius: 30px; cursor: none; transition: all 0.25s; white-space: nowrap;
@@ -426,7 +426,7 @@
     outline: none; transition: border 0.3s; cursor: none;
   }
   .burger-search:focus { border-color: var(--glow); }
-  .burger-search::placeholder { color: rgba(200,216,240,0.3); }
+  .burger-search::placeholder { color: rgba(255,255,255,0.3); }
 
   .burger-modal-body {
     padding: 32px 48px 48px; max-height: 60vh; overflow-y: auto;
@@ -446,31 +446,29 @@
 
   /* burger card — full width row */
   .burger-card {
-    display: grid; grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto auto;
-    gap: 4px 20px;
+    display: flex; flex-direction: column;
+    gap: 4px;
     padding: 14px 18px;
     border-left: 2px solid transparent;
     transition: all 0.2s; border-radius: 1px;
   }
   .burger-card .choose-block { grid-column: 1 / -1; }
   .burger-card:hover { background: rgba(10,31,61,0.5); border-left-color: var(--glow); padding-left: 22px; }
-  .burger-card-head { display: flex; align-items: center; gap: 10px; grid-column: 1; }
+  .burger-card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .burger-card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
   .burger-card-tag {
     font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 2px 8px; border-radius: 20px;
     background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
   }
-  .burger-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(200,216,240,0.6); line-height: 1.5; grid-column: 1; }
-  .burger-card-price {
-    grid-column: 2; grid-row: 1 / 3;
-    display: flex; align-items: center; justify-content: flex-end;
+  .burger-card-price-inline {
     font-family: 'Playfair Display', serif;
-    font-size: 0.9rem; font-weight: 700;
+    font-size: 0.88rem; font-weight: 700;
     color: var(--gold-light); white-space: nowrap;
   }
-  .burger-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(200,216,240,0.4); }
+  .burger-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .burger-card-price { display: none; }
+  .burger-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(255,255,255,0.4); }
 
   /* === GENERIC MODAL === */
   .generic-modal-overlay {
@@ -502,7 +500,7 @@
   .generic-modal-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
   .generic-modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; }
   .generic-modal-title em { color: var(--glow); font-style: italic; }
-  .generic-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,216,240,0.55); margin-top: 10px; }
+  .generic-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.55); margin-top: 10px; }
   .generic-modal-close {
     background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
     color: var(--silver); width: 44px; height: 44px;
@@ -525,7 +523,7 @@
     outline: none; transition: border 0.3s; cursor: none;
   }
   .generic-search:focus { border-color: var(--glow); }
-  .generic-search::placeholder { color: rgba(200,216,240,0.3); }
+  .generic-search::placeholder { color: rgba(255,255,255,0.3); }
   .generic-modal-body {
     padding: 32px 48px 48px;
     max-height: 60vh; overflow-y: auto;
@@ -558,7 +556,7 @@
     padding: 2px 8px; border-radius: 20px;
     background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
   }
-  .generic-list-item .gli-desc { grid-column: 1; font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(200,216,240,0.6); line-height: 1.5; }
+  .generic-list-item .gli-desc { grid-column: 1; font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(166, 201, 255, 0.367); line-height: 1.5; }
   .generic-list-item .gli-price {
     grid-column: 2; grid-row: 1 / 3;
     display: flex; align-items: center; justify-content: flex-end;
@@ -598,8 +596,8 @@
   .menu-item:hover::before { height: 100%; }
   .menu-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
   .menu-item-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.3; flex: 1; }
-  .menu-item-price { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--gold); white-space: nowrap; margin-left: 16px; }
-  .menu-item-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: rgba(200,216,240,0.65); line-height: 1.6; }
+  .menu-item-price { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--white); white-space: nowrap; margin-left: 16px; }
+  .menu-item-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgb(255, 255, 255); line-height: 1.6; }
   .menu-item-tag {
     display: inline-block; margin-top: 12px;
     padding: 3px 10px; border-radius: 20px;
@@ -607,7 +605,7 @@
     background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
   }
 
-  .generic-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(200,216,240,0.4); }
+  .generic-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgb(200, 216, 240); }
 
   /* ABOUT */
   .about {
@@ -660,7 +658,7 @@
   .special-card:hover::after { opacity: 1; }
   .special-icon { font-size: 3rem; display: block; margin-bottom: 24px; filter: drop-shadow(0 0 12px rgba(77,159,255,0.4)); }
   .special-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
-  .special-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.7; color: rgba(200,216,240,0.7); }
+  .special-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,0.7); }
 
   /* INFO / HOURS */
   .info-section {
@@ -683,7 +681,7 @@
     padding: 16px 0; border-bottom: 1px solid rgba(77,159,255,0.08);
     font-size: 0.85rem; color: var(--silver);
   }
-  .hours-list li .day { color: rgba(200,216,240,0.6); letter-spacing: 0.05em; }
+  .hours-list li .day { color: rgba(255,255,255,0.6); letter-spacing: 0.05em; }
   .hours-list li .time { color: var(--glow); font-weight: 600; }
 
   /* SHOWS */
@@ -735,14 +733,16 @@
   footer { background: var(--navy); border-top: 1px solid rgba(77,159,255,0.1); padding: 60px; text-align: center; }
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--white); margin-bottom: 8px; }
   .footer-logo span { color: var(--glow); }
-  .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(200,216,240,0.5); margin-bottom: 32px; }
+  .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
   .footer-links { display: flex; gap: 32px; justify-content: center; list-style: none; margin-bottom: 40px; }
-  .footer-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,216,240,0.4); text-decoration: none; transition: color 0.3s; }
+  .footer-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s; }
   .footer-links a:hover { color: var(--glow); }
   .footer-social { display: flex; gap: 20px; justify-content: center; margin-bottom: 40px; }
-  .social-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(77,159,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; cursor: none; text-decoration: none; }
-  .social-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); }
-  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(200,216,240,0.25); }
+  .social-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(77, 160, 255, 0.284); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; cursor: none; text-decoration: none;.social-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(77, 160, 255, 0.284); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; cursor: none; text-decoration: none; }
+  .social-btn:hover { border-color: var(--glow); background: rgba(77, 172, 255, 0.312); }
+  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); } }
+  .social-btn:hover { border-color: var(--glow); background: rgba(77, 172, 255, 0.312); }
+  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); }
 
   /* ═══════════════════════════════════════
      CARRINHO FLUTUANTE
@@ -813,7 +813,7 @@
   .cart-empty {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 16px;
-    color: rgba(200,216,240,0.35);
+    color: rgba(255,255,255,0.35);
   }
   .cart-empty-icon { font-size: 4rem; opacity: 0.4; }
   .cart-empty p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; }
@@ -834,7 +834,7 @@
     font-weight: 700; color: var(--white); margin-bottom: 3px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .cart-item-unit { font-size: 0.7rem; color: rgba(200,216,240,0.4); }
+  .cart-item-unit { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
   .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
   .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--gold-light); }
   .cart-qty {
@@ -856,7 +856,7 @@
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 16px;
   }
-  .cart-subtotal-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,216,240,0.5); }
+  .cart-subtotal-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
   .cart-subtotal-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--glow); }
   .cart-checkout-btn {
     width: 100%; padding: 16px;
@@ -941,12 +941,12 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 0 0; margin-top: 8px; border-top: 1px solid rgba(77,159,255,0.15);
     font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(200,216,240,0.5);
+    color: rgba(255,255,255,0.5);
   }
   .checkout-total-val { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--glow); }
 
   .checkout-field { margin-bottom: 18px; }
-  .checkout-label { display: block; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,216,240,0.5); margin-bottom: 8px; }
+  .checkout-label { display: block; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
   .checkout-input, .checkout-textarea {
     width: 100%; background: rgba(10,31,61,0.7);
     border: 1px solid rgba(77,159,255,0.2);
@@ -955,14 +955,14 @@
     outline: none; transition: border 0.3s; cursor: none; border-radius: 2px;
   }
   .checkout-input:focus, .checkout-textarea:focus { border-color: var(--glow); }
-  .checkout-input::placeholder, .checkout-textarea::placeholder { color: rgba(200,216,240,0.3); }
+  .checkout-input::placeholder, .checkout-textarea::placeholder { color: rgba(255,255,255,0.3); }
   .checkout-textarea { resize: none; height: 72px; }
 
   .checkout-payment-options { display: flex; gap: 10px; flex-wrap: wrap; }
   .pay-opt {
     flex: 1; min-width: 80px; padding: 12px 8px;
     background: rgba(10,31,61,0.6); border: 1px solid rgba(77,159,255,0.2);
-    color: rgba(200,216,240,0.5); border-radius: 2px;
+    color: rgba(255,255,255,0.5); border-radius: 2px;
     font-family: 'Montserrat', sans-serif; font-size: 0.68rem;
     font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
     cursor: none; transition: all 0.25s; text-align: center;
@@ -1002,7 +1002,7 @@
   .pizza-size-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); color: var(--white); }
   .pizza-size-btn.psb-added { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.1); color: #4ade80; }
   .psb-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; }
-  .psb-sub { font-size: 0.58rem; color: rgba(200,216,240,0.45); }
+  .psb-sub { font-size: 0.58rem; color: rgba(255,255,255,0.45); }
   .psb-price { font-size: 0.72rem; font-weight: 700; color: var(--gold-light); margin-top: 2px; }
 
   /* === PORTION SELECTOR (Executivos) === */
@@ -1020,7 +1020,7 @@
   .portion-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); color: var(--white); }
   .portion-btn.pb-added { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.1); color: #4ade80; }
   .pb-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-  .pb-sub { font-size: 0.56rem; color: rgba(200,216,240,0.45); }
+  .pb-sub { font-size: 0.56rem; color: rgba(255,255,255,0.45); }
   .pb-price { font-size: 0.72rem; font-weight: 700; color: var(--gold-light); margin-top: 2px; }
 
   /* === CHOOSE SELECTOR (Tábuas, Caipirinhas, Pão, Suco Duplo) === */
@@ -1033,7 +1033,7 @@
     color: var(--glow); margin-bottom: 6px; display: block; font-weight: 600;
   }
   .choose-notice {
-    font-size: 0.65rem; color: rgba(200,216,240,0.45);
+    font-size: 1rem; color: rgb(200, 216, 240);
     font-family: 'Cormorant Garamond', serif; font-style: italic;
     margin-bottom: 6px; display: block;
   }
@@ -1043,7 +1043,7 @@
   .choose-opt {
     padding: 5px 12px; border-radius: 20px;
     background: rgba(10,31,61,0.7); border: 1px solid rgba(77,159,255,0.2);
-    color: rgba(200,216,240,0.6);
+    color: rgba(255,255,255,0.6);
     font-family: 'Montserrat', sans-serif; font-size: 0.65rem;
     font-weight: 500; cursor: none; transition: all 0.2s;
   }
@@ -1091,7 +1091,7 @@
     cursor: text;
   }
   .cart-item-note-input:focus { border-color: var(--glow); }
-  .cart-item-note-input::placeholder { color: rgba(200,216,240,0.3); }
+  .cart-item-note-input::placeholder { color: rgba(255,255,255,0.3); }
   .cart-item-note-input.visible { display: block; }
 
   /* ── Hamburger ── */
@@ -1175,7 +1175,20 @@
     .about-moon-big { width: 160px; height: 160px; }
     .pizza-size-btn { min-width: 55px; padding: 6px 8px; }
     .cart-fab-total { display: none; }
+  }  .gli-price-inline {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.88rem; font-weight: 700;
+    color: var(--gold-light); white-space: nowrap;
   }
+  /* simplify generic item layout */
+  .generic-list-item {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px 18px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .generic-list-item .gli-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .generic-list-item .gli-price { display: none; }
 </style>
 </head>
 <body>
@@ -1825,40 +1838,40 @@
       <div id="burgerGrid">
 
         <div class="burger-section-title" data-sub="queridinhos">🤍 Queridinhos</div>
-        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Moon Burger Classic</span><span class="burger-card-tag">⭐ Assinatura</span></div><p class="burger-card-desc">Blend 180g, queijo cheddar, alface americana, tomate, cebola crispy e molho especial blue moon</p><div class="burger-card-price">R$ 38,90</div></div>
-        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Blue Smash Burger</span><span class="burger-card-tag">Favorito</span></div><p class="burger-card-desc">Dois smash patties 90g, queijo american, picles artesanal e molho blue moon</p><div class="burger-card-price">R$ 44,90</div></div>
-        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Frango Crocante</span></div><p class="burger-card-desc">Filé de frango empanado crocante, coleslaw caseira e maionese de limão siciliano</p><div class="burger-card-price">R$ 36,90</div></div>
-        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">X-Tudo da Lua</span></div><p class="burger-card-desc">Hambúrguer, presunto, ovos, queijo, alface, tomate, maionese e catchup</p><div class="burger-card-price">R$ 42,90</div></div>
-        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Bauru Artesanal</span></div><p class="burger-card-desc">Rosbife, queijo derretido, tomate e pepino no pão brioche tostado</p><div class="burger-card-price">R$ 29,90</div></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Moon Burger Classic</span><span class="burger-card-price-inline">R$ 38,90</span></div><p class="burger-card-desc">Blend 180g, queijo cheddar, alface americana, tomate, cebola crispy e molho especial blue moon</p></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Blue Smash Burger</span><span class="burger-card-price-inline">R$ 44,90</span></div><p class="burger-card-desc">Dois smash patties 90g, queijo american, picles artesanal e molho blue moon</p></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Frango Crocante</span><span class="burger-card-price-inline">R$ 36,90</span></div><p class="burger-card-desc">Filé de frango empanado crocante, coleslaw caseira e maionese de limão siciliano</p></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">X-Tudo da Lua</span><span class="burger-card-price-inline">R$ 42,90</span></div><p class="burger-card-desc">Hambúrguer, presunto, ovos, queijo, alface, tomate, maionese e catchup</p></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Bauru Artesanal</span><span class="burger-card-price-inline">R$ 29,90</span></div><p class="burger-card-desc">Rosbife, queijo derretido, tomate e pepino no pão brioche tostado</p></div>
 
         <div class="burger-section-title" data-sub="novidades">✨ Novidades</div>
-        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Lunar Brie</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 200g, queijo brie derretido, geleia de pimenta, rúcula fresca e cebola caramelizada</p><div class="burger-card-price">R$ 49,90</div></div>
-        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Blue Truffle</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 180g, queijo gruyère, maionese de trufas, cogumelos salteados e alho negro</p><div class="burger-card-price">R$ 54,90</div></div>
-        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Smash Crispy Chicken</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Frango flat smashado crocante, coleslaw de chucrute, molho ranch e pickles de jalapeño</p><div class="burger-card-price">R$ 46,90</div></div>
-        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">BBQ Mango Chutney</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 200g, cheddar defumado, bacon crocante, chutney de manga e cebola roxa marinada</p><div class="burger-card-price">R$ 47,90</div></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Lunar Brie</span><span class="burger-card-price-inline">R$ 49,90</span></div><p class="burger-card-desc">Blend 200g, queijo brie derretido, geleia de pimenta, rúcula fresca e cebola caramelizada</p></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Blue Truffle</span><span class="burger-card-price-inline">R$ 54,90</span></div><p class="burger-card-desc">Blend 180g, queijo gruyère, maionese de trufas, cogumelos salteados e alho negro</p></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Smash Crispy Chicken</span><span class="burger-card-price-inline">R$ 46,90</span></div><p class="burger-card-desc">Frango flat smashado crocante, coleslaw de chucrute, molho ranch e pickles de jalapeño</p></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">BBQ Mango Chutney</span><span class="burger-card-price-inline">R$ 47,90</span></div><p class="burger-card-desc">Blend 200g, cheddar defumado, bacon crocante, chutney de manga e cebola roxa marinada</p></div>
 
         <div class="burger-section-title" data-sub="exagerados">🔥 Exagerados</div>
-        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Big Blue Moon</span><span class="burger-card-tag">🔥 Monstro</span></div><p class="burger-card-desc">Dois blends 200g, duplo cheddar, duplo bacon, ovo, alface, tomate, cebola crispy e molhos especiais</p><div class="burger-card-price">R$ 59,90</div></div>
-        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Triple Eclipse</span><span class="burger-card-tag">🔥🔥</span></div><p class="burger-card-desc">Três smash patties, três queijos (cheddar, american e gruyère), bacon, picles e molho especial</p><div class="burger-card-price">R$ 64,90</div></div>
-        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Supernova</span><span class="burger-card-tag">🌋 Extremo</span></div><p class="burger-card-desc">Blend 300g, cheddar cremoso, jalapeño acebolado, bacon em fogo, molho da casa e onion rings</p><div class="burger-card-price">R$ 67,90</div></div>
-        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Black Hole</span></div><p class="burger-card-desc">Pão black, blend 250g, queijo pepper jack, cogumelos, bacon de costela e aioli de alho assado</p><div class="burger-card-price">R$ 62,90</div></div>
-        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Abominável</span><span class="burger-card-tag">👹</span></div><p class="burger-card-desc">Blend duplo 400g total, catupiry borbulhando, calabresa grelhada, frango crocante e batata palha</p><div class="burger-card-price">R$ 72,90</div></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Big Blue Moon</span><span class="burger-card-price-inline">R$ 59,90</span></div><p class="burger-card-desc">Dois blends 200g, duplo cheddar, duplo bacon, ovo, alface, tomate, cebola crispy e molhos especiais</p></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Triple Eclipse</span><span class="burger-card-price-inline">R$ 64,90</span></div><p class="burger-card-desc">Três smash patties, três queijos (cheddar, american e gruyère), bacon, picles e molho especial</p></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Supernova</span><span class="burger-card-price-inline">R$ 67,90</span></div><p class="burger-card-desc">Blend 300g, cheddar cremoso, jalapeño acebolado, bacon em fogo, molho da casa e onion rings</p></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Black Hole</span><span class="burger-card-price-inline">R$ 62,90</span></div><p class="burger-card-desc">Pão black, blend 250g, queijo pepper jack, cogumelos, bacon de costela e aioli de alho assado</p></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Abominável</span><span class="burger-card-price-inline">R$ 72,90</span></div><p class="burger-card-desc">Blend duplo 400g total, catupiry borbulhando, calabresa grelhada, frango crocante e batata palha</p></div>
 
         <div class="burger-section-title" data-sub="exoticos">🌍 Exóticos</div>
-        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Tokyo Moon</span><span class="burger-card-tag">Fusion</span></div><p class="burger-card-desc">Blend 180g, queijo gouda, maionese de missô, kimchi, cebolinha e gergelim torrado</p><div class="burger-card-price">R$ 52,90</div></div>
-        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Árabe da Lua</span></div><p class="burger-card-desc">Blend de cordeiro e bovino, queijo halloumi grelhado, tabule, homus e molho de iogurte</p><div class="burger-card-price">R$ 56,90</div></div>
-        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Mexican Blue</span><span class="burger-card-tag">🌶️</span></div><p class="burger-card-desc">Blend 200g, cheddar derretido, guacamole, pico de gallo, jalapeño e tortilla chips crocante</p><div class="burger-card-price">R$ 51,90</div></div>
-        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Greek Night</span></div><p class="burger-card-desc">Blend 180g, queijo feta, azeitonas kalamata, tomate seco, pepino e molho tzatziki</p><div class="burger-card-price">R$ 50,90</div></div>
-        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Nordestino Lunar</span><span class="burger-card-tag">🇧🇷</span></div><p class="burger-card-desc">Blend com carne seca desfiada, queijo coalho grelhado, vinagrete de coentro e farofa crocante</p><div class="burger-card-price">R$ 53,90</div></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Tokyo Moon</span><span class="burger-card-price-inline">R$ 52,90</span></div><p class="burger-card-desc">Blend 180g, queijo gouda, maionese de missô, kimchi, cebolinha e gergelim torrado</p></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Árabe da Lua</span><span class="burger-card-price-inline">R$ 56,90</span></div><p class="burger-card-desc">Blend de cordeiro e bovino, queijo halloumi grelhado, tabule, homus e molho de iogurte</p></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Mexican Blue</span><span class="burger-card-price-inline">R$ 51,90</span></div><p class="burger-card-desc">Blend 200g, cheddar derretido, guacamole, pico de gallo, jalapeño e tortilla chips crocante</p></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Greek Night</span><span class="burger-card-price-inline">R$ 50,90</span></div><p class="burger-card-desc">Blend 180g, queijo feta, azeitonas kalamata, tomate seco, pepino e molho tzatziki</p></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Nordestino Lunar</span><span class="burger-card-price-inline">R$ 53,90</span></div><p class="burger-card-desc">Blend com carne seca desfiada, queijo coalho grelhado, vinagrete de coentro e farofa crocante</p></div>
 
         <div class="burger-section-title" data-sub="adicionais">➕ Adicionais</div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Bacon Extra</span></div><p class="burger-card-desc">Fatia extra de bacon crocante</p><div class="burger-card-price">R$ 4,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Ovo Frito ou Mexido</span></div><p class="burger-card-desc">Ovo caipira frito ou mexido</p><div class="burger-card-price">R$ 3,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Queijo Extra</span></div><p class="burger-card-desc">Cheddar, american, brie, gruyère ou pepper jack</p><div class="burger-card-price">R$ 4,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Catupiry ou Requeijão</span></div><p class="burger-card-desc">Porção generosa de catupiry original ou requeijão cremoso</p><div class="burger-card-price">R$ 4,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Onion Rings</span></div><p class="burger-card-desc">3 unidades de anéis de cebola empanados crocantes</p><div class="burger-card-price">R$ 6,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Blend Extra 180g</span></div><p class="burger-card-desc">Patty adicional de blend artesanal</p><div class="burger-card-price">R$ 14,00</div></div>
-        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Trocar Fritas</span></div><p class="burger-card-desc">Fritas por batata doce frita, mandioca ou salada verde</p><div class="burger-card-price">R$ 5,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Bacon Extra</span><span class="burger-card-price-inline">R$ 4,00</span></div><p class="burger-card-desc">Fatia extra de bacon crocante</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Ovo Frito ou Mexido</span><span class="burger-card-price-inline">R$ 3,00</span></div><p class="burger-card-desc">Ovo caipira frito ou mexido</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Queijo Extra</span><span class="burger-card-price-inline">R$ 4,00</span></div><p class="burger-card-desc">Cheddar, american, brie, gruyère ou pepper jack</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Catupiry ou Requeijão</span><span class="burger-card-price-inline">R$ 4,00</span></div><p class="burger-card-desc">Porção generosa de catupiry original ou requeijão cremoso</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Onion Rings</span><span class="burger-card-price-inline">R$ 6,00</span></div><p class="burger-card-desc">3 unidades de anéis de cebola empanados crocantes</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Blend Extra 180g</span><span class="burger-card-price-inline">R$ 14,00</span></div><p class="burger-card-desc">Patty adicional de blend artesanal</p></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Trocar Fritas</span><span class="burger-card-price-inline">R$ 5,00</span></div><p class="burger-card-desc">Fritas por batata doce frita, mandioca ou salada verde</p></div>
         <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Jalapeño Acebolado</span></div><p class="burger-card-desc">Mix de jalapeño fresco e cebola caramelizada</p><div class="burger-card-price">R$ 4,00</div></div>
       </div>
       <p class="burger-no-result" id="burgerNoResult" style="display:none">Nenhum hambúrguer encontrado 🍔</p>
@@ -2082,7 +2095,7 @@ function openCheckout() {
   cart.forEach(item => {
     const row = document.createElement('div');
     row.className = 'checkout-order-row';
-    const noteHtml = item.note ? `<span style="color:rgba(200,216,240,0.4);font-size:0.7rem;display:block;margin-top:1px">${item.note}</span>` : '';
+    const noteHtml = item.note ? `<span style="color:rgba(255,255,255,0.4);font-size:0.7rem;display:block;margin-top:1px">${item.note}</span>` : '';
     row.innerHTML = `<span class="name">${item.name}${noteHtml}</span><span class="qty">x${item.qty}</span><span class="val">${fmtPrice(item.price * item.qty)}</span>`;
     sum.appendChild(row);
   });
@@ -2447,8 +2460,8 @@ function openGenericModal(cat) {
       // ── Porção individual / para 2 (Executivos, Talharim) ──
       el.innerHTML = `
         <div class="gli-head">
-          <span class="gli-name">${item.name}</span>
-          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+          <span class="gli-name">${item.name}</span><span class="gli-price-inline">${item.price}</span>
+          ${item.tag ? `` : ''}
         </div>
         <p class="gli-desc">${item.desc}</p>
       `;
@@ -2479,11 +2492,11 @@ function openGenericModal(cat) {
       const isMulti = ch.multi && ch.multi > 1;
       el.innerHTML = `
         <div class="gli-head">
-          <span class="gli-name">${item.name}</span>
-          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+          <span class="gli-name">${item.name}</span><span class="gli-price-inline">${item.price}</span>
+          ${item.tag ? `` : ''}
         </div>
         <p class="gli-desc">${item.desc}</p>
-        <div class="gli-price">${item.price}</div>
+        
       `;
       const chooseBlock = document.createElement('div');
       chooseBlock.className = 'choose-block';
@@ -2544,11 +2557,11 @@ function openGenericModal(cat) {
       // ── Item simples ──
       el.innerHTML = `
         <div class="gli-head">
-          <span class="gli-name">${item.name}</span>
-          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+          <span class="gli-name">${item.name}</span><span class="gli-price-inline">${item.price}</span>
+          ${item.tag ? `` : ''}
         </div>
         <p class="gli-desc">${item.desc}</p>
-        <div class="gli-price">${item.price}</div>
+        
       `;
       el.appendChild(makeAddBtn(item.name, item.price));
     }

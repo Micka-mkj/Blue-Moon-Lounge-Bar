@@ -1955,7 +1955,10 @@ animCursor();
 let cart = []; // [{id, name, price, qty}]
 
 function parsePrice(str) {
-  return parseFloat(str.replace('R$','').replace(',','.').trim());
+  if (!str) return 0;
+  const match = String(str).match(/R?\$?\s*([\d]+)[,\.]([\d]{2})/);
+  if (match) return parseFloat(match[1] + '.' + match[2]);
+  return parseFloat(String(str).replace(/R\$\s*/g,'').replace(',','.').trim()) || 0;
 }
 function fmtPrice(val) {
   return 'R$ ' + val.toFixed(2).replace('.',',');
@@ -2679,8 +2682,10 @@ function openBurgerModal() {
     if (card.querySelector('.add-to-cart-btn') || card.querySelector('.choose-block')) return;
 
     const name = card.querySelector('.burger-card-name')?.textContent || '';
-    const priceEl = card.querySelector('.burger-card-price');
-    const price = priceEl ? priceEl.textContent.trim() : 'R$ 0,00';
+    const priceEl = card.querySelector('.burger-card-price-inline');
+    const rawPriceText = priceEl ? priceEl.textContent : '';
+    const priceMatch = rawPriceText.match(/R\$\s*[\d]+[,\.][\d]{2}/);
+    const price = priceMatch ? priceMatch[0].replace(/\s+/g,'') : 'R$ 0,00';
     const isAdicional = card.dataset.sub === 'adicionais';
 
     if (isAdicional) {

@@ -1,0 +1,2813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Moon Lounge Bar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050d1a;
+    --midnight: #091428;
+    --deep: #0a1f3d;
+    --blue-moon: #1a4a8a;
+    --electric: #2563d4;
+    --glow: #4d9fff;
+    --silver: #c8d8f0;
+    --cream: #f0e8d5;
+    --gold: #c9a84c;
+    --gold-light: #e8c76a;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--silver);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  @media (hover: none) and (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none !important; }
+    button, a, input, select, textarea { cursor: auto !important; }
+  }
+
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--glow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(77,159,255,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+  }
+
+  .stars {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 10%, rgba(200,220,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 65%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 75%, rgba(200,220,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 5%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 90%, rgba(200,220,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 15% 55%, rgba(200,220,255,0.5) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 35%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 70%, rgba(200,220,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 45%, rgba(255,255,255,0.7) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(5,13,26,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--white); letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--silver); text-decoration: none; font-weight: 500;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--glow);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--glow); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(26,74,138,0.4) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 60%, rgba(77,159,255,0.1) 0%, transparent 60%);
+  }
+  .hero-moon {
+    position: absolute;
+    width: 440px; height: 440px;
+    top: -90px; right: -70px;
+    animation: moonFloat 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 40px rgba(77,159,255,0.45)) drop-shadow(0 0 100px rgba(26,74,138,0.3));
+  }
+  @keyframes moonFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 375px; }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--glow); margin-bottom: 20px; font-weight: 500;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900; line-height: 0.95; color: var(--white);
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-title .blue { color: var(--glow); text-shadow: 0 0 40px rgba(77,159,255,0.6); }
+  .hero-title .italic { font-style: italic; font-weight: 400; color: var(--silver); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-style: italic;
+    color: var(--silver); opacity: 0.8; margin: 24px 0 48px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-cta {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .btn-primary {
+    padding: 16px 48px;
+    background: linear-gradient(135deg, var(--electric), var(--blue-moon));
+    color: var(--white); border: none; border-radius: 2px;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif; font-weight: 600;
+    cursor: none; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(37,99,212,0.4), 0 0 60px rgba(77,159,255,0.1);
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,99,212,0.5), 0 0 80px rgba(77,159,255,0.2); }
+  .btn-outline {
+    padding: 16px 48px; background: transparent;
+    color: var(--silver); border: 1px solid rgba(77,159,255,0.4);
+    border-radius: 2px;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif; font-weight: 500;
+    cursor: none; text-decoration: none; transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--glow); color: var(--glow); background: rgba(77,159,255,0.05); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: center;
+    color: rgba(200,216,240,0.4); animation: fadeUp 1s 0.8s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(77,159,255,0.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* SECTION COMMON */
+  section { position: relative; z-index: 1; }
+  .section-header { text-align: center; margin-bottom: 70px; }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--glow); display: block; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700; color: var(--white); line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--glow); }
+  .section-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--glow), transparent);
+    margin: 24px auto 0;
+  }
+
+  /* CARDÁPIO SECTION */
+  .menu-section {
+    padding: 120px 60px;
+    background: linear-gradient(to bottom, transparent, rgba(10,31,61,0.4), transparent);
+  }
+
+  /* MENU TABS — scrollable row */
+  .menu-tabs-wrapper {
+    margin-bottom: 60px;
+  }
+  .menu-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .tab-btn {
+    padding: 12px 18px;
+    background: rgba(10,31,61,0.5);
+    border: 1px solid rgba(77,159,255,0.15);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255, 255, 255); cursor: none;
+    transition: all 0.25s; white-space: nowrap;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+  }
+  .tab-btn::before {
+    content: attr(data-icon);
+    display: block; font-size: 2rem;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    color: var(--glow); border-color: var(--glow);
+    background: rgba(77,159,255,0.08);
+  }
+
+  /* === PIZZA MODAL === */
+  .pizza-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(2,6,15,0.88);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s; overflow-y: auto;
+  }
+  .pizza-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .pizza-modal {
+    background: linear-gradient(160deg, #091428 0%, #050d1a 100%);
+    border: 1px solid rgba(77,159,255,0.2);
+    width: 100%; max-width: 1100px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 80px rgba(77,159,255,0.05);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+    overflow: hidden;
+  }
+  .pizza-modal-overlay.open .pizza-modal { transform: translateY(0); }
+  .pizza-modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 40px 48px 28px;
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+    background: linear-gradient(to right, rgba(26,74,138,0.15), transparent);
+  }
+  .pizza-modal-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
+  .pizza-modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .pizza-modal-title em { color: var(--glow); font-style: italic; }
+  .pizza-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,216,240,0.55); margin-top: 10px; }
+  .pizza-modal-sub strong { color: var(--silver); }
+  .pizza-modal-close {
+    background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); width: 44px; height: 44px;
+    border-radius: 50%; font-size: 1rem; cursor: none;
+    transition: all 0.25s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pizza-modal-close:hover { background: rgba(77,159,255,0.2); color: var(--white); }
+  .pizza-modal-controls {
+    padding: 24px 48px;
+    border-bottom: 1px solid rgba(77,159,255,0.08);
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+  }
+  .pizza-search-wrap { position: relative; flex: 1; min-width: 200px; }
+  .pizza-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; }
+  .pizza-search {
+    width: 100%; background: rgba(10,31,61,0.7);
+    border: 1px solid rgba(77,159,255,0.2);
+    padding: 12px 16px 12px 44px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border 0.3s; cursor: none;
+  }
+  .pizza-search:focus { border-color: var(--glow); }
+  .pizza-search::placeholder { color: rgba(200,216,240,0.3); }
+  .pizza-cat-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pcat-btn {
+    padding: 8px 18px; background: transparent;
+    border: 1px solid rgba(77,159,255,0.18); color: rgba(200,216,240,0.5);
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border-radius: 30px; cursor: none; transition: all 0.25s;
+  }
+  .pcat-btn:hover, .pcat-btn.active { background: rgba(77,159,255,0.12); border-color: var(--glow); color: var(--glow); }
+  .pizza-modal-body {
+    padding: 32px 48px 48px; max-height: 60vh; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(77,159,255,0.3) transparent;
+  }
+  .pizza-modal-body::-webkit-scrollbar { width: 4px; }
+  .pizza-modal-body::-webkit-scrollbar-thumb { background: rgba(77,159,255,0.3); border-radius: 2px; }
+  .pizza-modal-grid { display: flex; flex-direction: column; gap: 6px; }
+  .pizza-cat-title {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1.05rem; color: var(--glow);
+    padding: 20px 0 8px; border-bottom: 1px solid rgba(77,159,255,0.1);
+    margin-top: 12px; letter-spacing: 0.02em;
+  }
+  .pizza-cat-title:first-child { margin-top: 0; }
+  .pizza-card {
+    display: grid; grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: 4px 20px;
+    padding: 14px 18px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s; border-radius: 1px;
+  }
+  .pizza-card:hover { background: rgba(10,31,61,0.5); border-left-color: var(--glow); padding-left: 22px; }
+  .pizza-card-head { display: flex; align-items: center; gap: 10px; grid-column: 1; }
+  .pizza-card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .pizza-card-tag {
+    font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 20px;
+    background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
+  }
+  .pizza-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(200,216,240,0.6); line-height: 1.5; grid-column: 1; }
+  .pizza-card-prices {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: flex-end; justify-content: center;
+    font-size: 0.72rem; color: var(--gold); white-space: nowrap; font-weight: 500;
+  }
+  .pizza-card-prices span:first-child { opacity: 0.6; font-size: 0.68rem; }
+  .pizza-card-prices span:last-child { color: var(--gold-light); font-size: 0.78rem; font-weight: 600; }
+  .pizza-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(200,216,240,0.4); }
+  body.modal-open { overflow: hidden; }
+
+  /* === HAMBURGER MODAL (with subcategories) === */
+  .burger-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(2,6,15,0.88);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s; overflow-y: auto;
+  }
+  .burger-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .burger-modal {
+    background: linear-gradient(160deg, #091428 0%, #050d1a 100%);
+    border: 1px solid rgba(77,159,255,0.2);
+    width: 100%; max-width: 1100px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+    overflow: hidden;
+  }
+  .burger-modal-overlay.open .burger-modal { transform: translateY(0); }
+  .burger-modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 40px 48px 28px;
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+    background: linear-gradient(to right, rgba(26,74,138,0.15), transparent);
+  }
+  .burger-modal-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
+  .burger-modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .burger-modal-title em { color: var(--glow); font-style: italic; }
+  .burger-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,216,240,0.55); margin-top: 10px; }
+  .burger-modal-close {
+    background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); width: 44px; height: 44px;
+    border-radius: 50%; font-size: 1rem; cursor: none;
+    transition: all 0.25s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .burger-modal-close:hover { background: rgba(77,159,255,0.2); color: var(--white); }
+
+  /* Burger subcategory tabs */
+  .burger-subtabs-wrap {
+    padding: 20px 48px;
+    border-bottom: 1px solid rgba(77,159,255,0.08);
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .burger-subtabs-wrap::-webkit-scrollbar { display: none; }
+  .burger-subtabs { display: flex; gap: 8px; min-width: max-content; }
+  .bsub-btn {
+    padding: 9px 20px; background: transparent;
+    border: 1px solid rgba(77,159,255,0.2); color: rgba(200,216,240,0.5);
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border-radius: 30px; cursor: none; transition: all 0.25s; white-space: nowrap;
+  }
+  .bsub-btn:hover, .bsub-btn.active { background: rgba(77,159,255,0.12); border-color: var(--glow); color: var(--glow); }
+
+  .burger-search-wrap {
+    padding: 16px 48px;
+    border-bottom: 1px solid rgba(77,159,255,0.08);
+  }
+  .burger-search-inner { position: relative; max-width: 380px; }
+  .burger-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); }
+  .burger-search {
+    width: 100%; background: rgba(10,31,61,0.7);
+    border: 1px solid rgba(77,159,255,0.2);
+    padding: 11px 16px 11px 44px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border 0.3s; cursor: none;
+  }
+  .burger-search:focus { border-color: var(--glow); }
+  .burger-search::placeholder { color: rgba(200,216,240,0.3); }
+
+  .burger-modal-body {
+    padding: 32px 48px 48px; max-height: 60vh; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(77,159,255,0.3) transparent;
+  }
+  .burger-modal-body::-webkit-scrollbar { width: 4px; }
+  .burger-modal-body::-webkit-scrollbar-thumb { background: rgba(77,159,255,0.3); border-radius: 2px; }
+
+  /* burger section label */
+  .burger-section-title {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1.05rem; color: var(--glow);
+    padding: 20px 0 10px; border-bottom: 1px solid rgba(77,159,255,0.1);
+    margin-top: 12px; margin-bottom: 4px;
+  }
+  .burger-section-title:first-child { margin-top: 0; }
+
+  /* burger card — full width row */
+  .burger-card {
+    display: grid; grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: 4px 20px;
+    padding: 14px 18px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s; border-radius: 1px;
+  }
+  .burger-card .choose-block { grid-column: 1 / -1; }
+  .burger-card:hover { background: rgba(10,31,61,0.5); border-left-color: var(--glow); padding-left: 22px; }
+  .burger-card-head { display: flex; align-items: center; gap: 10px; grid-column: 1; }
+  .burger-card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .burger-card-tag {
+    font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 20px;
+    background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
+  }
+  .burger-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(200,216,240,0.6); line-height: 1.5; grid-column: 1; }
+  .burger-card-price {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; align-items: center; justify-content: flex-end;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; font-weight: 700;
+    color: var(--gold-light); white-space: nowrap;
+  }
+  .burger-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(200,216,240,0.4); }
+
+  /* === GENERIC MODAL === */
+  .generic-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(2,6,15,0.88);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s; overflow-y: auto;
+  }
+  .generic-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .generic-modal {
+    background: linear-gradient(160deg, #091428 0%, #050d1a 100%);
+    border: 1px solid rgba(77,159,255,0.2);
+    width: 100%; max-width: 1100px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 80px rgba(77,159,255,0.05);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+    overflow: hidden;
+  }
+  .generic-modal-overlay.open .generic-modal { transform: translateY(0); }
+  .generic-modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 40px 48px 28px;
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+    background: linear-gradient(to right, rgba(26,74,138,0.15), transparent);
+  }
+  .generic-modal-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
+  .generic-modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .generic-modal-title em { color: var(--glow); font-style: italic; }
+  .generic-modal-sub { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,216,240,0.55); margin-top: 10px; }
+  .generic-modal-close {
+    background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); width: 44px; height: 44px;
+    border-radius: 50%; font-size: 1rem; cursor: none;
+    transition: all 0.25s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .generic-modal-close:hover { background: rgba(77,159,255,0.2); color: var(--white); }
+  .generic-modal-search-wrap {
+    padding: 24px 48px;
+    border-bottom: 1px solid rgba(77,159,255,0.08);
+  }
+  .generic-search-inner { position: relative; max-width: 400px; }
+  .generic-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; }
+  .generic-search {
+    width: 100%; background: rgba(10,31,61,0.7);
+    border: 1px solid rgba(77,159,255,0.2);
+    padding: 12px 16px 12px 44px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border 0.3s; cursor: none;
+  }
+  .generic-search:focus { border-color: var(--glow); }
+  .generic-search::placeholder { color: rgba(200,216,240,0.3); }
+  .generic-modal-body {
+    padding: 32px 48px 48px;
+    max-height: 60vh; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(77,159,255,0.3) transparent;
+  }
+  .generic-modal-body::-webkit-scrollbar { width: 4px; }
+  .generic-modal-body::-webkit-scrollbar-thumb { background: rgba(77,159,255,0.3); border-radius: 2px; }
+  .generic-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  /* list layout variant */
+  .generic-modal-grid.list-layout { grid-template-columns: 1fr; gap: 0; }
+
+  /* generic list item (row style like pizza) */
+  .generic-list-item {
+    display: grid; grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 20px;
+    padding: 14px 18px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .generic-list-item:hover { background: rgba(10,31,61,0.5); border-left-color: var(--glow); padding-left: 22px; }
+  .generic-list-item .gli-head { grid-column: 1; display: flex; align-items: center; gap: 10px; }
+  .generic-list-item .gli-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .generic-list-item .gli-tag {
+    font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 20px;
+    background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
+  }
+  .generic-list-item .gli-desc { grid-column: 1; font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: rgba(200,216,240,0.6); line-height: 1.5; }
+  .generic-list-item .gli-price {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; align-items: center; justify-content: flex-end;
+    font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 700;
+    color: var(--gold-light); white-space: nowrap;
+  }
+  .generic-list-item .gli-prices {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: flex-end; justify-content: center;
+    font-size: 0.72rem; color: var(--gold); white-space: nowrap; font-weight: 500;
+  }
+  .generic-list-item .gli-prices span:first-child { opacity: 0.6; font-size: 0.68rem; }
+  .generic-list-item .gli-prices span:last-child { color: var(--gold-light); font-size: 0.78rem; font-weight: 600; }
+
+  /* generic cat title in list mode */
+  .generic-cat-title {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1.05rem; color: var(--glow);
+    padding: 20px 0 8px; border-bottom: 1px solid rgba(77,159,255,0.1);
+    margin-top: 12px;
+  }
+  .generic-cat-title:first-child { margin-top: 0; }
+
+  /* grid card (for card-grid layout) */
+  .menu-item {
+    background: rgba(10,31,61,0.5);
+    border: 1px solid rgba(77,159,255,0.12);
+    padding: 28px 32px; border-radius: 2px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .menu-item::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--glow); transition: height 0.3s;
+  }
+  .menu-item:hover { border-color: rgba(77,159,255,0.3); background: rgba(26,74,138,0.2); transform: translateX(4px); }
+  .menu-item:hover::before { height: 100%; }
+  .menu-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .menu-item-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.3; flex: 1; }
+  .menu-item-price { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--gold); white-space: nowrap; margin-left: 16px; }
+  .menu-item-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: rgba(200,216,240,0.65); line-height: 1.6; }
+  .menu-item-tag {
+    display: inline-block; margin-top: 12px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.2); color: var(--glow);
+  }
+
+  .generic-no-result { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(200,216,240,0.4); }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 60px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1300px; margin: 0 auto;
+  }
+  .about-visual { position: relative; }
+  .about-moon-big {
+    width: 340px; height: 340px;
+    margin: auto; position: relative;
+    animation: moonFloat 10s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(77,159,255,0.4)) drop-shadow(0 0 70px rgba(26,74,138,0.25));
+  }
+  .about-ring {
+    position: absolute; inset: -30px; border-radius: 50%;
+    border: 1px solid rgba(77,159,255,0.15);
+    animation: ringPulse 4s ease-in-out infinite;
+  }
+  .about-ring-2 {
+    position: absolute; inset: -70px; border-radius: 50%;
+    border: 1px solid rgba(77,159,255,0.07);
+    animation: ringPulse 4s 1s ease-in-out infinite;
+  }
+  @keyframes ringPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  .about-text h2 { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--white); margin-bottom: 8px; line-height: 1.1; }
+  .about-text h2 em { font-style: italic; color: var(--glow); }
+  .about-divider { width: 50px; height: 1px; background: linear-gradient(to right, var(--glow), transparent); margin: 20px 0; }
+  .about-text p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.8; color: var(--silver); opacity: 0.85; margin-bottom: 20px; }
+  .about-stats { display: flex; gap: 40px; margin-top: 40px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--glow); display: block; line-height: 1; }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--silver); opacity: 0.6; margin-top: 6px; display: block; }
+
+  /* SPECIALS */
+  .specials { padding: 120px 60px; max-width: 1300px; margin: 0 auto; }
+  .specials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .special-card {
+    background: linear-gradient(145deg, rgba(10,31,61,0.8), rgba(15,5,5,0.9));
+    border: 1px solid rgba(77,159,255,0.15);
+    padding: 48px 36px; text-align: center;
+    position: relative; overflow: hidden; transition: all 0.4s;
+  }
+  .special-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(77,159,255,0.08) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .special-card:hover { border-color: rgba(77,159,255,0.4); transform: translateY(-8px); }
+  .special-card:hover::after { opacity: 1; }
+  .special-icon { font-size: 3rem; display: block; margin-bottom: 24px; filter: drop-shadow(0 0 12px rgba(77,159,255,0.4)); }
+  .special-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .special-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.7; color: rgba(200,216,240,0.7); }
+
+  /* INFO / HOURS */
+  .info-section {
+    padding: 120px 60px;
+    background: linear-gradient(135deg, rgba(9,20,40,0.95), rgba(15,5,5,0.95));
+    border-top: 1px solid rgba(77,159,255,0.1);
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+  }
+  .hours-centered {
+    max-width: 560px; margin: 0 auto; text-align: center;
+  }
+  .hours-centered h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--white); margin-bottom: 40px;
+  }
+  .hours-centered h3 em { font-style: italic; color: var(--glow); }
+  .hours-list { list-style: none; }
+  .hours-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 0; border-bottom: 1px solid rgba(77,159,255,0.08);
+    font-size: 0.85rem; color: var(--silver);
+  }
+  .hours-list li .day { color: rgba(200,216,240,0.6); letter-spacing: 0.05em; }
+  .hours-list li .time { color: var(--glow); font-weight: 600; }
+
+  /* SHOWS */
+  .shows-section { padding: 120px 60px; max-width: 1100px; margin: 0 auto; }
+  .shows-filter { display: flex; gap: 12px; justify-content: center; margin-bottom: 60px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 10px 28px; background: transparent;
+    border: 1px solid rgba(77,159,255,0.25); color: rgba(255, 255, 255);
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 40px; cursor: none; transition: all 0.3s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: rgba(77,159,255,0.12); border-color: var(--glow); color: var(--glow); }
+  .shows-timeline { display: flex; flex-direction: column; gap: 16px; }
+  .show-month-label {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic;
+    color: rgba(77,159,255,0.7); margin-top: 32px; margin-bottom: 8px;
+    padding-bottom: 12px; border-bottom: 1px solid rgba(77,159,255,0.12); letter-spacing: 0.04em;
+  }
+  .show-month-label:first-child { margin-top: 0; }
+  .show-card {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 28px; align-items: center;
+    background: rgba(9,20,40,0.55); border: 1px solid rgba(77,159,255,0.1);
+    padding: 24px 28px; border-radius: 2px; transition: all 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .show-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--glow); opacity: 0; transition: opacity 0.3s; }
+  .show-card:hover { border-color: rgba(77,159,255,0.3); background: rgba(10,31,61,0.7); transform: translateX(6px); }
+  .show-card:hover::before { opacity: 1; }
+  .show-card.destaque { background: linear-gradient(135deg, rgba(10,31,61,0.8), rgba(26,74,138,0.25)); border-color: rgba(77,159,255,0.3); box-shadow: 0 4px 30px rgba(77,159,255,0.08); }
+  .show-card.destaque::before { opacity: 1; }
+  .show-date-block { text-align: center; background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.15); padding: 12px 8px; border-radius: 2px; }
+  .show-day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--glow); display: block; line-height: 1; }
+  .show-weekday { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255, 255, 255); display: block; margin-top: 4px; }
+  .show-badge { display: inline-block; margin-bottom: 10px; padding: 3px 12px; border-radius: 20px; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+  .show-badge.jazz      { background: rgba(100,100,255,0.15); border: 1px solid rgba(100,100,255,0.3); color: #9999ff; }
+  .show-badge.samba     { background: rgba(255,160,50,0.12);  border: 1px solid rgba(255,160,50,0.3);  color: #ffb850; }
+  .show-badge.mpb       { background: rgba(80,200,120,0.12);  border: 1px solid rgba(80,200,120,0.3);  color: #70d090; }
+  .show-badge.blues     { background: rgba(60,160,220,0.12);  border: 1px solid rgba(60,160,220,0.3);  color: #60c0e0; }
+  .show-badge.rock      { background: rgba(220,80,80,0.12);   border: 1px solid rgba(220,80,80,0.3);   color: #e08080; }
+  .show-badge.especial  { background: rgba(201,168,76,0.15);  border: 1px solid rgba(201,168,76,0.35); color: var(--gold-light); }
+  .show-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .show-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; line-height: 1.6; color: rgba(255, 255, 255); margin-bottom: 14px; }
+  .show-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(255, 255, 255); }
+  .show-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* FOOTER */
+  footer { background: var(--navy); border-top: 1px solid rgba(77,159,255,0.1); padding: 60px; text-align: center; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--white); margin-bottom: 8px; }
+  .footer-logo span { color: var(--glow); }
+  .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(200,216,240,0.5); margin-bottom: 32px; }
+  .footer-links { display: flex; gap: 32px; justify-content: center; list-style: none; margin-bottom: 40px; }
+  .footer-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,216,240,0.4); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--glow); }
+  .footer-social { display: flex; gap: 20px; justify-content: center; margin-bottom: 40px; }
+  .social-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(77,159,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; cursor: none; text-decoration: none; }
+  .social-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); }
+  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(200,216,240,0.25); }
+
+  /* ═══════════════════════════════════════
+     CARRINHO FLUTUANTE
+  ═══════════════════════════════════════ */
+  .cart-fab {
+    position: fixed; bottom: 32px; right: 32px; z-index: 300;
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, var(--electric), var(--blue-moon));
+    color: var(--white); border: none; border-radius: 50px;
+    padding: 16px 24px; cursor: none;
+    box-shadow: 0 8px 32px rgba(37,99,212,0.5), 0 0 60px rgba(77,159,255,0.15);
+    font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 0.08em;
+    transition: all 0.3s; opacity: 0; pointer-events: none;
+    transform: translateY(20px);
+  }
+  .cart-fab.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .cart-fab:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(37,99,212,0.6); }
+  .cart-fab-icon { font-size: 1.3rem; }
+  .cart-fab-badge {
+    background: var(--gold); color: var(--navy);
+    border-radius: 50%; width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+  }
+  .cart-fab-total { opacity: 0.9; }
+  .silver {
+ color: var(silver);
+}
+
+  /* ── Sidebar Carrinho ── */
+  .cart-sidebar {
+    position: fixed; top: 0; right: -480px; width: 100%; max-width: 460px; height: 100vh;
+    background: linear-gradient(180deg, #091428 0%, #050d1a 100%);
+    border-left: 1px solid rgba(77,159,255,0.2);
+    z-index: 600; display: flex; flex-direction: column;
+    box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+    transition: right 0.4s cubic-bezier(.16,1,.3,1);
+  }
+  .cart-sidebar.open { right: 0; }
+  .cart-sidebar-overlay {
+    position: fixed; inset: 0; z-index: 599;
+    background: rgba(2,6,15,0.7); backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none; transition: opacity 0.35s;
+  }
+  .cart-sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid rgba(77,159,255,0.12);
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to right, rgba(26,74,138,0.2), transparent);
+    flex-shrink: 0;
+  }
+  .cart-header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900; color: var(--white);
+  }
+  .cart-header-title em { color: var(--glow); font-style: italic; }
+  .cart-close-btn {
+    background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); width: 40px; height: 40px; border-radius: 50%;
+    font-size: 1rem; cursor: none; transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cart-close-btn:hover { background: rgba(77,159,255,0.2); color: var(--white); }
+
+  .cart-empty {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    color: rgba(200,216,240,0.35);
+  }
+  .cart-empty-icon { font-size: 4rem; opacity: 0.4; }
+  .cart-empty p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; }
+
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px 28px;
+    scrollbar-width: thin; scrollbar-color: rgba(77,159,255,0.3) transparent; }
+  .cart-items::-webkit-scrollbar { width: 4px; }
+  .cart-items::-webkit-scrollbar-thumb { background: rgba(77,159,255,0.3); border-radius: 2px; }
+
+  .cart-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid rgba(77,159,255,0.08);
+    animation: fadeUp 0.25s ease;
+  }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name {
+    font-family: 'Playfair Display', serif; font-size: 0.95rem;
+    font-weight: 700; color: var(--white); margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cart-item-unit { font-size: 0.7rem; color: rgba(200,216,240,0.4); }
+  .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+  .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--gold-light); }
+  .cart-qty {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(10,31,61,0.7); border: 1px solid rgba(77,159,255,0.2);
+    border-radius: 20px; padding: 4px 8px;
+  }
+  .cart-qty-btn {
+    background: none; border: none; color: var(--glow);
+    font-size: 1rem; cursor: none; width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s; line-height: 1;
+  }
+  .cart-qty-btn:hover { color: var(--white); }
+  .cart-qty-num { font-size: 0.8rem; font-weight: 600; color: var(--white); min-width: 16px; text-align: center; }
+
+  .cart-footer { padding: 20px 28px 28px; border-top: 1px solid rgba(77,159,255,0.12); flex-shrink: 0; }
+  .cart-subtotal {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .cart-subtotal-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,216,240,0.5); }
+  .cart-subtotal-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--glow); }
+  .cart-checkout-btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, #25d366, #128C7E);
+    color: var(--white); border: none; border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+  }
+  .cart-checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,211,102,0.4); }
+  .cart-checkout-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* ── Botão Adicionar nos cards ── */
+  .add-to-cart-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(77,159,255,0.1); border: 1px solid rgba(77,159,255,0.25);
+    color: var(--glow); padding: 6px 14px; border-radius: 20px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.65rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; transition: all 0.25s; margin-top: 10px;
+  }
+  .add-to-cart-btn:hover { background: rgba(77,159,255,0.2); border-color: var(--glow); transform: translateY(-1px); }
+  .add-to-cart-btn.added { background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.4); color: #4ade80; }
+
+  /* ── Checkout Modal ── */
+  .checkout-overlay {
+    position: fixed; inset: 0; z-index: 700;
+    background: rgba(2,6,15,0.92); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.35s;
+    overflow-y: auto;
+  }
+  .checkout-overlay.open { opacity: 1; pointer-events: all; }
+  .checkout-modal {
+    background: linear-gradient(160deg, #091428 0%, #050d1a 100%);
+    border: 1px solid rgba(77,159,255,0.25);
+    width: 100%; max-width: 520px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(77,159,255,0.05);
+    transform: translateY(30px); transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+    border-radius: 4px; overflow: hidden;
+  }
+  .checkout-overlay.open .checkout-modal { transform: translateY(0); }
+  .checkout-header {
+    padding: 32px 36px 24px;
+    border-bottom: 1px solid rgba(77,159,255,0.1);
+    background: linear-gradient(to right, rgba(26,74,138,0.2), transparent);
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .checkout-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--glow); margin-bottom: 6px; }
+  .checkout-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .checkout-title em { color: var(--glow); font-style: italic; }
+  .checkout-close {
+    background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); width: 38px; height: 38px; border-radius: 50%; font-size: 0.9rem;
+    cursor: none; transition: all 0.25s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .checkout-close:hover { background: rgba(77,159,255,0.2); color: var(--white); }
+
+  .checkout-body { padding: 28px 36px 36px; }
+  .checkout-order-summary {
+    background: rgba(10,31,61,0.5); border: 1px solid rgba(77,159,255,0.1);
+    padding: 16px 18px; margin-bottom: 24px; border-radius: 2px;
+    max-height: 160px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(77,159,255,0.3) transparent;
+  }
+  .checkout-order-summary::-webkit-scrollbar { width: 3px; }
+  .checkout-order-summary::-webkit-scrollbar-thumb { background: rgba(77,159,255,0.3); }
+  .checkout-order-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; padding: 4px 0;
+    border-bottom: 1px solid rgba(77,159,255,0.06);
+    color: var(--silver);
+  }
+  .checkout-order-row:last-child { border: none; }
+  .checkout-order-row .name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+  .checkout-order-row .qty { color: var(--glow); margin-right: 8px; font-weight: 600; }
+  .checkout-order-row .val { color: var(--gold-light); font-weight: 600; white-space: nowrap; }
+  .checkout-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0 0; margin-top: 8px; border-top: 1px solid rgba(77,159,255,0.15);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(200,216,240,0.5);
+  }
+  .checkout-total-val { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--glow); }
+
+  .checkout-field { margin-bottom: 18px; }
+  .checkout-label { display: block; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,216,240,0.5); margin-bottom: 8px; }
+  .checkout-input, .checkout-textarea {
+    width: 100%; background: rgba(10,31,61,0.7);
+    border: 1px solid rgba(77,159,255,0.2);
+    padding: 13px 16px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border 0.3s; cursor: none; border-radius: 2px;
+  }
+  .checkout-input:focus, .checkout-textarea:focus { border-color: var(--glow); }
+  .checkout-input::placeholder, .checkout-textarea::placeholder { color: rgba(200,216,240,0.3); }
+  .checkout-textarea { resize: none; height: 72px; }
+
+  .checkout-payment-options { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pay-opt {
+    flex: 1; min-width: 80px; padding: 12px 8px;
+    background: rgba(10,31,61,0.6); border: 1px solid rgba(77,159,255,0.2);
+    color: rgba(200,216,240,0.5); border-radius: 2px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; transition: all 0.25s; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .pay-opt .pay-icon { font-size: 1.4rem; }
+  .pay-opt:hover { border-color: rgba(77,159,255,0.4); color: var(--silver); }
+  .pay-opt.selected { background: rgba(77,159,255,0.12); border-color: var(--glow); color: var(--glow); }
+
+  .checkout-troco-wrap { margin-top: 12px; display: none; }
+  .checkout-troco-wrap.visible { display: block; }
+
+  .checkout-send-btn {
+    width: 100%; padding: 16px; margin-top: 24px;
+    background: linear-gradient(135deg, #25d366, #128C7E);
+    color: var(--white); border: none; border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.82rem;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+  }
+  .checkout-send-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.45); }
+
+  /* ── Pizza size selector ── */
+  .pizza-size-selector {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 12px; grid-column: 1 / -1;
+  }
+  .pizza-size-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: rgba(10,31,61,0.7); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); padding: 8px 12px; border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; cursor: none;
+    transition: all 0.22s; flex: 1; min-width: 80px;
+  }
+  .pizza-size-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); color: var(--white); }
+  .pizza-size-btn.psb-added { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.1); color: #4ade80; }
+  .psb-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; }
+  .psb-sub { font-size: 0.58rem; color: rgba(200,216,240,0.45); }
+  .psb-price { font-size: 0.72rem; font-weight: 700; color: var(--gold-light); margin-top: 2px; }
+
+  /* === PORTION SELECTOR (Executivos) === */
+  .portion-selector {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 10px; grid-column: 1 / -1;
+  }
+  .portion-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: rgba(10,31,61,0.7); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--silver); padding: 8px 14px; border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; cursor: none;
+    transition: all 0.22s; flex: 1; min-width: 100px;
+  }
+  .portion-btn:hover { border-color: var(--glow); background: rgba(77,159,255,0.1); color: var(--white); }
+  .portion-btn.pb-added { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.1); color: #4ade80; }
+  .pb-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .pb-sub { font-size: 0.56rem; color: rgba(200,216,240,0.45); }
+  .pb-price { font-size: 0.72rem; font-weight: 700; color: var(--gold-light); margin-top: 2px; }
+
+  /* === CHOOSE SELECTOR (Tábuas, Caipirinhas, Pão, Suco Duplo) === */
+  .choose-block {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+  }
+  .choose-label {
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--glow); margin-bottom: 6px; display: block; font-weight: 600;
+  }
+  .choose-notice {
+    font-size: 0.65rem; color: rgba(200,216,240,0.45);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    margin-bottom: 6px; display: block;
+  }
+  .choose-options {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .choose-opt {
+    padding: 5px 12px; border-radius: 20px;
+    background: rgba(10,31,61,0.7); border: 1px solid rgba(77,159,255,0.2);
+    color: rgba(200,216,240,0.6);
+    font-family: 'Montserrat', sans-serif; font-size: 0.65rem;
+    font-weight: 500; cursor: none; transition: all 0.2s;
+  }
+  .choose-opt:hover { border-color: var(--glow); color: var(--silver); }
+  .choose-opt.selected { border-color: var(--glow); background: rgba(77,159,255,0.15); color: var(--white); font-weight: 700; }
+  .choose-add-btn {
+    margin-top: 4px; padding: 7px 18px; border-radius: 4px;
+    background: rgba(37,99,212,0.2); border: 1px solid rgba(77,159,255,0.3);
+    color: var(--glow); font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+    cursor: none; transition: all 0.22s;
+  }
+  .choose-add-btn:hover { background: rgba(37,99,212,0.35); border-color: var(--glow); color: var(--white); }
+  .choose-add-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .choose-add-btn.ch-added { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.1); color: #4ade80; }
+
+  /* floating notif */
+  .cart-notif {
+    position: fixed; bottom: 110px; right: 32px; z-index: 400;
+    background: rgba(9,20,40,0.95); border: 1px solid rgba(77,159,255,0.3);
+    color: var(--glow); padding: 10px 18px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+    pointer-events: none; transform: translateY(10px); opacity: 0;
+    transition: all 0.3s; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .cart-notif.show { transform: translateY(0); opacity: 1; }
+
+  /* ── Observação por item ── */
+  .cart-item-note-wrap { margin-top: 6px; }
+  .cart-item-note-btn {
+    background: none; border: none;
+    color: rgba(77,159,255,0.55); font-size: 0.62rem;
+    font-family: 'Montserrat', sans-serif; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: none; padding: 0; transition: color 0.2s;
+  }
+  .cart-item-note-btn:hover { color: var(--glow); }
+  @media (hover: none) { .cart-item-note-btn { cursor: auto; } }
+  .cart-item-note-input {
+    display: none; width: 100%; margin-top: 6px;
+    background: rgba(10,31,61,0.85); border: 1px solid rgba(77,159,255,0.2);
+    color: var(--white); padding: 8px 10px; font-size: 0.75rem;
+    font-family: 'Montserrat', sans-serif; border-radius: 2px;
+    outline: none; resize: none; height: 50px; transition: border 0.25s;
+    cursor: text;
+  }
+  .cart-item-note-input:focus { border-color: var(--glow); }
+  .cart-item-note-input::placeholder { color: rgba(200,216,240,0.3); }
+  .cart-item-note-input.visible { display: block; }
+
+  /* ── Hamburger ── */
+  .nav-hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: none;
+    padding: 6px; z-index: 200; flex-shrink: 0;
+  }
+  @media (hover: none) { .nav-hamburger { cursor: auto; } }
+  .nav-hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--silver); border-radius: 2px; transition: all 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      position: fixed; inset: 0; z-index: 150;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 0; background: rgba(5,13,26,0.97); backdrop-filter: blur(14px);
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; text-align: center; }
+    .nav-links a {
+      display: block; padding: 20px 40px; font-size: 1rem;
+      letter-spacing: 0.2em; border-bottom: 1px solid rgba(77,159,255,0.08);
+    }
+    .nav-links a::after { display: none; }
+    .hero { padding: 90px 20px 60px; }
+    .hero-moon { width: 200px; height: 200px; top: -10px; right: -20px; }
+    .hero-title { font-size: clamp(2.6rem, 10vw, 4.5rem); }
+    .hero-sub { font-size: 1.1rem; }
+    .btn-primary, .btn-outline { padding: 14px 28px; font-size: 0.7rem; }
+    .about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
+    .about-moon-big { width: 200px; height: 200px; }
+    .specials-grid { grid-template-columns: 1fr; gap: 16px; }
+    .special-card { padding: 36px 24px; }
+    .menu-section { padding: 60px 16px; }
+    .specials, .shows-section, .info-section { padding: 60px 20px; }
+    .section-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+    .menu-tabs { gap: 6px; }
+    .tab-btn { padding: 10px 14px; font-size: 0.62rem; }
+    .tab-btn::before { font-size: 1rem; }
+    .pizza-modal-overlay, .burger-modal-overlay, .generic-modal-overlay { padding: 0; align-items: flex-end; }
+    .pizza-modal, .burger-modal, .generic-modal { border-radius: 16px 16px 0 0; max-height: 92vh; display: flex; flex-direction: column; }
+    .pizza-modal-header, .pizza-modal-controls, .pizza-modal-body,
+    .generic-modal-header, .generic-modal-search-wrap, .generic-modal-body,
+    .burger-modal-header, .burger-subtabs-wrap, .burger-search-wrap, .burger-modal-body
+    { padding-left: 16px; padding-right: 16px; }
+    .pizza-modal-header, .generic-modal-header, .burger-modal-header { padding-top: 20px; padding-bottom: 16px; }
+    .pizza-modal-title, .generic-modal-title, .burger-modal-title { font-size: 1.6rem; }
+    .pizza-modal-body, .generic-modal-body, .burger-modal-body { max-height: 55vh; flex: 1; }
+    .pizza-modal-controls { flex-direction: column; gap: 10px; }
+    .pizza-card { grid-template-columns: 1fr; }
+    .pizza-card-prices { grid-column: 1; grid-row: auto; flex-direction: row; justify-content: flex-start; gap: 12px; }
+    .cart-fab { bottom: 16px; right: 14px; padding: 12px 16px; font-size: 0.75rem; gap: 8px; }
+    .cart-notif { bottom: 86px; right: 14px; left: 14px; text-align: center; }
+    .cart-sidebar { max-width: 100%; right: -100%; }
+    .cart-header { padding: 18px 16px 14px; }
+    .cart-items { padding: 10px 16px; }
+    .cart-footer { padding: 14px 16px 24px; }
+    .checkout-overlay { padding: 0; align-items: flex-end; }
+    .checkout-modal { max-width: 100%; border-radius: 16px 16px 0 0; max-height: 92vh; overflow-y: auto; }
+    .checkout-header { padding: 18px 18px 14px; }
+    .checkout-body { padding: 16px 18px 32px; }
+    .pay-opt { min-width: 70px; padding: 10px 6px; font-size: 0.6rem; }
+    .show-card { grid-template-columns: 58px 1fr; gap: 14px; padding: 14px 14px; }
+    .show-day { font-size: 1.5rem; }
+    footer { padding: 40px 20px; }
+    .footer-links { gap: 16px; flex-wrap: wrap; }
+  }
+  @media (max-width: 480px) {
+    .hero-moon { width: 150px; height: 150px; top: -5px; right: -15px; }
+    .hero-title { font-size: clamp(2.2rem, 11vw, 3rem); }
+    .about-moon-big { width: 160px; height: 160px; }
+    .pizza-size-btn { min-width: 55px; padding: 6px 8px; }
+    .cart-fab-total { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 0 8px rgba(77,159,255,0.7))">
+      <defs>
+        <radialGradient id="nm-base" cx="35%" cy="30%" r="65%">
+          <stop offset="0%"   stop-color="#9eceff"/>
+          <stop offset="22%"  stop-color="#4d94e0"/>
+          <stop offset="48%"  stop-color="#1d55a8"/>
+          <stop offset="72%"  stop-color="#0b2d6a"/>
+          <stop offset="100%" stop-color="#020918"/>
+        </radialGradient>
+        <radialGradient id="nm-dark" cx="70%" cy="65%" r="58%">
+          <stop offset="20%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#010810" stop-opacity="0.65"/>
+        </radialGradient>
+        <radialGradient id="nm-rim" cx="50%" cy="50%" r="50%">
+          <stop offset="78%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#4d9fff" stop-opacity="0.4"/>
+        </radialGradient>
+        <clipPath id="nm-clip"><circle cx="16" cy="16" r="14"/></clipPath>
+      </defs>
+      <circle cx="16" cy="16" r="14" fill="url(#nm-base)"/>
+      <g clip-path="url(#nm-clip)" opacity="0.5">
+        <ellipse cx="10" cy="10" rx="5" ry="4" fill="#0a2250" opacity="0.7"/>
+        <ellipse cx="17" cy="14" rx="5" ry="4" fill="#081e44" opacity="0.55"/>
+        <ellipse cx="8"  cy="17" rx="4" ry="6" fill="#0a2248" opacity="0.5"/>
+      </g>
+      <g clip-path="url(#nm-clip)">
+        <ellipse cx="20" cy="21" rx="3" ry="2.5" fill="#04122e" opacity="0.75"/>
+        <ellipse cx="12" cy="14" rx="2" ry="2"   fill="#05152e" opacity="0.7"/>
+        <ellipse cx="22" cy="11" rx="1.5" ry="1.5" fill="#04122e" opacity="0.6"/>
+      </g>
+      <circle cx="16" cy="16" r="14" fill="url(#nm-dark)"/>
+      <circle cx="16" cy="16" r="14" fill="url(#nm-rim)"/>
+    </svg>
+    Blue Moon
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sobre" onclick="closeNav()">Sobre</a></li>
+    <li><a href="#cardapio" onclick="closeNav()">Cardápio</a></li>
+    <li><a href="#especiais" onclick="closeNav()">Especiais</a></li>
+    <li><a href="#shows" onclick="closeNav()">Shows</a></li>
+    <li><a href="https://wa.me/5543991431023" target="_blank" onclick="closeNav()">Contato</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-moon">
+    <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <defs>
+        <!-- Base moon sphere shading: light from top-left, blue tint -->
+        <radialGradient id="hm-base" cx="38%" cy="32%" r="65%" fx="38%" fy="32%">
+          <stop offset="0%"   stop-color="#a8d4ff"/>
+          <stop offset="18%"  stop-color="#5ba3e8"/>
+          <stop offset="40%"  stop-color="#2563b0"/>
+          <stop offset="62%"  stop-color="#0f3272"/>
+          <stop offset="80%"  stop-color="#061840"/>
+          <stop offset="100%" stop-color="#020c22"/>
+        </radialGradient>
+        <!-- Terminator shadow (dark side) -->
+        <radialGradient id="hm-dark" cx="72%" cy="62%" r="62%">
+          <stop offset="30%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#010810" stop-opacity="0.72"/>
+        </radialGradient>
+        <!-- Atmospheric rim glow -->
+        <radialGradient id="hm-rim" cx="50%" cy="50%" r="50%">
+          <stop offset="82%" stop-color="transparent"/>
+          <stop offset="94%" stop-color="#4d9fff" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#2563d4" stop-opacity="0.35"/>
+        </radialGradient>
+        <!-- Highlight sheen top-left -->
+        <radialGradient id="hm-shine" cx="30%" cy="25%" r="35%">
+          <stop offset="0%"  stop-color="#d0eaff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <clipPath id="hm-clip"><circle cx="220" cy="220" r="200"/></clipPath>
+      </defs>
+
+      <!-- Base sphere -->
+      <circle cx="220" cy="220" r="200" fill="url(#hm-base)"/>
+
+      <!-- Terrain texture: large dark maria (seas) -->
+      <g clip-path="url(#hm-clip)" opacity="0.55">
+        <!-- Mare Imbrium-style large dark patch top-left area -->
+        <ellipse cx="155" cy="155" rx="68" ry="55" fill="#0a2350" opacity="0.7"/>
+        <!-- Mare Serenitatis -->
+        <ellipse cx="210" cy="130" rx="42" ry="36" fill="#0d2a5c" opacity="0.6"/>
+        <!-- Mare Tranquillitatis / Nectaris lower right of center -->
+        <ellipse cx="265" cy="200" rx="55" ry="40" fill="#081e44" opacity="0.55"/>
+        <!-- Oceanus Procellarum wide sweep -->
+        <ellipse cx="130" cy="220" rx="52" ry="80" fill="#0a2248" opacity="0.5"/>
+        <!-- Small dark patch lower -->
+        <ellipse cx="200" cy="300" rx="35" ry="25" fill="#091a3e" opacity="0.45"/>
+        <!-- Mare Humorum -->
+        <ellipse cx="150" cy="295" rx="30" ry="22" fill="#0b2040" opacity="0.5"/>
+      </g>
+
+      <!-- Highland texture: subtle lighter patches (bright highlands) -->
+      <g clip-path="url(#hm-clip)" opacity="0.3">
+        <ellipse cx="295" cy="140" rx="48" ry="38" fill="#4a82c8" opacity="0.4"/>
+        <ellipse cx="310" cy="270" rx="38" ry="45" fill="#3a6daf" opacity="0.35"/>
+        <ellipse cx="220" cy="340" rx="55" ry="30" fill="#4080c0" opacity="0.3"/>
+        <ellipse cx="170" cy="380" rx="40" ry="22" fill="#355e9a" opacity="0.3"/>
+      </g>
+
+      <!-- Craters — various sizes, realistic with rim highlight and shadow floor -->
+      <g clip-path="url(#hm-clip)">
+        <!-- Large crater 1 (Tycho-style, lower center-right) -->
+        <ellipse cx="285" cy="295" rx="28" ry="27" fill="#04122e" opacity="0.75"/>
+        <ellipse cx="279" cy="289" rx="28" ry="27" fill="none" stroke="#5590d0" stroke-width="2.5" opacity="0.35"/>
+        <ellipse cx="281" cy="291" rx="10" ry="9" fill="#0c2a5a" opacity="0.6"/>
+
+        <!-- Large crater 2 (Copernicus-style, center-left) -->
+        <ellipse cx="168" cy="198" rx="22" ry="21" fill="#05152e" opacity="0.8"/>
+        <ellipse cx="163" cy="194" rx="22" ry="21" fill="none" stroke="#4a80bf" stroke-width="2" opacity="0.4"/>
+        <ellipse cx="165" cy="196" rx="7" ry="7" fill="#0a2245" opacity="0.7"/>
+
+        <!-- Medium crater A -->
+        <ellipse cx="248" cy="155" rx="14" ry="13" fill="#04122e" opacity="0.7"/>
+        <ellipse cx="245" cy="152" rx="14" ry="13" fill="none" stroke="#4a80bf" stroke-width="1.5" opacity="0.35"/>
+
+        <!-- Medium crater B -->
+        <ellipse cx="195" cy="265" rx="12" ry="11" fill="#050f28" opacity="0.65"/>
+        <ellipse cx="192" cy="262" rx="12" ry="11" fill="none" stroke="#4070ae" stroke-width="1.2" opacity="0.3"/>
+
+        <!-- Medium crater C (right side) -->
+        <ellipse cx="318" cy="195" rx="16" ry="15" fill="#041028" opacity="0.7"/>
+        <ellipse cx="314" cy="191" rx="16" ry="15" fill="none" stroke="#5088c8" stroke-width="1.5" opacity="0.35"/>
+
+        <!-- Small craters scattered -->
+        <ellipse cx="130" cy="155" rx="8"  ry="7"  fill="#03102a" opacity="0.6"/>
+        <ellipse cx="128" cy="153" rx="8"  ry="7"  fill="none" stroke="#3a6aaa" stroke-width="1" opacity="0.3"/>
+
+        <ellipse cx="320" cy="320" rx="9"  ry="8"  fill="#040e28" opacity="0.6"/>
+        <ellipse cx="318" cy="318" rx="9"  ry="8"  fill="none" stroke="#4070b0" stroke-width="1" opacity="0.3"/>
+
+        <ellipse cx="240" cy="370" rx="7"  ry="6"  fill="#03102a" opacity="0.55"/>
+        <ellipse cx="238" cy="368" rx="7"  ry="6"  fill="none" stroke="#3a68a8" stroke-width="1" opacity="0.28"/>
+
+        <ellipse cx="350" cy="240" rx="6"  ry="6"  fill="#040f28" opacity="0.55"/>
+        <ellipse cx="100" cy="280" rx="5"  ry="4"  fill="#030e26" opacity="0.5"/>
+        <ellipse cx="200" cy="100" rx="5"  ry="5"  fill="#030f28" opacity="0.5"/>
+        <ellipse cx="310" cy="100" rx="4"  ry="4"  fill="#040f28" opacity="0.45"/>
+        <ellipse cx="360" cy="170" rx="5"  ry="4"  fill="#03102a" opacity="0.5"/>
+        <ellipse cx="175" cy="340" rx="6"  ry="5"  fill="#040e28" opacity="0.5"/>
+        <ellipse cx="270" cy="90"  rx="4"  ry="4"  fill="#030d26" opacity="0.45"/>
+        <ellipse cx="355" cy="295" rx="4"  ry="4"  fill="#04102a" opacity="0.45"/>
+      </g>
+
+      <!-- Terminator shadow overlay (dark limb) -->
+      <circle cx="220" cy="220" r="200" fill="url(#hm-dark)"/>
+
+      <!-- Atmospheric rim glow -->
+      <circle cx="220" cy="220" r="200" fill="url(#hm-rim)"/>
+
+      <!-- Top-left specular shine -->
+      <circle cx="220" cy="220" r="200" fill="url(#hm-shine)"/>
+
+      <!-- Subtle blue atmospheric haze at edge -->
+      <circle cx="220" cy="220" r="200" fill="none" stroke="#4d9fff" stroke-width="3" opacity="0.12"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">✦ Bem-vindo ao</p>
+    <h1 class="hero-title">
+      <span class="blue">Blue</span><br>
+      <span class="italic">Moon</span><br>
+      <span class="silver">Lounge Bar</span>
+    </h1>
+    <p class="hero-sub">Onde cada noite brilha como a lua azul</p>
+    <div class="hero-cta">
+      <a href="#cardapio" class="btn-primary">Ver Cardápio</a>
+      <a href="#contato" class="btn-outline">Horários</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="about">
+    <div class="about-visual">
+      <div class="about-moon-big">
+        <div class="about-ring"></div>
+        <div class="about-ring-2"></div>
+        <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="border-radius:50%;overflow:hidden;display:block;">
+          <defs>
+            <radialGradient id="am-base" cx="36%" cy="30%" r="65%">
+              <stop offset="0%"   stop-color="#9eceff"/>
+              <stop offset="20%"  stop-color="#4d94e0"/>
+              <stop offset="42%"  stop-color="#1d55a8"/>
+              <stop offset="65%"  stop-color="#0b2d6a"/>
+              <stop offset="85%"  stop-color="#050f38"/>
+              <stop offset="100%" stop-color="#020918"/>
+            </radialGradient>
+            <radialGradient id="am-dark" cx="70%" cy="65%" r="58%">
+              <stop offset="25%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="#010810" stop-opacity="0.68"/>
+            </radialGradient>
+            <radialGradient id="am-rim" cx="50%" cy="50%" r="50%">
+              <stop offset="80%" stop-color="transparent"/>
+              <stop offset="93%" stop-color="#4d9fff" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#2563d4" stop-opacity="0.30"/>
+            </radialGradient>
+            <radialGradient id="am-shine" cx="28%" cy="24%" r="33%">
+              <stop offset="0%"   stop-color="#c8e8ff" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <clipPath id="am-clip"><circle cx="170" cy="170" r="160"/></clipPath>
+          </defs>
+          <circle cx="170" cy="170" r="160" fill="url(#am-base)"/>
+          <!-- Maria -->
+          <g clip-path="url(#am-clip)" opacity="0.5">
+            <ellipse cx="120" cy="120" rx="52" ry="42" fill="#0a2250" opacity="0.65"/>
+            <ellipse cx="165" cy="100" rx="32" ry="28" fill="#0d2a5c" opacity="0.55"/>
+            <ellipse cx="205" cy="155" rx="43" ry="32" fill="#081e44" opacity="0.5"/>
+            <ellipse cx="100" cy="170" rx="40" ry="62" fill="#0a2248" opacity="0.45"/>
+            <ellipse cx="155" cy="235" rx="28" ry="20" fill="#091a3e" opacity="0.42"/>
+          </g>
+          <!-- Highlands -->
+          <g clip-path="url(#am-clip)" opacity="0.28">
+            <ellipse cx="228" cy="108" rx="37" ry="30" fill="#4a82c8" opacity="0.38"/>
+            <ellipse cx="240" cy="210" rx="30" ry="36" fill="#3a6daf" opacity="0.32"/>
+          </g>
+          <!-- Craters -->
+          <g clip-path="url(#am-clip)">
+            <ellipse cx="220" cy="228" rx="22" ry="21" fill="#04122e" opacity="0.75"/>
+            <ellipse cx="215" cy="223" rx="22" ry="21" fill="none" stroke="#5088c8" stroke-width="2" opacity="0.35"/>
+            <ellipse cx="217" cy="225" rx="7" ry="7" fill="#0c2a5a" opacity="0.6"/>
+
+            <ellipse cx="130" cy="155" rx="17" ry="16" fill="#05152e" opacity="0.78"/>
+            <ellipse cx="126" cy="151" rx="17" ry="16" fill="none" stroke="#4a80bf" stroke-width="1.8" opacity="0.38"/>
+            <ellipse cx="128" cy="153" rx="5" ry="5" fill="#0a2245" opacity="0.65"/>
+
+            <ellipse cx="192" cy="120" rx="11" ry="10" fill="#04122e" opacity="0.68"/>
+            <ellipse cx="189" cy="117" rx="11" ry="10" fill="none" stroke="#4a80bf" stroke-width="1.2" opacity="0.3"/>
+
+            <ellipse cx="152" cy="205" rx="9"  ry="8"  fill="#050f28" opacity="0.62"/>
+            <ellipse cx="149" cy="202" rx="9"  ry="8"  fill="none" stroke="#3a6aaa" stroke-width="1" opacity="0.28"/>
+
+            <ellipse cx="246" cy="148" rx="12" ry="11" fill="#041028" opacity="0.68"/>
+            <ellipse cx="243" cy="145" rx="12" ry="11" fill="none" stroke="#5088c8" stroke-width="1.2" opacity="0.32"/>
+
+            <ellipse cx="100" cy="120" rx="6"  ry="5"  fill="#03102a" opacity="0.55"/>
+            <ellipse cx="248" cy="248" rx="7"  ry="6"  fill="#040e28" opacity="0.55"/>
+            <ellipse cx="186" cy="288" rx="5"  ry="5"  fill="#03102a" opacity="0.5"/>
+            <ellipse cx="275" cy="185" rx="4"  ry="4"  fill="#040f28" opacity="0.48"/>
+            <ellipse cx="80"  cy="215" rx="4"  ry="3"  fill="#030e26" opacity="0.45"/>
+            <ellipse cx="210" cy="75"  rx="4"  ry="3"  fill="#030f28" opacity="0.45"/>
+          </g>
+          <circle cx="170" cy="170" r="160" fill="url(#am-dark)"/>
+          <circle cx="170" cy="170" r="160" fill="url(#am-rim)"/>
+          <circle cx="170" cy="170" r="160" fill="url(#am-shine)"/>
+          <circle cx="170" cy="170" r="160" fill="none" stroke="#4d9fff" stroke-width="2.5" opacity="0.10"/>
+        </svg>
+      </div>
+    </div>
+    <div class="about-text">
+      <h2>O Melhor da<br><em>Noite Azul</em></h2>
+      <div class="about-divider"></div>
+      <p>O Blue Moon Lounge Bar é o destino perfeito para quem busca uma experiência gastronômica única, com ambiente sofisticado e acolhedor. Inspirado na rara e mágica lua azul, nosso espaço foi criado para transformar cada visita em uma memória inesquecível.</p>
+      <p>Do nosso cardápio amplo com pizzas artesanais, hambúrgueres exclusivos, porções generosas, pratos executivos e a mais completa carta de drinks — tudo pensado para encantar seu paladar.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num">+363</span><span class="stat-label">Itens no cardápio</span></div>
+        <div class="stat"><span class="stat-num">+24</span><span class="stat-label">Drinks & batidas</span></div>
+         <div class="stat"><span class="stat-num">1★</span><span class="stat-label">Premiação Tripadvisor</span></div>
+         <div class="stat"><span class="stat-num">5★</span><span class="stat-label">Avaliação</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDÁPIO -->
+<section id="cardapio" class="menu-section">
+  <div class="section-header">
+    <span class="section-label">✦ Nosso Cardápio ✦</span>
+    <h2 class="section-title">Sabores que <em>iluminam</em> a noite</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="menu-tabs-wrapper">
+    <div class="menu-tabs">
+      <button class="tab-btn active" data-icon="🍕" onclick="openPizzaModal()">Pizzas</button>
+      <button class="tab-btn" data-icon="🍔" onclick="openBurgerModal()">Hambúrgueres</button>
+      <button class="tab-btn" data-icon="🍗" onclick="openGenericModal('porcoes')">Porções</button>
+      <button class="tab-btn" data-icon="🧀" onclick="openGenericModal('tabuas')">Tábuas</button>
+      <button class="tab-btn" data-icon="🍽️" onclick="openGenericModal('executivos')">Executivos</button>
+      <button class="tab-btn" data-icon="🍝" onclick="openGenericModal('talharim')">Talharim</button>
+      <button class="tab-btn" data-icon="🍚" onclick="openGenericModal('risoto')">Risoto</button>
+      <button class="tab-btn" data-icon="🍨" onclick="openGenericModal('sobremesa')">Sobremesas</button>
+      <button class="tab-btn" data-icon="🍹" onclick="openGenericModal('drinks')">Drinks</button>
+      <button class="tab-btn" data-icon="🥃" onclick="openGenericModal('caipirinhas')">Caipirinhas</button>
+      <button class="tab-btn" data-icon="🍸" onclick="openGenericModal('shots')">Shots</button>
+      <button class="tab-btn" data-icon="🌿" onclick="openGenericModal('moscow')">Moscow Mule</button>
+      <button class="tab-btn" data-icon="🥤" onclick="openGenericModal('batidas')">Batidas</button>
+      <button class="tab-btn" data-icon="🍺" onclick="openGenericModal('cerveja')">Cerveja</button>
+      <button class="tab-btn" data-icon="🫚" onclick="openGenericModal('gins')">Gins</button>
+      <button class="tab-btn" data-icon="🧊" onclick="openGenericModal('destilados')">Destilados</button>
+      <button class="tab-btn" data-icon="🍷" onclick="openGenericModal('vinhos')">Vinhos</button>
+      <button class="tab-btn" data-icon="🧃" onclick="openGenericModal('suco')">Sucos</button>
+      <button class="tab-btn" data-icon="🥤" onclick="openGenericModal('refrigerante')">Refrigerantes</button>
+      <button class="tab-btn" data-icon="🫧" onclick="openGenericModal('soda')">Sodas Italianas</button>
+      <button class="tab-btn" data-icon="🧋" onclick="openGenericModal('milkshake')">Milk Shake</button>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIAIS -->
+<section id="especiais" class="specials">
+  <div class="section-header">
+    <span class="section-label">✦ Experiências ✦</span>
+    <h2 class="section-title">Noites <em>Especiais</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="specials-grid">
+    <div class="special-card">
+      <span class="special-icon">🎵</span>
+      <h3 class="special-name">Noites ao Vivo 🎶</h3>
+      <p class="special-desc">Todos os sábados a partir das 21h, com música ao vivo, ambiente animado e experiências inesquecíveis.</p>
+    </div>
+    <div class="special-card">
+      <span class="special-icon">🌙</span>
+      <h3 class="special-name">Viva a Noite 🌙</h3>
+      <p class="special-desc">O lugar ideal para curtir a noite com tranquilidade, boa companhia e um ambiente agradável.</p>
+    </div>
+    <div class="special-card">
+      <span class="special-icon">🎂</span>
+      <h3 class="special-name">Comemore com a Gente 🎉</h3>
+      <p class="special-desc">Celebre seu aniversário com estilo! Aniversariante ganha brinde especial para tornar a noite ainda mais especial..</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWS -->
+<section id="shows" class="shows-section">
+  <div class="section-header">
+    <span class="section-label">✦ Agenda Cultural ✦</span>
+    <h2 class="section-title">Shows & <em>Eventos</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="shows-filter">
+    <button class="filter-btn active" onclick="filterShows('todos')">Todos</button>
+    <button class="filter-btn" onclick="filterShows('março')">Março</button>
+    <button class="filter-btn" onclick="filterShows('abril')">Abril</button>
+    <button class="filter-btn" onclick="filterShows('maio')">Maio</button>
+    <button class="filter-btn" onclick="filterShows('junho')">Junho</button>
+  </div>
+  <div class="shows-timeline">
+    <div class="show-month-label" data-month="março"><span>🌒</span> Março 2026</div>
+    <div class="show-card" data-month="março">
+      <div class="show-date-block"><span class="show-day">28</span><span class="show-weekday">sábado</span></div>
+      <div class="show-info">
+        <div class="show-badge jazz">Rock</div>
+        <h3 class="show-name">Gabriel Soares</h3>
+        <div class="show-meta"><span>🕗 21h00</span><span></div>
+        <p class="show-desc">Uma viagem pelo Rock clássico, Pop Rock, MPB e Reggae - Uma noite inesquecível.</p>
+      </div>
+    </div>
+    <div class="show-card" data-month="abril">
+      <div class="show-date-block"><span class="show-day">05</span><span class="show-weekday">Sáb</span></div>
+      <div class="show-info">
+        <div class="show-badge samba">Samba & Pagode</div>
+        <h3 class="show-name">Grupo Raiz da Lua</h3>
+        <div class="show-meta"><span>🕗 20h30</span><span>🎤 Palco Principal</span></div>
+        <p class="show-desc">Pagode raiz de verdade com tradição do samba-de-roda misturada com clássicos dos anos 90.</p>
+      </div>
+    </div>
+    <div class="show-card destaque" data-month="abril">
+      <div class="show-date-block"><span class="show-day">19</span><span class="show-weekday">Sáb</span></div>
+      <div class="show-info">
+        <div class="show-badge especial">✦ Especial</div>
+        <h3 class="show-name">Noite da Lua Azul</h3>
+        <div class="show-meta"><span>🕗 19h00 – 02h00</span><span>🎤 Salão Completo</span></div>
+        <p class="show-desc">Grande evento especial: show duplo com o Trio Eclético + DJ Set. Jantar harmonizado e decoração exclusiva temática.</p>
+      </div>
+    </div>
+    <div class="show-card" data-month="abril">
+      <div class="show-date-block"><span class="show-day">25</span><span class="show-weekday">Sex</span></div>
+      <div class="show-info">
+        <div class="show-badge rock">Pop Rock · MPB</div>
+        <h3 class="show-name">Show do Luiz</h3>
+        <div class="show-meta"><span>🕗 19h00</span><span>🎤 Palco Principal</span></div>
+        <p class="show-desc">Uma noite com o melhor do pop rock e MPB nacional — seleção especial de clássicos e músicas autorais.</p>
+      </div>
+    </div>
+    <div class="show-month-label" data-month="maio"><span>🌓</span> Maio 2025</div>
+    <div class="show-card" data-month="maio">
+      <div class="show-date-block"><span class="show-day">02</span><span class="show-weekday">Sex</span></div>
+      <div class="show-info">
+        <div class="show-badge rock">Rock Acústico</div>
+        <h3 class="show-name">Tributo à Legião Urbana</h3>
+        <div class="show-meta"><span>🕗 21h00</span><span>🎤 Palco Principal</span></div>
+        <p class="show-desc">Os maiores sucessos de Renato Russo em versões acústicas intimistas e emocionantes.</p>
+      </div>
+    </div>
+    <div class="show-card destaque" data-month="maio">
+      <div class="show-date-block"><span class="show-day">10</span><span class="show-weekday">Sáb</span></div>
+      <div class="show-info">
+        <div class="show-badge especial">✦ Especial</div>
+        <h3 class="show-name">Baile Retrô Anos 80/90</h3>
+        <div class="show-meta"><span>🕗 20h00 – 03h00</span><span>🎤 Salão Completo</span></div>
+        <p class="show-desc">DJ de alta rotatividade tocando os grandes hits das décadas de ouro. Muita nostalgia e animação!</p>
+      </div>
+    </div>
+    <div class="show-month-label" data-month="junho"><span>🌕</span> Junho 2025</div>
+    <div class="show-card destaque" data-month="junho">
+      <div class="show-date-block"><span class="show-day">07</span><span class="show-weekday">Sáb</span></div>
+      <div class="show-info">
+        <div class="show-badge especial">✦ 1º Aniversário</div>
+        <h3 class="show-name">Festival Blue Moon</h3>
+        <div class="show-meta"><span>🕗 18h00 – 04h00</span><span>🎤 Evento Completo</span></div>
+        <p class="show-desc">Celebramos 1 ano do Blue Moon com festival épico: 3 atrações ao vivo, open bar premium e surpresas especiais!</p>
+      </div>
+    </div>
+    <div class="show-card" data-month="junho">
+      <div class="show-date-block"><span class="show-day">20</span><span class="show-weekday">Sex</span></div>
+      <div class="show-info">
+        <div class="show-badge samba">Forró · Baião · Xote</div>
+        <h3 class="show-name">Sanfona na Lua — São João</h3>
+        <div class="show-meta"><span>🕗 20h00</span><span>🎤 Salão + Área Externa</span></div>
+        <p class="show-desc">Festa junina com o clima do Blue Moon: forrós raiz, baião e quadrilha moderna. Traje caipira chique bem-vindo!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="info-section">
+  <div class="hours-centered">
+    <h3>Horário de <em>Funcionamento</em></h3>
+    <ul class="hours-list">
+      <li><span class="day">Segunda-feira</span><span class="time">19:00 – 23:30</span></li>
+      <li><span class="day">Terça-feira</span><span class="time">19:00 – 23:30</span></li>
+      <li><span class="day">Quarta-feira</span><span class="time">19:00 – 23:30</span></li>
+      <li><span class="day">Quinta-feira</span><span class="time">19:00 – 23:30</span></li>
+      <li><span class="day">Sexta-feira</span><span class="time">19:00 – 23:30</span></li>
+      <li><span class="day">Sábado</span><span class="time">19:00 – 00:00</span></li>
+      <li><span class="day">Domingo</span><span class="time">19:00 – 00:00</span></li>
+      <li><span class="day">Dia de Eventos</span><span class="time">A partir das 19:00</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CARRINHO FAB -->
+<button class="cart-fab" id="cartFab" onclick="openCart()">
+  <span class="cart-fab-icon">🛒</span>
+  <span class="cart-fab-badge" id="cartFabCount">0</span>
+  <span class="cart-fab-total" id="cartFabTotal">R$ 0,00</span>
+</button>
+<div class="cart-notif" id="cartNotif"></div>
+
+<!-- Sidebar Carrinho -->
+<div class="cart-sidebar-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-header-title">Seu <em>Pedido</em></div>
+    <button class="cart-close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <span class="cart-empty-icon">🌙</span>
+    <p>Seu carrinho está vazio</p>
+    <p style="font-size:0.85rem;opacity:0.5">Adicione itens do cardápio</p>
+  </div>
+  <div class="cart-items" id="cartItems" style="display:none"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Total do pedido</span>
+      <span class="cart-subtotal-value" id="cartTotal">R$ 0,00</span>
+    </div>
+    <button class="cart-checkout-btn" onclick="openCheckout()">
+      <span>💬</span> Finalizar Pedido
+    </button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="checkout-modal">
+    <div class="checkout-header">
+      <div>
+        <p class="checkout-eyebrow">✦ Blue Moon Lounge Bar ✦</p>
+        <h2 class="checkout-title">Finalizar <em>Pedido</em></h2>
+      </div>
+      <button class="checkout-close" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="checkout-body">
+      <div class="checkout-order-summary" id="checkoutSummary"></div>
+      <div class="checkout-field">
+        <label class="checkout-label">Seu Nome *</label>
+        <input class="checkout-input" id="checkoutName" type="text" placeholder="Como devemos te chamar?">
+      </div>
+      <div class="checkout-field">
+        <label class="checkout-label">Endereço de Entrega *</label>
+        <input class="checkout-input" id="checkoutAddr" type="text" placeholder="Rua, número e bairro">
+      </div>
+      <div class="checkout-field">
+        <label class="checkout-label">Detalhes da entrega (observações)</label>
+        <textarea class="checkout-textarea" id="checkoutObs" placeholder="Informe casa, Bloco, Referência ou Instruções"></textarea>
+      </div>
+      <div class="checkout-field">
+        <label class="checkout-label">Forma de Pagamento *</label>
+        <div class="checkout-payment-options">
+          <button class="pay-opt" id="payPix" onclick="selectPay('pix')"><span class="pay-icon">💠</span> Pix</button>
+          <button class="pay-opt" id="payCartao" onclick="selectPay('cartao')"><span class="pay-icon">💳</span> Cartão</button>
+          <button class="pay-opt" id="payDinheiro" onclick="selectPay('dinheiro')"><span class="pay-icon">💵</span> Dinheiro</button>
+        </div>
+        <div class="checkout-troco-wrap" id="trocoWrap">
+          <label class="checkout-label" style="margin-top:10px">Troco para quanto?</label>
+          <input class="checkout-input" id="checkoutTroco" type="text" placeholder="Ex: R$ 50,00">
+        </div>
+      </div>
+      <button class="checkout-send-btn" onclick="sendToWhatsApp()">
+        <span>📲</span> Enviar pelo WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PIZZA MODAL
+═══════════════════════════════════════ -->
+<div id="pizzaModal" class="pizza-modal-overlay" onclick="closePizzaModalOutside(event)">
+  <div class="pizza-modal">
+    <div class="pizza-modal-header">
+      <div>
+        <p class="pizza-modal-eyebrow">✦ Cardápio Completo ✦</p>
+        <h2 class="pizza-modal-title">Nossas <em>Pizzas</em></h2>
+        <p class="pizza-modal-sub">45+ sabores artesanais — tamanhos: <strong>Pequena (4 fatias)</strong> · <strong>Média (6 fatias)</strong> · <strong>Grande (8 fatias)</strong></p>
+      </div>
+      <button class="pizza-modal-close" onclick="closePizzaModal()">✕</button>
+    </div>
+    <div class="pizza-modal-controls">
+      <div class="pizza-search-wrap">
+        <span class="pizza-search-icon">🔍</span>
+        <input type="text" id="pizzaSearch" placeholder="Buscar pizza..." oninput="filterPizzas()" class="pizza-search">
+      </div>
+      <div class="pizza-cat-filters">
+        <button class="pcat-btn active" onclick="setPizzaCat('todas')">Todas Salgadas</button>
+        <button class="pcat-btn" onclick="setPizzaCat('doces')">Doces</button>
+      </div>
+    </div>
+    <div class="pizza-modal-body">
+      <div class="pizza-modal-grid" id="pizzaGrid">
+        <div class="pizza-cat-title" data-cat="tradicionais">🍅 Tradicionais</div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Margherita</span><span class="pizza-card-tag">Clássica</span></div><p class="pizza-card-desc">Molho de tomate, mussarela, manjericão fresco e azeite</p><div class="pizza-card-prices"><span>Pequena R$ 32,90</span><span>Grande R$ 54,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Calabresa</span></div><p class="pizza-card-desc">Calabresa fatiada, cebola roxa, azeitonas e orégano</p><div class="pizza-card-prices"><span>Pequena R$ 33,90</span><span>Grande R$ 55,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Portuguesa</span></div><p class="pizza-card-desc">Presunto, ovo, cebola, pimentão, azeitona e mussarela</p><div class="pizza-card-prices"><span>Pequena R$ 34,90</span><span>Grande R$ 57,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Mussarela</span></div><p class="pizza-card-desc">Generosa camada de mussarela, molho de tomate e orégano</p><div class="pizza-card-prices"><span>Pequena R$ 30,90</span><span>Grande R$ 52,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Napolitana</span></div><p class="pizza-card-desc">Mussarela, tomate fresco, alho, orégano e azeite</p><div class="pizza-card-prices"><span>Pequena R$ 33,90</span><span>Grande R$ 55,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Milho com Bacon</span></div><p class="pizza-card-desc">Mussarela, milho verde, bacon crocante e catupiry</p><div class="pizza-card-prices"><span>Pequena R$ 35,90</span><span>Grande R$ 58,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Atum</span></div><p class="pizza-card-desc">Atum, cebola, azeitona, mussarela e orégano</p><div class="pizza-card-prices"><span>Pequena R$ 34,90</span><span>Grande R$ 57,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Presunto</span></div><p class="pizza-card-desc">Presunto fatiado, mussarela e orégano fresco</p><div class="pizza-card-prices"><span>Pequena R$ 31,90</span><span>Grande R$ 53,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Palmito</span></div><p class="pizza-card-desc">Palmito pupunha, mussarela, molho de tomate e orégano</p><div class="pizza-card-prices"><span>Pequena R$ 35,90</span><span>Grande R$ 58,90</span></div></div>
+        <div class="pizza-card" data-cat="tradicionais"><div class="pizza-card-head"><span class="pizza-card-name">Escarola com Bacon</span></div><p class="pizza-card-desc">Escarola refogada, bacon, mussarela e alho dourado</p><div class="pizza-card-prices"><span>Pequena R$ 35,90</span><span>Grande R$ 58,90</span></div></div>
+
+        <div class="pizza-cat-title" data-cat="especiais">⭐ Especiais</div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Blue Moon Especial</span><span class="pizza-card-tag">Assinatura</span></div><p class="pizza-card-desc">Mussarela premium, gorgonzola, nozes caramelizadas, peras laminadas e mel trufado</p><div class="pizza-card-prices"><span>Pequena R$ 48,90</span><span>Grande R$ 75,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">4 Queijos da Lua</span><span class="pizza-card-tag">Favorita</span></div><p class="pizza-card-desc">Mussarela, parmesão, provolone e grana padano com noz-moscada</p><div class="pizza-card-prices"><span>Pequena R$ 44,90</span><span>Grande R$ 70,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Camarão ao Alho</span><span class="pizza-card-tag">Premium</span></div><p class="pizza-card-desc">Camarão salteado no alho e azeite, mussarela e catupiry</p><div class="pizza-card-prices"><span>Pequena R$ 52,90</span><span>Grande R$ 82,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Tomate Seco com Rúcula</span></div><p class="pizza-card-desc">Mussarela, tomate seco, rúcula fresca, parmesão e azeite trufado</p><div class="pizza-card-prices"><span>Pequena R$ 42,90</span><span>Grande R$ 68,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Cogumelos ao Brie</span></div><p class="pizza-card-desc">Mix de cogumelos, queijo brie, mussarela e tomilho fresco</p><div class="pizza-card-prices"><span>Pequena R$ 46,90</span><span>Grande R$ 73,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Parma com Figos</span></div><p class="pizza-card-desc">Presunto parma, figo fresco, gorgonzola, mel e rúcula</p><div class="pizza-card-prices"><span>Pequena R$ 50,90</span><span>Grande R$ 79,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Pepperoni com Mel</span></div><p class="pizza-card-desc">Pepperoni importado, mussarela, jalapeño e fio de mel</p><div class="pizza-card-prices"><span>Pequena R$ 45,90</span><span>Grande R$ 71,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Carne Seca com Cebola</span></div><p class="pizza-card-desc">Carne seca desfiada, cebola caramelizada, mussarela e catupiry</p><div class="pizza-card-prices"><span>Pequena R$ 46,90</span><span>Grande R$ 73,90</span></div></div>
+        <div class="pizza-card" data-cat="especiais"><div class="pizza-card-head"><span class="pizza-card-name">Lombo com Abacaxi</span></div><p class="pizza-card-desc">Lombo canadense, abacaxi, mussarela e hortelã</p><div class="pizza-card-prices"><span>Pequena R$ 40,90</span><span>Grande R$ 66,90</span></div></div>
+
+        <div class="pizza-cat-title" data-cat="frango">🍗 Frango</div>
+        <div class="pizza-card" data-cat="frango"><div class="pizza-card-head"><span class="pizza-card-name">Frango com Catupiry</span><span class="pizza-card-tag">Clássica</span></div><p class="pizza-card-desc">Frango desfiado temperado, catupiry original, milho e pimentão</p><div class="pizza-card-prices"><span>Pequena R$ 37,90</span><span>Grande R$ 61,90</span></div></div>
+        <div class="pizza-card" data-cat="frango"><div class="pizza-card-head"><span class="pizza-card-name">Frango com Bacon</span></div><p class="pizza-card-desc">Frango desfiado, bacon crocante, mussarela e cebola</p><div class="pizza-card-prices"><span>Pequena R$ 38,90</span><span>Grande R$ 62,90</span></div></div>
+        <div class="pizza-card" data-cat="frango"><div class="pizza-card-head"><span class="pizza-card-name">Frango com Gorgonzola</span></div><p class="pizza-card-desc">Frango grelhado, gorgonzola, uva-passa, nozes e mussarela</p><div class="pizza-card-prices"><span>Pequena R$ 42,90</span><span>Grande R$ 67,90</span></div></div>
+        <div class="pizza-card" data-cat="frango"><div class="pizza-card-head"><span class="pizza-card-name">Frango com Pesto</span></div><p class="pizza-card-desc">Frango grelhado, pesto de manjericão, tomate seco e mussarela</p><div class="pizza-card-prices"><span>Pequena R$ 41,90</span><span>Grande R$ 66,90</span></div></div>
+        <div class="pizza-card" data-cat="frango"><div class="pizza-card-head"><span class="pizza-card-name">Frango Buffalo</span><span class="pizza-card-tag">🌶️ Picante</span></div><p class="pizza-card-desc">Frango empanado crocante, molho buffalo, mussarela e cebolinha</p><div class="pizza-card-prices"><span>Pequena R$ 40,90</span><span>Grande R$ 65,90</span></div></div>
+
+        <div class="pizza-cat-title" data-cat="vegetarianas">🥦 Vegetarianas</div>
+        <div class="pizza-card" data-cat="vegetarianas"><div class="pizza-card-head"><span class="pizza-card-name">Veggie Azul</span><span class="pizza-card-tag">Assinatura</span></div><p class="pizza-card-desc">Abobrinha, berinjela, pimentão, tomate cereja, rúcula e queijo de cabra</p><div class="pizza-card-prices"><span>Pequena R$ 38,90</span><span>Grande R$ 63,90</span></div></div>
+        <div class="pizza-card" data-cat="vegetarianas"><div class="pizza-card-head"><span class="pizza-card-name">Primavera</span></div><p class="pizza-card-desc">Brócolis, cenoura, ervilha, milho, cebola e mussarela</p><div class="pizza-card-prices"><span>Pequena R$ 36,90</span><span>Grande R$ 60,90</span></div></div>
+        <div class="pizza-card" data-cat="vegetarianas"><div class="pizza-card-head"><span class="pizza-card-name">Cogumelos & Espinafre</span></div><p class="pizza-card-desc">Cogumelos paris, espinafre, alho, mussarela e parmesão</p><div class="pizza-card-prices"><span>Pequena R$ 39,90</span><span>Grande R$ 64,90</span></div></div>
+        <div class="pizza-card" data-cat="vegetarianas"><div class="pizza-card-head"><span class="pizza-card-name">Mozzarella de Búfala</span></div><p class="pizza-card-desc">Mozzarella de búfala, tomate, manjericão e azeite extravirgem</p><div class="pizza-card-prices"><span>Pequena R$ 42,90</span><span>Grande R$ 67,90</span></div></div>
+        <div class="pizza-card" data-cat="vegetarianas"><div class="pizza-card-head"><span class="pizza-card-name">Alho Negro & Brie</span></div><p class="pizza-card-desc">Creme de alho negro, queijo brie, pera e mel de eucalipto</p><div class="pizza-card-prices"><span>Pequena R$ 44,90</span><span>Grande R$ 70,90</span></div></div>
+
+        <div class="pizza-cat-title" data-cat="picantes">🌶️ Picantes</div>
+        <div class="pizza-card" data-cat="picantes"><div class="pizza-card-head"><span class="pizza-card-name">Pepperoni Vulcão</span><span class="pizza-card-tag">🌶️🌶️</span></div><p class="pizza-card-desc">Dupla camada de pepperoni importado, bordas recheadas e pimenta calabresa</p><div class="pizza-card-prices"><span>Pequena R$ 42,90</span><span>Grande R$ 67,90</span></div></div>
+        <div class="pizza-card" data-cat="picantes"><div class="pizza-card-head"><span class="pizza-card-name">Arrabiata</span><span class="pizza-card-tag">🌶️</span></div><p class="pizza-card-desc">Molho apimentado, calabresa, pimenta dedo-de-moça, mussarela e alho</p><div class="pizza-card-prices"><span>Pequena R$ 38,90</span><span>Grande R$ 63,90</span></div></div>
+        <div class="pizza-card" data-cat="picantes"><div class="pizza-card-head"><span class="pizza-card-name">Jalapeño com Cheddar</span><span class="pizza-card-tag">🌶️🌶️</span></div><p class="pizza-card-desc">Jalapeño fresco, cheddar americano, hambúrguer artesanal e cebola crispy</p><div class="pizza-card-prices"><span>Pequena R$ 44,90</span><span>Grande R$ 70,90</span></div></div>
+
+        <div class="pizza-cat-title" data-cat="doces">🍫 Doces</div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Chocolate com Morango</span><span class="pizza-card-tag">Favorita</span></div><p class="pizza-card-desc">Chocolate ao leite derretido, morangos frescos e granulado</p><div class="pizza-card-prices"><span>Pequena R$ 34,90</span><span>Grande R$ 57,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Nutella com Banana</span></div><p class="pizza-card-desc">Nutella, banana em rodelas, leite condensado e granola crocante</p><div class="pizza-card-prices"><span>Pequena R$ 36,90</span><span>Grande R$ 60,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Romeu & Julieta</span></div><p class="pizza-card-desc">Queijo mussarela e goiabada cremosa — equilíbrio perfeito</p><div class="pizza-card-prices"><span>Pequena R$ 32,90</span><span>Grande R$ 54,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Brigadeiro</span></div><p class="pizza-card-desc">Massa doce, creme de brigadeiro, granulado e leite condensado</p><div class="pizza-card-prices"><span>Pequena R$ 35,90</span><span>Grande R$ 58,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Banana com Canela</span></div><p class="pizza-card-desc">Banana, canela, açúcar demerara, mel e farofa de amendoim</p><div class="pizza-card-prices"><span>Pequena R$ 33,90</span><span>Grande R$ 55,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Prestígio</span></div><p class="pizza-card-desc">Creme de coco, chocolate meio amargo e coco ralado tostado</p><div class="pizza-card-prices"><span>Pequena R$ 35,90</span><span>Grande R$ 58,90</span></div></div>
+        <div class="pizza-card" data-cat="doces"><div class="pizza-card-head"><span class="pizza-card-name">Frutas Vermelhas</span></div><p class="pizza-card-desc">Creme de baunilha, mix de frutas vermelhas e calda de framboesa</p><div class="pizza-card-prices"><span>Pequena R$ 37,90</span><span>Grande R$ 61,90</span></div></div>
+      </div>
+      <p class="pizza-no-result" id="pizzaNoResult" style="display:none">Nenhuma pizza encontrada 🍕</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     BURGER MODAL
+═══════════════════════════════════════ -->
+<div id="burgerModal" class="burger-modal-overlay" onclick="closeBurgerModalOutside(event)">
+  <div class="burger-modal">
+    <div class="burger-modal-header">
+      <div>
+        <p class="burger-modal-eyebrow">✦ Cardápio Completo ✦</p>
+        <h2 class="burger-modal-title">Nossos <em>Hambúrgueres</em></h2>
+        <p class="burger-modal-sub">Blends artesanais, pães brioche e molhos exclusivos — todos acompanham fritas rústicas</p>
+      </div>
+      <button class="burger-modal-close" onclick="closeBurgerModal()">✕</button>
+    </div>
+    <div class="burger-subtabs-wrap">
+      <div class="burger-subtabs">
+        <button class="bsub-btn active" onclick="setBurgerSub('todos')">Todos</button>
+        <button class="bsub-btn" onclick="setBurgerSub('queridinhos')">🤍 Queridinhos</button>
+        <button class="bsub-btn" onclick="setBurgerSub('novidades')">✨ Novidades</button>
+        <button class="bsub-btn" onclick="setBurgerSub('exagerados')">🔥 Exagerados</button>
+        <button class="bsub-btn" onclick="setBurgerSub('exoticos')">🌍 Exóticos</button>
+        <button class="bsub-btn" onclick="setBurgerSub('adicionais')">➕ Adicionais</button>
+      </div>
+    </div>
+    <div class="burger-search-wrap">
+      <div class="burger-search-inner">
+        <span class="burger-search-icon">🔍</span>
+        <input class="burger-search" id="burgerSearch" type="text" placeholder="Buscar hambúrguer..." oninput="filterBurgers()">
+      </div>
+    </div>
+    <div class="burger-modal-body">
+      <div id="burgerGrid">
+
+        <div class="burger-section-title" data-sub="queridinhos">🤍 Queridinhos</div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Moon Burger Classic</span><span class="burger-card-tag">⭐ Assinatura</span></div><p class="burger-card-desc">Blend 180g, queijo cheddar, alface americana, tomate, cebola crispy e molho especial blue moon</p><div class="burger-card-price">R$ 38,90</div></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Blue Smash Burger</span><span class="burger-card-tag">Favorito</span></div><p class="burger-card-desc">Dois smash patties 90g, queijo american, picles artesanal e molho blue moon</p><div class="burger-card-price">R$ 44,90</div></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Frango Crocante</span></div><p class="burger-card-desc">Filé de frango empanado crocante, coleslaw caseira e maionese de limão siciliano</p><div class="burger-card-price">R$ 36,90</div></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">X-Tudo da Lua</span></div><p class="burger-card-desc">Hambúrguer, presunto, ovos, queijo, alface, tomate, maionese e catchup</p><div class="burger-card-price">R$ 42,90</div></div>
+        <div class="burger-card" data-sub="queridinhos"><div class="burger-card-head"><span class="burger-card-name">Bauru Artesanal</span></div><p class="burger-card-desc">Rosbife, queijo derretido, tomate e pepino no pão brioche tostado</p><div class="burger-card-price">R$ 29,90</div></div>
+
+        <div class="burger-section-title" data-sub="novidades">✨ Novidades</div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Lunar Brie</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 200g, queijo brie derretido, geleia de pimenta, rúcula fresca e cebola caramelizada</p><div class="burger-card-price">R$ 49,90</div></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Blue Truffle</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 180g, queijo gruyère, maionese de trufas, cogumelos salteados e alho negro</p><div class="burger-card-price">R$ 54,90</div></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">Smash Crispy Chicken</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Frango flat smashado crocante, coleslaw de chucrute, molho ranch e pickles de jalapeño</p><div class="burger-card-price">R$ 46,90</div></div>
+        <div class="burger-card" data-sub="novidades"><div class="burger-card-head"><span class="burger-card-name">BBQ Mango Chutney</span><span class="burger-card-tag">🆕 Novo</span></div><p class="burger-card-desc">Blend 200g, cheddar defumado, bacon crocante, chutney de manga e cebola roxa marinada</p><div class="burger-card-price">R$ 47,90</div></div>
+
+        <div class="burger-section-title" data-sub="exagerados">🔥 Exagerados</div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Big Blue Moon</span><span class="burger-card-tag">🔥 Monstro</span></div><p class="burger-card-desc">Dois blends 200g, duplo cheddar, duplo bacon, ovo, alface, tomate, cebola crispy e molhos especiais</p><div class="burger-card-price">R$ 59,90</div></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Triple Eclipse</span><span class="burger-card-tag">🔥🔥</span></div><p class="burger-card-desc">Três smash patties, três queijos (cheddar, american e gruyère), bacon, picles e molho especial</p><div class="burger-card-price">R$ 64,90</div></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Supernova</span><span class="burger-card-tag">🌋 Extremo</span></div><p class="burger-card-desc">Blend 300g, cheddar cremoso, jalapeño acebolado, bacon em fogo, molho da casa e onion rings</p><div class="burger-card-price">R$ 67,90</div></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Black Hole</span></div><p class="burger-card-desc">Pão black, blend 250g, queijo pepper jack, cogumelos, bacon de costela e aioli de alho assado</p><div class="burger-card-price">R$ 62,90</div></div>
+        <div class="burger-card" data-sub="exagerados"><div class="burger-card-head"><span class="burger-card-name">Abominável</span><span class="burger-card-tag">👹</span></div><p class="burger-card-desc">Blend duplo 400g total, catupiry borbulhando, calabresa grelhada, frango crocante e batata palha</p><div class="burger-card-price">R$ 72,90</div></div>
+
+        <div class="burger-section-title" data-sub="exoticos">🌍 Exóticos</div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Tokyo Moon</span><span class="burger-card-tag">Fusion</span></div><p class="burger-card-desc">Blend 180g, queijo gouda, maionese de missô, kimchi, cebolinha e gergelim torrado</p><div class="burger-card-price">R$ 52,90</div></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Árabe da Lua</span></div><p class="burger-card-desc">Blend de cordeiro e bovino, queijo halloumi grelhado, tabule, homus e molho de iogurte</p><div class="burger-card-price">R$ 56,90</div></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Mexican Blue</span><span class="burger-card-tag">🌶️</span></div><p class="burger-card-desc">Blend 200g, cheddar derretido, guacamole, pico de gallo, jalapeño e tortilla chips crocante</p><div class="burger-card-price">R$ 51,90</div></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Greek Night</span></div><p class="burger-card-desc">Blend 180g, queijo feta, azeitonas kalamata, tomate seco, pepino e molho tzatziki</p><div class="burger-card-price">R$ 50,90</div></div>
+        <div class="burger-card" data-sub="exoticos"><div class="burger-card-head"><span class="burger-card-name">Nordestino Lunar</span><span class="burger-card-tag">🇧🇷</span></div><p class="burger-card-desc">Blend com carne seca desfiada, queijo coalho grelhado, vinagrete de coentro e farofa crocante</p><div class="burger-card-price">R$ 53,90</div></div>
+
+        <div class="burger-section-title" data-sub="adicionais">➕ Adicionais</div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Bacon Extra</span></div><p class="burger-card-desc">Fatia extra de bacon crocante</p><div class="burger-card-price">R$ 4,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Ovo Frito ou Mexido</span></div><p class="burger-card-desc">Ovo caipira frito ou mexido</p><div class="burger-card-price">R$ 3,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Queijo Extra</span></div><p class="burger-card-desc">Cheddar, american, brie, gruyère ou pepper jack</p><div class="burger-card-price">R$ 4,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Catupiry ou Requeijão</span></div><p class="burger-card-desc">Porção generosa de catupiry original ou requeijão cremoso</p><div class="burger-card-price">R$ 4,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Onion Rings</span></div><p class="burger-card-desc">3 unidades de anéis de cebola empanados crocantes</p><div class="burger-card-price">R$ 6,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Blend Extra 180g</span></div><p class="burger-card-desc">Patty adicional de blend artesanal</p><div class="burger-card-price">R$ 14,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Trocar Fritas</span></div><p class="burger-card-desc">Fritas por batata doce frita, mandioca ou salada verde</p><div class="burger-card-price">R$ 5,00</div></div>
+        <div class="burger-card" data-sub="adicionais"><div class="burger-card-head"><span class="burger-card-name">Jalapeño Acebolado</span></div><p class="burger-card-desc">Mix de jalapeño fresco e cebola caramelizada</p><div class="burger-card-price">R$ 4,00</div></div>
+      </div>
+      <p class="burger-no-result" id="burgerNoResult" style="display:none">Nenhum hambúrguer encontrado 🍔</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GENERIC MODAL
+═══════════════════════════════════════ -->
+<div class="generic-modal-overlay" id="genericModal" onclick="closeGenericModalOutside(event)">
+  <div class="generic-modal">
+    <div class="generic-modal-header">
+      <div>
+        <p class="generic-modal-eyebrow" id="genericModalEyebrow">✦ Cardápio ✦</p>
+        <h2 class="generic-modal-title" id="genericModalTitle">Categoria</h2>
+        <p class="generic-modal-sub" id="genericModalSub"></p>
+      </div>
+      <button class="generic-modal-close" onclick="closeGenericModal()">✕</button>
+    </div>
+    <div class="generic-modal-search-wrap">
+      <div class="generic-search-inner">
+        <span class="generic-search-icon">🔍</span>
+        <input class="generic-search" id="genericSearch" type="text" placeholder="Buscar item..." oninput="filterGenericItems()">
+      </div>
+    </div>
+    <div class="generic-modal-body">
+      <div id="genericModalGrid"></div>
+      <p class="generic-no-result" id="genericNoResult" style="display:none">Nenhum item encontrado!</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Blue <span>Moon</span> Lounge Bar</div>
+  <p class="footer-tagline">"Onde cada noite brilha como a lua azul"</p>
+  <ul class="footer-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cardapio">Cardápio</a></li>
+    <li><a href="#especiais">Especiais</a></li>
+    <li><a href="#shows">Shows</a></li>
+  </ul>
+  <div class="footer-social">
+    <!-- Facebook -->
+    <a class="social-btn" href="https://www.facebook.com/share/1CuSFFViqj/" target="_blank" title="Facebook">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12.073C24 5.406 18.627 0 12 0S0 5.406 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+      </svg>
+    </a>
+    <!-- Instagram -->
+    <a class="social-btn" href="https://www.instagram.com/bluemoonloungebaroficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" title="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+      </svg>
+    </a>
+    <!-- WhatsApp -->
+    <a class="social-btn" href="https://wa.me/5543991431023" target="_blank" title="WhatsApp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+  <p class="footer-copy">© 2026 Blue Moon Lounge Bar. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIGURAÇÃO — mude o número do WhatsApp
+// ══════════════════════════════════════════
+const WHATSAPP_NUMBER = '5543991431023'; // DDI + DDD + número
+
+// ── Cursor ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function animCursor(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animCursor);}
+animCursor();
+
+// ══════════════════════════════════════════
+// CARRINHO
+// ══════════════════════════════════════════
+let cart = []; // [{id, name, price, qty}]
+
+function parsePrice(str) {
+  return parseFloat(str.replace('R$','').replace(',','.').trim());
+}
+function fmtPrice(val) {
+  return 'R$ ' + val.toFixed(2).replace('.',',');
+}
+function cartTotal() {
+  return cart.reduce((s,i) => s + i.price * i.qty, 0);
+}
+function cartCount() {
+  return cart.reduce((s,i) => s + i.qty, 0);
+}
+
+function addToCart(name, priceStr) {
+  const price = parsePrice(priceStr);
+  const id = name.toLowerCase().replace(/\s+/g,'-');
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({id, name, price, qty:1});
+  }
+  updateCartUI();
+  showNotif(`${name} adicionado! 🛒`);
+}
+
+function updateCartUI() {
+  const count = cartCount();
+  const total = cartTotal();
+
+  // FAB
+  const fab = document.getElementById('cartFab');
+  document.getElementById('cartFabCount').textContent = count;
+  document.getElementById('cartFabTotal').textContent = fmtPrice(total);
+  fab.classList.toggle('visible', count > 0);
+
+  // Sidebar items
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartEmptyEl = document.getElementById('cartEmpty');
+  const cartFooterEl = document.getElementById('cartFooter');
+  const cartTotalEl  = document.getElementById('cartTotal');
+
+  if (cart.length === 0) {
+    cartEmptyEl.style.display = 'flex';
+    cartItemsEl.style.display = 'none';
+    cartFooterEl.style.display = 'none';
+    return;
+  }
+  cartEmptyEl.style.display = 'none';
+  cartItemsEl.style.display = 'block';
+  cartFooterEl.style.display = 'block';
+  cartTotalEl.textContent = fmtPrice(total);
+
+  cartItemsEl.innerHTML = '';
+  cart.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'cart-item';
+    el.innerHTML = `
+      <div class="cart-item-info" style="flex:1;min-width:0;">
+        <div class="cart-item-name" title="${item.name}">${item.name}</div>
+        <div class="cart-item-unit">${fmtPrice(item.price)} / un.</div>
+        <div class="cart-item-note-wrap">
+          <button class="cart-item-note-btn" onclick="toggleItemNote(this)">✏️ Observação</button>
+          <textarea class="cart-item-note-input${item.note ? ' visible' : ''}"
+            placeholder="Ex: sem cebola, bem passado..."
+            oninput="saveItemNote('${item.id}', this.value)">${item.note || ''}</textarea>
+        </div>
+      </div>
+      <div class="cart-item-right">
+        <div class="cart-item-price">${fmtPrice(item.price * item.qty)}</div>
+        <div class="cart-qty">
+          <button class="cart-qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
+          <span class="cart-qty-num">${item.qty}</span>
+          <button class="cart-qty-btn" onclick="changeQty('${item.id}',1)">+</button>
+        </div>
+      </div>
+    `;
+    cartItemsEl.appendChild(el);
+  });
+}
+
+function changeQty(id, delta) {
+  const idx = cart.findIndex(i => i.id === id);
+  if (idx === -1) return;
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  updateCartUI();
+}
+
+function openCart() {
+  document.getElementById('cartSidebar').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+// Notif toast
+function showNotif(msg) {
+  const el = document.getElementById('cartNotif');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ── Add-to-cart button builder (used in generic and pizza/burger) ──
+function makeAddBtn(name, price) {
+  const btn = document.createElement('button');
+  btn.className = 'add-to-cart-btn';
+  btn.innerHTML = '+ Adicionar';
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    addToCart(name, price);
+    btn.innerHTML = '✓ Adicionado';
+    btn.classList.add('added');
+    setTimeout(() => { btn.innerHTML = '+ Adicionar'; btn.classList.remove('added'); }, 1500);
+  };
+  return btn;
+}
+
+// ══════════════════════════════════════════
+// CHECKOUT
+// ══════════════════════════════════════════
+let selectedPayment = '';
+
+function openCheckout() {
+  if (cart.length === 0) return;
+  closeCart();
+
+  // populate summary
+  const sum = document.getElementById('checkoutSummary');
+  sum.innerHTML = '';
+  cart.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'checkout-order-row';
+    const noteHtml = item.note ? `<span style="color:rgba(200,216,240,0.4);font-size:0.7rem;display:block;margin-top:1px">${item.note}</span>` : '';
+    row.innerHTML = `<span class="name">${item.name}${noteHtml}</span><span class="qty">x${item.qty}</span><span class="val">${fmtPrice(item.price * item.qty)}</span>`;
+    sum.appendChild(row);
+  });
+  const totalRow = document.createElement('div');
+  totalRow.className = 'checkout-total-row';
+  totalRow.innerHTML = `<span>Total</span><span class="checkout-total-val">${fmtPrice(cartTotal())}</span>`;
+  sum.appendChild(totalRow);
+
+  // reset
+  document.getElementById('checkoutName').value = '';
+  document.getElementById('checkoutAddr').value = '';
+  document.getElementById('checkoutObs').value = '';
+  document.getElementById('checkoutTroco').value = '';
+  selectedPayment = '';
+  document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('selected'));
+  document.getElementById('trocoWrap').classList.remove('visible');
+
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+function selectPay(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('selected'));
+  document.getElementById('pay' + method.charAt(0).toUpperCase() + method.slice(1)).classList.add('selected');
+  document.getElementById('trocoWrap').classList.toggle('visible', method === 'dinheiro');
+}
+
+function sendToWhatsApp() {
+  const name  = document.getElementById('checkoutName').value.trim();
+  const addr  = document.getElementById('checkoutAddr').value.trim();
+  const obs   = document.getElementById('checkoutObs').value.trim();
+  const troco = document.getElementById('checkoutTroco').value.trim();
+
+  if (!name) { alert('Por favor, informe seu nome.'); return; }
+  if (!addr) { alert('Por favor, informe o endereço de entrega.'); return; }
+  if (!selectedPayment) { alert('Por favor, selecione a forma de pagamento.'); return; }
+
+  const payLabels = { pix:'Pix', cartao:'Cartão', dinheiro:'Dinheiro' };
+
+  let msg = ` *PEDIDO — Blue Moon Lounge Bar*\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += ` *Cliente:* ${name}\n`;
+  msg += ` *Endereço:* ${addr}\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += ` *Itens do Pedido:*\n`;
+  cart.forEach(item => {
+    msg += `  • ${item.qty}x ${item.name} — ${fmtPrice(item.price * item.qty)}\n`;
+    if (item.note) msg += `    _↳ Obs: ${item.note}_\n`;
+  });
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += ` *Total: ${fmtPrice(cartTotal())}*\n`;
+  msg += ` *Pagamento:* ${payLabels[selectedPayment]}`;
+  if (selectedPayment === 'dinheiro' && troco) msg += ` (troco para ${troco})`;
+  msg += `\n`;
+  if (obs) msg += ` *Obs:* ${obs}\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `_Pedido enviado pelo site Blue Moon_`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+
+  // limpar carrinho
+  cart = [];
+  updateCartUI();
+  closeCheckout();
+  showNotif('Pedido enviado! 🎉');
+}
+
+// ── Generic Category Data ──
+const categoryData = {
+  porcoes:{
+    eyebrow:'✦ Cardápio ✦', title:'<em>Porções</em>', sub:'Petiscos e porções para compartilhar', layout:'list',
+    items:[
+      {name:'Batata Frita Rústica',price:'R$ 28,90',desc:'Batatas temperadas com ervas finas, parmesão e acompanha molho aioli',tag:''},
+      {name:'Frango à Passarinho',price:'R$ 46,90',desc:'Frango crocante temperado com alho, limão e pimenta. Serve até 4 pessoas',tag:'🍗 Para compartilhar'},
+      {name:'Isca de Peixe',price:'R$ 42,90',desc:'Tilápia empanada crocante com tartar de limão e chips de mandioca',tag:''},
+      {name:'Mix de Petiscos',price:'R$ 58,90',desc:'Combinação de frango, linguiça toscana, queijo empanado, batata e molhos variados',tag:'⭐ Mais pedido'},
+      {name:'Calabresa Acebolada',price:'R$ 38,90',desc:'Linguiça artesanal grelhada com cebola caramelizada e pimenta biquinho',tag:''},
+      {name:'Mandioca Frita',price:'R$ 26,90',desc:'Mandioca cozida e frita na hora, crocante por fora e macia por dentro, com molho aioli',tag:''},
+      {name:'Batata Cheese Bacon',price:'R$ 34,90',desc:'Fritas rústicas, cheddar cremoso derretido, bacon crocante e cebolinha',tag:'🔥 Destaque'},
+      {name:'Bolinho de Bacalhau',price:'R$ 39,90',desc:'12 unidades de bolinho de bacalhau com requeijão e molho de pimenta',tag:''},
+      {name:'Camarão no Alho',price:'R$ 52,90',desc:'Camarões salteados no azeite, alho e limão siciliano com pão ciabatta',tag:'Premium'},
+    ]
+  },
+  tabuas:{
+    eyebrow:'✦ Cardápio ✦', title:'<em>Tábuas</em>', sub:'Seleções finas para compartilhar', layout:'list',
+    items:[
+      {name:'Tábua de Frios Clássica',price:'R$ 64,90',desc:'Salame italiano, presunto parma, queijos artesanais (brie e gouda), torradas e geleias especiais',tag:'🧀 Premium',choose:{label:'Acompanhamento',options:['Mandioca Frita','Anéis de Cebola','Batata Frita']}},
+      {name:'Tábua Blue Moon',price:'R$ 79,90',desc:'Frios premium, frutas da estação, mel de abelhas nativas, castanhas e pão artesanal',tag:'⭐ Assinatura',choose:{label:'Acompanhamento',options:['Mandioca Frita','Anéis de Cebola','Batata Frita']}},
+      {name:'Tábua Veggie',price:'R$ 54,90',desc:'Homus, babaganoush, palitos de legumes, azeitonas marinadas e pão pita',tag:'🥗 Vegano',choose:{label:'Acompanhamento',options:['Mandioca Frita','Anéis de Cebola','Batata Frita']}},
+      {name:'Tábua Mediterrânea',price:'R$ 72,90',desc:'Queijo feta, azeitonas gregas, tomates secos, pesto de manjericão, torresmo e crostini',tag:'',choose:{label:'Acompanhamento',options:['Mandioca Frita','Anéis de Cebola','Batata Frita']}},
+      {name:'Tábua do Chefe',price:'R$ 89,90',desc:'Seleção especial do chef com 3 queijos, 3 embutidos, conservas e acompanhamentos premium',tag:'👨‍🍳 Chef',choose:{label:'Acompanhamento',options:['Mandioca Frita','Anéis de Cebola','Batata Frita']}},
+    ]
+  },
+  executivos:{
+    eyebrow:'✦ Cardápio ✦', title:'<em>Executivos</em>', sub:'Pratos completos para almoço e jantar', layout:'list',
+    items:[
+      {name:'Executivo do Dia',prices:{individual:'R$ 39,90',para2:'R$ 69,90'},desc:'Prato principal + arroz + feijão + salada + sobremesa + suco natural (seg à sex)',tag:'☀️ Seg-Sex'},
+      {name:'Filé ao Molho Madeira',prices:{individual:'R$ 54,90',para2:'R$ 99,90'},desc:'Filé mignon grelhado ao molho madeira com cogumelos, arroz e fritas',tag:'⭐ Chef\'s Choice'},
+      {name:'Tilápia Grelhada',prices:{individual:'R$ 47,90',para2:'R$ 87,90'},desc:'Filé de tilápia grelhado com ervas, arroz de brócolis e legumes salteados',tag:''},
+      {name:'Frango ao Limão Siciliano',prices:{individual:'R$ 45,90',para2:'R$ 83,90'},desc:'Peito de frango grelhado com molho de limão, alcaparras, purê e salada',tag:''},
+      {name:'Picanha na Brasa',prices:{individual:'R$ 72,90',para2:'R$ 134,90'},desc:'300g de picanha grelhada, vinagrete, farofa, arroz e feijão tropeiro',tag:'🔥 Destaque'},
+      {name:'Salmão ao Molho de Maracujá',prices:{individual:'R$ 62,90',para2:'R$ 115,90'},desc:'Filé de salmão grelhado com molho de maracujá, arroz negro e aspargos',tag:'Premium'},
+      {name:'Frango ao Parmesão',prices:{individual:'R$ 48,90',para2:'R$ 89,90'},desc:'Frango empanado, mussarela, molho de tomate e parmesão com fettuccine ao alho',tag:''},
+      {name:'Strogonoff da Casa',prices:{individual:'R$ 44,90',para2:'R$ 81,90'},desc:'Strogonoff de frango ou carne com arroz, batata palha e salada',tag:''},
+    ]
+  },
+  talharim:{
+    eyebrow:'✦ Massas ✦', title:'<em>Talharim</em>', sub:'Massas artesanais e molhos elaborados', layout:'list',
+    items:[
+      {name:'Talharim à Carbonara',prices:{individual:'R$ 42,90',para2:'R$ 77,90'},desc:'Massa fresca, guanciale, gema curada, parmesão e pimenta preta — receita clássica romana',tag:'Clássico'},
+      {name:'Talharim ao Pesto',prices:{individual:'R$ 38,90',para2:'R$ 69,90'},desc:'Pesto de manjericão fresco, pinhão, parmesão e tomate cereja',tag:'🥗 Veg'},
+      {name:'Talharim Funghi',prices:{individual:'R$ 44,90',para2:'R$ 81,90'},desc:'Creme de cogumelos porcini, shitake e paris com parmesão e tomilho',tag:''},
+      {name:'Talharim Bolonhesa',prices:{individual:'R$ 40,90',para2:'R$ 73,90'},desc:'Ragù de carne bovina e suína, tomate San Marzano, vinho tinto e manjericão',tag:''},
+      {name:'Talharim com Camarão',prices:{individual:'R$ 56,90',para2:'R$ 104,90'},desc:'Camarões salteados no azeite, alho, tomate cereja, rúcula e pimenta',tag:'Premium'},
+      {name:'Talharim ao Pomodoro',prices:{individual:'R$ 34,90',para2:'R$ 61,90'},desc:'Molho de tomate fresco, manjericão, azeite e flor de sal — simplicidade italiana',tag:''},
+      {name:'Talharim da Lua',prices:{individual:'R$ 48,90',para2:'R$ 89,90'},desc:'Molho de quatro queijos (brie, gorgonzola, parmesão e mussarela) com nozes e mel trufado',tag:'⭐ Assinatura'},
+    ]
+  },
+  risoto:{
+    eyebrow:'✦ Risotos ✦', title:'<em>Risoto</em>', sub:'Arborio cremoso com ingredientes selecionados', layout:'list',
+    items:[
+      {name:'Risoto de Funghi',price:'R$ 52,90',desc:'Porcini, shitake, paris e shiimeji com creme de parmesão e trufa negra',tag:'⭐ Favorito'},
+      {name:'Risoto de Camarão',price:'R$ 64,90',desc:'Camarões rosa, molho bisque, limão siciliano e azeite de manjericão',tag:'Premium'},
+      {name:'Risoto de Parma',price:'R$ 58,90',desc:'Presunto parma crocante, pera laminada, gorgonzola e mel trufado',tag:''},
+      {name:'Risoto de Salmão',price:'R$ 62,90',desc:'Salmão grelhado, alcaparras, ervas finas e creme de ervilha',tag:''},
+      {name:'Risoto de Frango com Açafrão',price:'R$ 48,90',desc:'Frango desfiado, açafrão, tomate seco e parmesão',tag:''},
+      {name:'Risoto Veggie',price:'R$ 44,90',desc:'Abobrinha, aspargos, tomate cereja, parmesão e limão siciliano',tag:'🥗 Vegetariano'},
+      {name:'Risoto 4 Queijos',price:'R$ 50,90',desc:'Mussarela, brie, grana padano e provolone com noz-moscada e lascas de parmesão',tag:''},
+    ]
+  },
+  sobremesa:{
+    eyebrow:'✦ Sobremesas ✦', title:'<em>Sobremesas</em>', sub:'Doces que encerram a noite com perfeição', layout:'list',
+    items:[
+      {name:'Petit Gateau',price:'R$ 24,90',desc:'Bolo de chocolate quente com interior cremoso, sorvete de baunilha e calda de frutas vermelhas',tag:'⭐ Clássico'},
+      {name:'Brownie da Lua',price:'R$ 19,90',desc:'Brownie fudge de chocolate belga com nozes, sorvete e calda quente de caramelo salgado',tag:''},
+      {name:'Pudim de Leite',price:'R$ 16,90',desc:'Pudim artesanal, cremoso e irresistível com calda de caramelo',tag:'Artesanal'},
+      {name:'Cheesecake de Frutas Vermelhas',price:'R$ 21,90',desc:'Base de biscoito amanteigado, creme de cream cheese e calda de frutas vermelhas frescas',tag:''},
+      {name:'Crepe Blue Moon',price:'R$ 22,90',desc:'Crepe de massa fina, Nutella, morango, banana e sorvete de creme',tag:''},
+      {name:'Açaí na Tigela',price:'R$ 18,90',desc:'Açaí cremoso com granola, banana, morango, mel e leite condensado',tag:''},
+      {name:'Sorvete Artesanal',price:'R$ 14,90',desc:'2 bolas à escolha: chocolate belga, baunilha, morango, maracujá ou pistache',tag:''},
+      {name:'Torta de Limão',price:'R$ 17,90',desc:'Base crocante, creme de limão siciliano e merengue levemente tostado',tag:''},
+    ]
+  },
+  drinks:{
+    eyebrow:'✦ Carta de Drinks ✦', title:'<em>Drinks</em>', sub:'Coquetéis artesanais e clássicos reimaginados', layout:'list',
+    items:[
+      {name:'Blue Moon Signature',price:'R$ 34,90',desc:'Gin azul, butterfly pea tea, tônica premium, limão siciliano e pétalas cristalizadas',tag:'🌀 Instagramável'},
+      {name:'Negroni da Lua',price:'R$ 32,90',desc:'Gin artesanal, Campari, vermute rosso e twist de laranja com zest defumado',tag:''},
+      {name:'Mojito Blue',price:'R$ 28,90',desc:'Rum branco, hortelã fresca, limão, açúcar e água com gás tingida com blue curaçao',tag:'💙 Blue especial'},
+      {name:'Aperol Spritz',price:'R$ 30,90',desc:'Aperol, prosecco gelado, água com gás e laranja fatiada',tag:''},
+      {name:'Sex on the Moon',price:'R$ 31,90',desc:'Vodka, pêssego, suco de cranberry, suco de laranja e curaçao azul',tag:'⭐ Exclusivo'},
+      {name:'Dry Martini',price:'R$ 33,90',desc:'Gin premium, vermute extra seco e azeitona ou twist de limão',tag:''},
+      {name:'Pina Colada',price:'R$ 27,90',desc:'Rum, leite de coco, abacaxi fresco e creme de coco batido',tag:''},
+      {name:'Cosmopolitan',price:'R$ 29,90',desc:'Vodka citrus, Cointreau, suco de cranberry e limão siciliano',tag:''},
+      {name:'Whisky Sour',price:'R$ 35,90',desc:'Bourbon, suco de limão, xarope de açúcar, clara de ovo e angostura',tag:''},
+      {name:'Paloma Blue',price:'R$ 28,90',desc:'Tequila, toronja, limão, sal, butterfly pea e água com gás',tag:'💙'},
+      {name:'French 75',price:'R$ 36,90',desc:'Gin, suco de limão, xarope de açúcar e espumante brut gelado',tag:'✨ Elegante'},
+      {name:'Clover Club',price:'R$ 32,90',desc:'Gin, framboesa, limão e clara de ovo — suave e floral',tag:''},
+    ]
+  },
+  caipirinhas:{
+    eyebrow:'✦ Caipirinhas ✦', title:'<em>Caipirinhas</em>', sub:'Tradição brasileira com um toque Blue Moon', layout:'list',
+    items:[
+      {name:'Caipirinha Clássica',price:'R$ 22,90',desc:'Limão tahiti, açúcar demerara e gelo moído',tag:'Clássica',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipirinha de Morango',price:'R$ 24,90',desc:'Morango fresco, limão e açúcar demerara',tag:'⭐ Favorita',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipiroska de Maracujá',price:'R$ 24,90',desc:'Maracujá fresco, limão e açúcar',tag:'',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipirinha de Kiwi com Menta',price:'R$ 25,90',desc:'Kiwi, hortelã fresca e açúcar mascavo',tag:'',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipirinha de Abacaxi com Gengibre',price:'R$ 24,90',desc:'Abacaxi, gengibre fresco, açúcar e limão',tag:'',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipiroska de Frutas Vermelhas',price:'R$ 25,90',desc:'Mix de morango, amora, framboesa e açúcar demerara',tag:'💙 Blue especial',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Caipirinha de Manga',price:'R$ 24,90',desc:'Manga palmira madura, limão e açúcar',tag:'',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+      {name:'Sakerinha',price:'R$ 26,90',desc:'Sakê, limão siciliano e açúcar — leve e refrescante',tag:'Fusion',choose:{label:'Destilado',options:['Cachaça','Vodka','Sake']}},
+    ]
+  },
+  shots:{
+    eyebrow:'✦ Shots ✦', title:'<em>Shots</em>', sub:'Para animar a noite com estilo', layout:'list',
+    items:[
+      {name:'Shot Blue Moon',price:'R$ 12,90',desc:'Gin azul, curaçao blue e limão — visual impactante',tag:'💙 Assinatura'},
+      {name:'Tequila Sunrise',price:'R$ 10,90',desc:'Tequila com sal e limão — o clássico eterno',tag:''},
+      {name:'Tequilinha Especial',price:'R$ 11,90',desc:'Tequila gold, sal de ervas e limão siciliano',tag:''},
+      {name:'Bomba Energética',price:'R$ 13,90',desc:'Vodka com energético — explosão de sabor',tag:'🔥'},
+      {name:'Limão Siciliano Shot',price:'R$ 10,90',desc:'Vodka citrusa, suco de limão siciliano e mel',tag:''},
+      {name:'Ginja da Lua',price:'R$ 11,90',desc:'Ginja portuguesa artesanal servida gelada',tag:''},
+      {name:'Kamikaze',price:'R$ 11,90',desc:'Vodka, Cointreau e limão — curto e direto',tag:''},
+      {name:'Jäger Bomb',price:'R$ 14,90',desc:'Jägermeister com energético',tag:''},
+      {name:'Shot de Cachaça Envelhecida',price:'R$ 12,90',desc:'Cachaça de barril envelhecida — pura e premiada',tag:'Premium'},
+    ]
+  },
+  moscow:{
+    eyebrow:'✦ Moscow Mule ✦', title:'<em>Moscow Mule</em>', sub:'Servidos na caneca de cobre gelada', layout:'list',
+    items:[
+      {name:'Moscow Mule Clássico',price:'R$ 29,90',desc:'Vodka, ginger beer artesanal, limão e hortelã fresca',tag:'Clássico'},
+      {name:'Blue Mule',price:'R$ 32,90',desc:'Vodka blue, butterfly pea, ginger beer, limão e pétalas — muda de cor na sua taça!',tag:'💙 Instagramável'},
+      {name:'Tropical Mule',price:'R$ 31,90',desc:'Vodka, ginger beer, maracujá, abacaxi e limão',tag:'🌴'},
+      {name:'Spicy Mule',price:'R$ 31,90',desc:'Vodka, ginger beer, jalapeño, limão siciliano e gengibre fresco',tag:'🌶️ Picante'},
+      {name:'Strawberry Mule',price:'R$ 30,90',desc:'Vodka, ginger beer, morango macerado, manjericão e limão',tag:''},
+      {name:'Mule de Gin',price:'R$ 33,90',desc:'Gin artesanal, ginger beer, pepino, limão e tônica',tag:'Premium'},
+      {name:'Mule de Cachaça',price:'R$ 28,90',desc:'Cachaça premium, ginger beer nacional, limão e gengibre',tag:'🇧🇷 Nacional'},
+    ]
+  },
+  batidas:{
+    eyebrow:'✦ Batidas ✦', title:'<em>Batidas</em>', sub:'Cremosas, geladas e irresistíveis', layout:'list',
+    items:[
+      {name:'Batida de Maracujá',price:'R$ 19,90',desc:'Cachaça, leite condensado, creme de leite e maracujá fresco batidos',tag:'⭐ Favorita'},
+      {name:'Batida de Morango',price:'R$ 19,90',desc:'Vodka, morango fresco, leite condensado e creme de leite gelado',tag:''},
+      {name:'Batida de Coco',price:'R$ 18,90',desc:'Cachaça, leite de coco, leite condensado e coco ralado fresco',tag:''},
+      {name:'Batida Blue Tropicana',price:'R$ 22,90',desc:'Vodka azul, mix tropical (abacaxi, manga, maracujá), leite condensado e gelo',tag:'💙 Blue especial'},
+      {name:'Batida de Limão',price:'R$ 18,90',desc:'Cachaça, limão tahiti, leite condensado e hortelã refrescante',tag:''},
+      {name:'Batida de Abacaxi com Hortelã',price:'R$ 20,90',desc:'Rum, abacaxi fresco, hortelã, leite condensado e toque de pimenta rosa',tag:''},
+      {name:'Batida de Amendoim',price:'R$ 21,90',desc:'Cachaça, pasta de amendoim, leite condensado e canela',tag:''},
+      {name:'Batida de Goiaba',price:'R$ 19,90',desc:'Cachaça, goiaba vermelha, leite condensado e limão',tag:''},
+    ]
+  },
+  cerveja:{
+    eyebrow:'✦ Cervejas ✦', title:'<em>Cerveja</em>', sub:'Geladas, artesanais e de pressão', layout:'list',
+    items:[
+      {name:'Cerveja Artesanal da Casa',price:'R$ 18,90',desc:'Seleção rotativa de cervejas artesanais locais — pergunte ao garçom as opções do dia',tag:'Rotativa'},
+      {name:'Lager 600ml',price:'R$ 16,90',desc:'Brahma, Skol ou Itaipava — gelada e refrescante',tag:''},
+      {name:'Long Neck Premium',price:'R$ 14,90',desc:'Heineken, Stella Artois, Budweiser ou Corona — 330ml',tag:''},
+      {name:'Chopp de Pressão 400ml',price:'R$ 12,90',desc:'Chopp escuro ou claro tirado na hora',tag:'🍺 Draft'},
+      {name:'Chopp de Pressão 700ml',price:'R$ 18,90',desc:'Copo grande de chopp gelado',tag:'🍺 Draft'},
+      {name:'Cerveja sem Álcool',price:'R$ 12,90',desc:'Heineken 0.0 ou Bavaria sem álcool — 330ml',tag:''},
+      {name:'IPA Artesanal',price:'R$ 22,90',desc:'India Pale Ale com notas cítricas e amargor equilibrado — 500ml',tag:'Artesanal'},
+      {name:'Stout Preta',price:'R$ 22,90',desc:'Cerveja escura com notas de chocolate e café torrado — 500ml',tag:'Artesanal'},
+    ]
+  },
+  gins:{
+    eyebrow:'✦ Carta de Gins ✦', title:'<em>Gins</em>', sub:'Servidos com tônica premium e guarnição especial', layout:'list',
+    items:[
+      {name:'Hendrick\'s',price:'R$ 38,90',desc:'Gin escocês com pepino e pétalas de rosa, tônica e rodela de pepino',tag:'Premium'},
+      {name:'Tanqueray',price:'R$ 32,90',desc:'London Dry Gin clássico, tônica, limão e zimbro fresco',tag:'Clássico'},
+      {name:'Bombay Sapphire',price:'R$ 34,90',desc:'Gin azul com 10 botânicos, tônica premium e limão siciliano',tag:''},
+      {name:'Gin Azul Blue Moon',price:'R$ 36,90',desc:'Gin azul da casa, butterfly pea, tônica artesanal e pétalas de lavanda',tag:'💙 Casa'},
+      {name:'Malfy Rosa',price:'R$ 40,90',desc:'Gin italiano com toronja siciliana, sal rosa e tônica rosada',tag:'🌸 Elegante'},
+      {name:'Monkey 47',price:'R$ 48,90',desc:'Gin da Floresta Negra com 47 botânicos — complexo e exclusivo',tag:'⭐ Raro'},
+      {name:'Beefeater 24',price:'R$ 33,90',desc:'London Dry premium com chá verde japonês e folhas de laranjeira',tag:''},
+      {name:'Gin Tônica Tropical',price:'R$ 31,90',desc:'Gin com maracujá, abacaxi, tônica tropical e hortelã',tag:'🌴'},
+    ]
+  },
+  destilados:{
+    eyebrow:'✦ Destilados ✦', title:'<em>Destilados</em>', sub:'Whiskies, vodkas, rums e mais — servidos puros ou com gelo', layout:'list',
+    items:[
+      {name:'Johnnie Walker Black Label',price:'R$ 28,90',desc:'Scotch whisky 12 anos — puro, com gelo ou no pedra',tag:''},
+      {name:'Jack Daniel\'s',price:'R$ 26,90',desc:'Tennessee Whiskey — suave e defumado, puro ou com cola',tag:''},
+      {name:'Jameson',price:'R$ 27,90',desc:'Whisky irlandês triplo destilado — suave e acessível',tag:''},
+      {name:'Chivas Regal 12',price:'R$ 30,90',desc:'Blended scotch 12 anos com notas de mel e frutas',tag:''},
+      {name:'Single Malt da Casa',price:'R$ 36,90',desc:'Glenfiddich 12 ou Glenlivet 12 — pergunte disponibilidade',tag:'Single Malt'},
+      {name:'Vodka Grey Goose',price:'R$ 24,90',desc:'Vodka francesa premium — pura gelada ou no preparo de drinques',tag:'Premium'},
+      {name:'Rum Bacardi Ouro',price:'R$ 19,90',desc:'Rum envelhecido com notas de caramelo e baunilha',tag:''},
+      {name:'Cachaça Artesanal da Casa',price:'R$ 16,90',desc:'Cachaça de alambique selecionada — pura ou com gelo',tag:'🇧🇷 Artesanal'},
+      {name:'Tequila Don Julio Blanco',price:'R$ 32,90',desc:'Tequila 100% agave azul — para shots ou drinques',tag:''},
+      {name:'Campari',price:'R$ 18,90',desc:'Aperitivo italiano amargo servido puro, com gelo ou em drink',tag:''},
+    ]
+  },
+  vinhos:{
+    eyebrow:'✦ Carta de Vinhos ✦', title:'<em>Vinhos — Garrafas</em>', sub:'Seleção curada para harmonizar com o cardápio Blue Moon', layout:'list',
+    items:[
+      {name:'Vinho da Casa — Tinto',price:'R$ 79,90',desc:'Malbec argentino encorpado com notas de ameixa, cedro e especiarias',tag:'Garrafa 750ml'},
+      {name:'Vinho da Casa — Branco',price:'R$ 79,90',desc:'Sauvignon Blanc chileno fresco com notas cítricas e ervas',tag:'Garrafa 750ml'},
+      {name:'Vinho da Casa — Rosé',price:'R$ 79,90',desc:'Rosé provençal leve e floral com notas de pêssego e framboesa',tag:'Garrafa 750ml'},
+      {name:'Taça Tinto',price:'R$ 24,90',desc:'Taça 150ml do vinho tinto da casa',tag:'Taça'},
+      {name:'Taça Branco',price:'R$ 24,90',desc:'Taça 150ml do vinho branco da casa',tag:'Taça'},
+      {name:'Taça Rosé',price:'R$ 24,90',desc:'Taça 150ml do vinho rosé da casa',tag:'Taça'},
+      {name:'Espumante Casa Valduga Brut',price:'R$ 99,90',desc:'Espumante brasileiro Método Charmat — festivo e versátil',tag:'Espumante'},
+      {name:'Moët & Chandon Brut',price:'R$ 289,90',desc:'Champagne francês iconic — para celebrações especiais',tag:'✨ Champagne'},
+      {name:'Gato Negro Cabernet Sauvignon',price:'R$ 89,90',desc:'Tinto chileno elegante com notas de frutas negras e toque de carvalho',tag:''},
+      {name:'Luigi Bosca Malbec',price:'R$ 139,90',desc:'Malbec premium de Luján de Cuyo — estruturado e veludo',tag:'Premium'},
+    ]
+  },
+  suco:{
+    eyebrow:'✦ Bebidas ✦', title:'<em>Sucos</em>', sub:'Naturais, Polpas, com Leite', layout:'list',
+    items:[
+      {name:'Suco Natural de Laranja 350ml',price:'R$ 13,90',desc:'',tag:''},
+      {name:'Suco Natural de Limão 350ml',price:'R$ 10,90',desc:'',tag:''},
+      {name:'Maracujá 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Morango 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Abacaxi 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Abacaxi com Hortelã 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Acerola 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Manga 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Goiaba 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Uva 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Cajú 350ml',price:'R$ 13,90',desc:'',tag:'Polpa'},
+      {name:'Suco com Leite 350ml',price:'R$ 15,90',desc:'Escolher o sabor: Laranja,Maracujá, Morango, Abacaxi, Abacaxi com Hortelã, Acerola, Manga, Goiaba, Uva, Cajú',tag:'Leite'},
+      {name:'Suco Duplo',price:'R$ 13,90',desc:'Escolha até 2 sabores',tag:'Polpa',choose:{label:'Sabores',options:['Laranja','Maracujá','Morango','Abacaxi','Abacaxi c/ Hortelã','Acerola','Manga','Goiaba','Uva','Cajú'],multi:2}},
+      {name:'Picolé Adicional',price:'R$ 5,50',desc:'Escolher o sabor: Morango, Limão ou Maracujá',tag:'Polpa'},
+    ]
+  },
+  refrigerante:{
+    eyebrow:'✦ Bebidas ✦', title:'<em>Refrigerantes</em>', sub:'Gelados e refrescantes', layout:'list',
+    items:[
+      {name:'Refrigerante Lata 350ml',price:'R$ 8,90',desc:'Coca-Cola, Coca Zero, Guaraná Antarctica, Sprite, Fanta Laranja ou Fanta Uva',tag:''},
+      {name:'Coca-Cola 600ml',price:'R$ 13,90',desc:'Coca-Cola gelada em garrafa — clássico insubstituível',tag:''},
+      {name:'Guaraná 600ml',price:'R$ 12,90',desc:'Guaraná Antarctica gelado em garrafa',tag:'🇧🇷'},
+      {name:'Energético Monster 473ml',price:'R$ 16,90',desc:'Original, Ultra White ou Pipeline Punch',tag:'⚡ Energia'},
+      {name:'Energético Red Bull 250ml',price:'R$ 14,90',desc:'Original ou Tropical',tag:'⚡'},
+      {name:'Água Tônica 269ml',price:'R$ 9,90',desc:'Schweppes ou Fever-Tree — limão ou original',tag:''},
+    ]
+  },
+  soda:{
+    eyebrow:'✦ Sodas ✦', title:'<em>Sodas Italianas</em>', sub:'Bebidas artesanais com xaropes importados', layout:'list',
+    items:[
+      {name:'Soda Italiana de Morango',price:'R$ 15,90',desc:'Xarope de morango com água com gás',tag:''},,
+      {name:'Soda de Maçã verde',price:'R$ 15,90',desc:'Xarope de maçã verde com água com gás',tag:''},
+      {name:'Soda de Frutas vermelhas',price:'R$ 15,90',desc:'Xarope de frutas vermelhas com água com gás',tag:''},
+      {name:'Soda Maracujá',price:'R$ 15,90',desc:'Xarope de maracujá com água com gás',tag:''},
+      {name:'Soda de Tangerina',price:'R$ 15,90',desc:'Xarope de tangerina com água com gás',tag:''},
+      {name:'Soda de Uva',price:'R$ 15,90',desc:'Xarope de uva com água com gás',tag:''},
+      {name:'Soda de Melancia',price:'R$ 15,90',desc:'Xarope de melancia com água com gás',tag:''},
+      {name:'Soda de Abacaxi',price:'R$ 15,90',desc:'Xarope de abacaxi com água com gás',tag:''},
+      {name:'Soda de Pêssego',price:'R$ 15,90',desc:'Xarope de pêssego com água com gás',tag:''},
+      {name:'Soda de Groselha',price:'R$ 15,90',desc:'Xarope de groselha com água com gás',tag:''},
+      {name:'Soda de Cranberry',price:'R$ 15,90',desc:'Xarope de cranberry com água com gás',tag:''},
+      {name:'Melancia + Tangerina',price:'R$ 16,90',desc:'Mix com água com gás',tag:''},
+      {name:'Morango + Maracujá',price:'R$ 16,90',desc:'Mix com água com gás',tag:''},
+      {name:'Tangerina + Pêssego',price:'R$ 16,90',desc:'Mix com água com gás',tag:''},
+      {name:'Maçã verde + Abacaxi',price:'R$ 16,90',desc:'Mix com água com gás',tag:''},
+    ]
+  },
+  milkshake:{
+    eyebrow:'✦ Milk Shakes ✦', title:'<em>Milk Shake</em>', sub:'Cremosos, encorpados e irresistíveis', layout:'list',
+    items:[
+      {name:'Milk de Chocolate',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk de Ovomaltine',price:'R$ 18,90',desc:'',tag:''},
+      {name:'Milk de Morango',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk de Maracujá',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk Choco-Morango',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk Choco-Creme',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk Creme + Uva',price:'R$ 16,90',desc:'',tag:''},
+      {name:'Milk Creme + Ovomaltine',price:'R$ 17,90',desc:'',tag:''},
+      {name:'Milk Morango + Ovomaltine',price:'R$ 19,90',desc:'',tag:''},
+    ]
+  },
+};
+
+// ── Generic Modal ──
+let currentGenericCat = null;
+function openGenericModal(cat) {
+  const data = categoryData[cat];
+  if (!data) return;
+  currentGenericCat = cat;
+
+  document.getElementById('genericModalEyebrow').textContent = data.eyebrow;
+  document.getElementById('genericModalTitle').innerHTML = data.title;
+  document.getElementById('genericModalSub').textContent = data.sub;
+
+  const grid = document.getElementById('genericModalGrid');
+  grid.innerHTML = '';
+  grid.className = 'generic-modal-grid list-layout';
+
+  data.items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'generic-list-item';
+
+    if (item.prices) {
+      // ── Porção individual / para 2 (Executivos, Talharim) ──
+      el.innerHTML = `
+        <div class="gli-head">
+          <span class="gli-name">${item.name}</span>
+          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+        </div>
+        <p class="gli-desc">${item.desc}</p>
+      `;
+      const portionSel = document.createElement('div');
+      portionSel.className = 'portion-selector';
+      const portions = [
+        { label: '🍽️ Individual', sub: '1 pessoa', price: item.prices.individual, key: 'Individual' },
+        { label: '👫 Para 2', sub: '2 pessoas', price: item.prices.para2, key: 'Para 2' }
+      ];
+      portions.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'portion-btn';
+        btn.innerHTML = `<span class="pb-label">${p.label}</span><span class="pb-sub">${p.sub}</span><span class="pb-price">${p.price}</span>`;
+        btn.onclick = () => {
+          addToCart(`${item.name} (${p.key})`, p.price);
+          btn.classList.add('pb-added');
+          const orig = btn.innerHTML;
+          btn.innerHTML = `<span class="pb-label">✓ Adicionado!</span>`;
+          setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('pb-added'); }, 1400);
+        };
+        portionSel.appendChild(btn);
+      });
+      el.appendChild(portionSel);
+
+    } else if (item.choose) {
+      // ── Seletor de escolha (Tábuas, Caipirinhas, Suco Duplo) ──
+      const ch = item.choose;
+      const isMulti = ch.multi && ch.multi > 1;
+      el.innerHTML = `
+        <div class="gli-head">
+          <span class="gli-name">${item.name}</span>
+          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+        </div>
+        <p class="gli-desc">${item.desc}</p>
+        <div class="gli-price">${item.price}</div>
+      `;
+      const chooseBlock = document.createElement('div');
+      chooseBlock.className = 'choose-block';
+      const noticeText = isMulti
+        ? `Escolha até ${ch.multi} opções:`
+        : `Escolha 1 opção:`;
+      chooseBlock.innerHTML = `
+        <span class="choose-label">🔸 ${ch.label}</span>
+        <span class="choose-notice">${noticeText}</span>
+        <div class="choose-options"></div>
+      `;
+      const optsDiv = chooseBlock.querySelector('.choose-options');
+      let selected = [];
+
+      ch.options.forEach(opt => {
+        const ob = document.createElement('button');
+        ob.className = 'choose-opt';
+        ob.textContent = opt;
+        ob.onclick = () => {
+          if (isMulti) {
+            if (ob.classList.contains('selected')) {
+              ob.classList.remove('selected');
+              selected = selected.filter(s => s !== opt);
+            } else if (selected.length < ch.multi) {
+              ob.classList.add('selected');
+              selected.push(opt);
+            }
+          } else {
+            optsDiv.querySelectorAll('.choose-opt').forEach(b => b.classList.remove('selected'));
+            ob.classList.add('selected');
+            selected = [opt];
+          }
+          addBtn.disabled = selected.length === 0;
+        };
+        optsDiv.appendChild(ob);
+      });
+
+      const addBtn = document.createElement('button');
+      addBtn.className = 'choose-add-btn';
+      addBtn.textContent = '+ Adicionar';
+      addBtn.disabled = true;
+      addBtn.onclick = () => {
+        if (!selected.length) return;
+        const choiceLabel = selected.join(' + ');
+        addToCart(`${item.name} [${choiceLabel}]`, item.price);
+        addBtn.classList.add('ch-added');
+        addBtn.textContent = '✓ Adicionado!';
+        // reset
+        optsDiv.querySelectorAll('.choose-opt').forEach(b => b.classList.remove('selected'));
+        selected = [];
+        addBtn.disabled = true;
+        setTimeout(() => { addBtn.classList.remove('ch-added'); addBtn.textContent = '+ Adicionar'; }, 1500);
+      };
+      chooseBlock.appendChild(addBtn);
+      el.appendChild(chooseBlock);
+
+    } else {
+      // ── Item simples ──
+      el.innerHTML = `
+        <div class="gli-head">
+          <span class="gli-name">${item.name}</span>
+          ${item.tag ? `<span class="gli-tag">${item.tag}</span>` : ''}
+        </div>
+        <p class="gli-desc">${item.desc}</p>
+        <div class="gli-price">${item.price}</div>
+      `;
+      el.appendChild(makeAddBtn(item.name, item.price));
+    }
+
+    grid.appendChild(el);
+  });
+
+  document.getElementById('genericSearch').value = '';
+  document.getElementById('genericNoResult').style.display = 'none';
+  document.getElementById('genericModal').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+function closeGenericModal() {
+  document.getElementById('genericModal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+function closeGenericModalOutside(e) {
+  if (e.target === document.getElementById('genericModal')) closeGenericModal();
+}
+function filterGenericItems() {
+  const q = document.getElementById('genericSearch').value.toLowerCase();
+  const items = document.querySelectorAll('#genericModalGrid .generic-list-item');
+  let any = false;
+  items.forEach(item => {
+    const match = !q || item.textContent.toLowerCase().includes(q);
+    item.style.display = match ? '' : 'none';
+    if (match) any = true;
+  });
+  document.getElementById('genericNoResult').style.display = any ? 'none' : 'block';
+}
+
+// ── Pizza Modal ──
+let currentPizzaCat = 'todas';
+function openPizzaModal() {
+  document.getElementById('pizzaModal').classList.add('open');
+  document.body.classList.add('modal-open');
+  // inject size selector into pizza cards that don't have one yet
+  document.querySelectorAll('.pizza-card').forEach(card => {
+    if (card.querySelector('.pizza-size-selector')) return;
+    const name = card.querySelector('.pizza-card-name')?.textContent?.trim() || '';
+    const spans = card.querySelectorAll('.pizza-card-prices span');
+    // spans: [0]=Pequena label+price, [1]=Grande label+price (may only be 1 for some cards)
+    const extractPrice = (el) => {
+      const m = el.textContent.match(/R\$\s*[\d,]+/);
+      return m ? m[0] : null;
+    };
+    const brotoPrice  = spans[0] ? extractPrice(spans[0]) : null;
+    const grandePrice = spans[1] ? extractPrice(spans[1]) : null;
+
+    // Build size buttons container
+    const sizer = document.createElement('div');
+    sizer.className = 'pizza-size-selector';
+
+    const sizes = [];
+    if (brotoPrice)  sizes.push({ label: '🌙 Pequena', sub: '4 fatias', price: brotoPrice, key: 'Pequena' });
+    if (grandePrice) sizes.push({ label: '🌕 Grande', sub: '8 fatias', price: grandePrice, key: 'Grande' });
+
+    sizes.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'pizza-size-btn';
+      btn.innerHTML = `<span class="psb-label">${s.label}</span><span class="psb-sub">${s.sub}</span><span class="psb-price">${s.price}</span>`;
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        addToCart(`${name} (${s.key})`, s.price);
+        btn.classList.add('psb-added');
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<span class="psb-label">✓ Adicionado!</span>`;
+        setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('psb-added'); }, 1400);
+      };
+      sizer.appendChild(btn);
+    });
+
+    card.appendChild(sizer);
+  });
+}
+function closePizzaModal() {
+  document.getElementById('pizzaModal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+function closePizzaModalOutside(e) {
+  if (e.target === document.getElementById('pizzaModal')) closePizzaModal();
+}
+function setPizzaCat(cat) {
+  currentPizzaCat = cat;
+  document.querySelectorAll('.pcat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.pcat-btn[onclick="setPizzaCat('${cat}')"]`).classList.add('active');
+  filterPizzas();
+}
+function filterPizzas() {
+  const q = document.getElementById('pizzaSearch').value.toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('.pizza-card').forEach(card => {
+    const matchCat = currentPizzaCat === 'todas'
+      ? card.dataset.cat !== 'doces'
+      : card.dataset.cat === currentPizzaCat;
+    const matchQ = !q || card.textContent.toLowerCase().includes(q);
+    const show = matchCat && matchQ;
+    card.style.display = show ? '' : 'none';
+    if (show) anyVisible = true;
+  });
+  document.querySelectorAll('.pizza-cat-title').forEach(title => {
+    const cat = title.dataset.cat;
+    const hasVisible = [...document.querySelectorAll(`.pizza-card[data-cat="${cat}"]`)].some(c => c.style.display !== 'none');
+    title.style.display = hasVisible ? '' : 'none';
+  });
+  document.getElementById('pizzaNoResult').style.display = anyVisible ? 'none' : 'block';
+}
+
+// ── Burger Modal ──
+let currentBurgerSub = 'todos';
+function openBurgerModal() {
+  document.getElementById('burgerModal').classList.add('open');
+  document.body.classList.add('modal-open');
+
+  const paes = ['Francês', 'Australiano', 'Brioche'];
+
+  document.querySelectorAll('.burger-card').forEach(card => {
+    if (card.querySelector('.add-to-cart-btn') || card.querySelector('.choose-block')) return;
+
+    const name = card.querySelector('.burger-card-name')?.textContent || '';
+    const priceEl = card.querySelector('.burger-card-price');
+    const price = priceEl ? priceEl.textContent.trim() : 'R$ 0,00';
+    const isAdicional = card.dataset.sub === 'adicionais';
+
+    if (isAdicional) {
+      // Adicionais: botão simples
+      card.appendChild(makeAddBtn(name, price));
+    } else {
+      // Hambúrguer: seletor de pão
+      const chooseBlock = document.createElement('div');
+      chooseBlock.className = 'choose-block';
+      chooseBlock.style.gridColumn = '1 / -1';
+      chooseBlock.innerHTML = `
+        <span class="choose-label">🍞 Tipo de Pão</span>
+        <span class="choose-notice">Escolha 1 opção:</span>
+        <div class="choose-options"></div>
+      `;
+      const optsDiv = chooseBlock.querySelector('.choose-options');
+      let selectedPao = null;
+
+      paes.forEach(pao => {
+        const ob = document.createElement('button');
+        ob.className = 'choose-opt';
+        ob.textContent = pao;
+        ob.onclick = () => {
+          optsDiv.querySelectorAll('.choose-opt').forEach(b => b.classList.remove('selected'));
+          ob.classList.add('selected');
+          selectedPao = pao;
+          addBtn.disabled = false;
+        };
+        optsDiv.appendChild(ob);
+      });
+
+      const addBtn = document.createElement('button');
+      addBtn.className = 'choose-add-btn';
+      addBtn.textContent = '+ Adicionar';
+      addBtn.disabled = true;
+      addBtn.onclick = () => {
+        if (!selectedPao) return;
+        addToCart(`${name} [Pão ${selectedPao}]`, price);
+        addBtn.classList.add('ch-added');
+        addBtn.textContent = '✓ Adicionado!';
+        optsDiv.querySelectorAll('.choose-opt').forEach(b => b.classList.remove('selected'));
+        selectedPao = null;
+        addBtn.disabled = true;
+        setTimeout(() => { addBtn.classList.remove('ch-added'); addBtn.textContent = '+ Adicionar'; }, 1500);
+      };
+      chooseBlock.appendChild(addBtn);
+      card.appendChild(chooseBlock);
+    }
+  });
+}
+function closeBurgerModal() {
+  document.getElementById('burgerModal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+function closeBurgerModalOutside(e) {
+  if (e.target === document.getElementById('burgerModal')) closeBurgerModal();
+}
+function setBurgerSub(sub) {
+  currentBurgerSub = sub;
+  document.querySelectorAll('.bsub-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.bsub-btn[onclick="setBurgerSub('${sub}')"]`).classList.add('active');
+  filterBurgers();
+}
+function filterBurgers() {
+  const q = document.getElementById('burgerSearch').value.toLowerCase();
+  let any = false;
+  document.querySelectorAll('.burger-card').forEach(card => {
+    const matchSub = currentBurgerSub === 'todos' || card.dataset.sub === currentBurgerSub;
+    const matchQ = !q || card.textContent.toLowerCase().includes(q);
+    const show = matchSub && matchQ;
+    card.style.display = show ? '' : 'none';
+    if (show) any = true;
+  });
+  document.querySelectorAll('.burger-section-title').forEach(title => {
+    const sub = title.dataset.sub;
+    const hasVisible = [...document.querySelectorAll(`.burger-card[data-sub="${sub}"]`)].some(c => c.style.display !== 'none');
+    title.style.display = (currentBurgerSub === 'todos' || currentBurgerSub === sub) && hasVisible ? '' : 'none';
+  });
+  document.getElementById('burgerNoResult').style.display = any ? 'none' : 'block';
+}
+
+// ── Shows filter ──
+function filterShows(month) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.filter-btn[onclick="filterShows('${month}')"]`).classList.add('active');
+  document.querySelectorAll('.show-card, .show-month-label').forEach(el => {
+    el.style.display = (month === 'todos' || el.dataset.month === month) ? '' : 'none';
+  });
+}
+
+// ── Item note ──
+function toggleItemNote(btn) {
+  const ta = btn.nextElementSibling;
+  const isVisible = ta.classList.contains('visible');
+  ta.classList.toggle('visible', !isVisible);
+  btn.textContent = isVisible ? '✏️ Observação' : '✖ Fechar obs.';
+  if (!isVisible) ta.focus();
+}
+function saveItemNote(id, value) {
+  const item = cart.find(i => i.id === id);
+  if (item) item.note = value.trim();
+}
+
+// ── Nav mobile ──
+function toggleNav() {
+  const links = document.getElementById('navLinks');
+  const ham   = document.getElementById('navHamburger');
+  const open  = !links.classList.contains('open');
+  links.classList.toggle('open', open);
+  ham.classList.toggle('open', open);
+  document.body.classList.toggle('modal-open', open);
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('navHamburger').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+// ── ESC close ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closePizzaModal(); closeGenericModal(); closeBurgerModal();
+    closeCheckout(); closeCart(); closeNav();
+  }
+});
+
+// ── Scroll entrance animation ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.special-card').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, background 0.3s';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

@@ -1192,11 +1192,10 @@
       opacity: 0.55;
     }
     .hero-content { max-width: 100%; }
-    .hero-title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
-    .hero-sub { font-size: 1.05rem; margin: 18px 0 36px; }
-    .hero-cta { gap: 12px; }
+    .hero-title { font-size: clamp(3rem, 11vw, 4.5rem); }
+    .hero-sub { font-size: 1.2rem; margin: 18px 0 36px; }
     .btn-primary, .btn-outline {
-      padding: 14px 28px; font-size: 0.7rem;
+      padding: 14px 28px; font-size: 0.82rem;
       width: 100%; text-align: center; display: block;
     }
 
@@ -1213,11 +1212,11 @@
     /* Menu */
     .menu-section { padding: 60px 16px; }
     .menu-tabs { gap: 6px; justify-content: center; flex-wrap: wrap; width: 100%; }
-    .tab-btn { padding: 10px 14px; font-size: 0.62rem; white-space: normal; flex: 1 1 calc(33% - 6px); max-width: calc(33% - 6px); }
-    .tab-btn::before { font-size: 1rem; }
+    .tab-btn { padding: 10px 14px; font-size: 0.72rem; white-space: normal; flex: 1 1 calc(33% - 6px); max-width: calc(33% - 6px); }
+    .tab-btn::before { font-size: 1.1rem; }
 
     /* Section */
-    .section-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+    .section-title { font-size: clamp(2rem, 6vw, 2.8rem); }
     .shows-section, .info-section { padding: 60px 20px; }
 
     /* Modais — sobem de baixo em mobile */
@@ -1245,7 +1244,14 @@
     .burger-modal-header { padding-top: 24px; padding-bottom: 16px; }
     .pizza-modal-title,
     .generic-modal-title,
-    .burger-modal-title { font-size: 1.6rem; }
+    .burger-modal-title { font-size: 1.8rem; }
+    .pizza-card-name,
+    .burger-card-name,
+    .gli-name { font-size: 1.05rem; }
+    .pizza-card-desc,
+    .burger-card-desc,
+    .gli-desc { font-size: 1rem; }
+    .gli-price-inline { font-size: 1rem; }
     .pizza-modal-body,
     .generic-modal-body,
     .burger-modal-body { max-height: 55svh; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -1254,12 +1260,15 @@
     .pizza-card-prices { grid-column: 1; grid-row: auto; flex-direction: row; justify-content: flex-start; gap: 12px; }
 
     /* Carrinho */
-    .cart-fab { bottom: max(16px, env(safe-area-inset-bottom)); right: 14px; padding: 12px 16px; font-size: 0.75rem; gap: 8px; }
+    .cart-fab { bottom: max(16px, env(safe-area-inset-bottom)); right: 14px; padding: 12px 16px; font-size: 0.82rem; gap: 8px; }
     .cart-notif { bottom: max(86px, calc(env(safe-area-inset-bottom) + 70px)); right: 14px; left: 14px; text-align: center; }
     .cart-sidebar { max-width: 100%; right: -100%; }
     .cart-header { padding: 18px 16px 14px; }
     .cart-items { padding: 10px 16px; -webkit-overflow-scrolling: touch; }
     .cart-footer { padding: 14px 16px max(24px, env(safe-area-inset-bottom)); }
+    .cart-item-name { font-size: 0.95rem; }
+    .cart-item-unit { font-size: 0.82rem; }
+    .cart-item-price { font-size: 1rem; }
 
     /* Checkout */
     .checkout-overlay { padding: 0; align-items: flex-end; }
@@ -1270,43 +1279,52 @@
     }
     .checkout-header { padding: 18px 18px 14px; }
     .checkout-body { padding: 16px 18px max(32px, env(safe-area-inset-bottom)); }
-    .pay-opt { min-width: 70px; padding: 10px 6px; font-size: 0.6rem; }
+    .checkout-label { font-size: 0.82rem; }
+    .pay-opt { min-width: 70px; padding: 10px 6px; font-size: 0.72rem; }
 
     /* Shows */
     .show-card { grid-template-columns: 58px 1fr; gap: 14px; padding: 14px 14px; }
-    .show-day { font-size: 1.5rem; }
+    .show-day { font-size: 1.6rem; }
+    .show-name { font-size: 1.2rem; }
+    .show-desc { font-size: 1rem; }
+    .show-meta { font-size: 0.82rem; }
+    .show-badge { font-size: 0.68rem; }
+
+    /* Horários */
+    .hours-list li { font-size: 0.95rem; }
 
     /* Footer */
     footer { padding: max(40px, env(safe-area-inset-bottom)) 20px 40px; }
     .footer-links { gap: 16px; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.82rem; }
   }
 
   /* RESPONSIVE — 480px (celulares pequenos) */
   @media (max-width: 480px) {
     .hero { padding: 90px 20px 70px; }
     .hero-moon { width: 160px; height: 160px; top: 55px; right: -30px; opacity: 0.45; }
-    .hero-title { font-size: clamp(2.4rem, 12vw, 3.2rem); }
-    .hero-sub { font-size: 0.95rem; }
+    .hero-title { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+    .hero-sub { font-size: 1.1rem; }
     .about-moon-big { width: 160px; height: 160px; }
     .pizza-size-btn { min-width: 55px; padding: 6px 8px; }
     .cart-fab-total { display: none; }
-    .tab-btn { padding: 8px 10px; font-size: 0.58rem; flex: 1 1 calc(50% - 6px); max-width: calc(50% - 6px); }
-    .section-title { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+    .tab-btn { padding: 8px 10px; font-size: 0.68rem; flex: 1 1 calc(50% - 6px); max-width: calc(50% - 6px); }
+    .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
     .show-card { grid-template-columns: 48px 1fr; gap: 10px; padding: 12px; }
-    .show-day { font-size: 1.3rem; }
-    .show-name { font-size: 1rem; }
-    .show-desc { font-size: 0.88rem; }
+    .show-day { font-size: 1.4rem; }
+    .show-name { font-size: 1.1rem; }
+    .show-desc { font-size: 0.95rem; }
     .checkout-payment-options { gap: 6px; }
-    .pay-opt { min-width: 60px; padding: 8px 4px; font-size: 0.58rem; }
-    .choose-opt { font-size: 0.72rem; padding: 7px 10px; }
+    .pay-opt { min-width: 60px; padding: 8px 4px; font-size: 0.68rem; }
+    .choose-opt { font-size: 0.82rem; padding: 7px 10px; }
     .portion-btn { padding: 8px 10px; }
   }
 
   /* RESPONSIVE — 360px (celulares muito pequenos) */
   @media (max-width: 360px) {
-    .hero-title { font-size: clamp(2rem, 13vw, 2.8rem); }
+    .hero-title { font-size: clamp(2.2rem, 13vw, 3rem); }
     .hero-moon { width: 130px; height: 130px; top: 50px; right: -20px; }
-    .tab-btn { padding: 7px 8px; font-size: 0.55rem; flex: 1 1 calc(50% - 6px); max-width: calc(50% - 6px); }
+    .tab-btn { padding: 7px 8px; font-size: 0.64rem; flex: 1 1 calc(50% - 6px); max-width: calc(50% - 6px); }
   }
 
   /* ── Previne zoom automático do iOS em inputs ── */

@@ -1627,13 +1627,13 @@
       <button class="tab-btn" data-icon="🍝" onclick="openGenericModal('talharim')">Talharim</button>
       <button class="tab-btn" data-icon="🍚" onclick="openGenericModal('risoto')">Risoto</button>
       <button class="tab-btn" data-icon="🍨" onclick="openGenericModal('sobremesa')">Sobremesas</button>
-      <button class="tab-btn" data-icon="🍹" onclick="openGenericModal('drinks')">Drinks</button>
-      <button class="tab-btn" data-icon="🥃" onclick="openGenericModal('caipirinhas')">Caipirinhas</button>
-      <button class="tab-btn" data-icon="🍸" onclick="openGenericModal('shots')">Shots</button>
-      <button class="tab-btn" data-icon="🌿" onclick="openGenericModal('moscow')">Moscow Mule</button>
+      <button class="tab-btn" data-icon="🍸" onclick="openGenericModal('drinks')">Drinks</button>
+      <button class="tab-btn" data-icon="🍹" onclick="openGenericModal('caipirinhas')">Caipirinhas</button>
+      <button class="tab-btn" data-icon="🥃" onclick="openGenericModal('shots')">Shots</button>
+      <button class="tab-btn" data-icon="🫚" onclick="openGenericModal('moscow')">Moscow Mule</button>
       <button class="tab-btn" data-icon="🥤" onclick="openGenericModal('batidas')">Batidas</button>
       <button class="tab-btn" data-icon="🍺" onclick="openGenericModal('cerveja')">Cerveja</button>
-      <button class="tab-btn" data-icon="🫚" onclick="openGenericModal('gins')">Gins</button>
+      <button class="tab-btn" data-icon="🌿" onclick="openGenericModal('gins')">Gins</button>
       <button class="tab-btn" data-icon="🧊" onclick="openGenericModal('destilados')">Destilados</button>
       <button class="tab-btn" data-icon="🍷" onclick="openGenericModal('vinhos')">Vinhos</button>
       <button class="tab-btn" data-icon="🧃" onclick="openGenericModal('suco')">Sucos</button>
@@ -1865,7 +1865,7 @@
       <div>
         <p class="pizza-modal-eyebrow">✦ Cardápio Completo ✦</p>
         <h2 class="pizza-modal-title">Nossas <em>Pizzas</em></h2>
-        <p class="pizza-modal-sub">45+ sabores artesanais — tamanhos: <strong>Pequena (4 fatias)</strong> · <strong>Média (6 fatias)</strong> · <strong>Grande (8 fatias)</strong></p>
+        <p class="pizza-modal-sub">45+ sabores artesanais — tamanhos: <strong>Pequena (Individual)</strong> · <strong>Grande (8 fatias)</strong></p>
       </div>
       <button class="pizza-modal-close" onclick="closePizzaModal()">✕</button>
     </div>
@@ -2751,7 +2751,7 @@ function openPizzaModal() {
     sizer.className = 'pizza-size-selector';
 
     const sizes = [];
-    if (brotoPrice)  sizes.push({ label: '🌙 Pequena', sub: '4 fatias', price: brotoPrice, key: 'Pequena' });
+    if (brotoPrice)  sizes.push({ label: '🌙 Pequena', sub: 'Individual', price: brotoPrice, key: 'Pequena' });
     if (grandePrice) sizes.push({ label: '🌕 Grande', sub: '8 fatias', price: grandePrice, key: 'Grande' });
 
     sizes.forEach(s => {

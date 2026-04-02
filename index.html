@@ -2,7 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#050d1a">
 <title>Blue Moon Lounge Bar</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -21,18 +24,21 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   body {
     background: var(--navy);
     color: var(--silver);
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
     cursor: none;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   @media (hover: none) and (pointer: coarse) {
     body { cursor: auto; }
     .cursor, .cursor-ring { display: none !important; }
-    button, a, input, select, textarea { cursor: auto !important; }
+    button, a, input, select, textarea { cursor: auto !important; -webkit-tap-highlight-color: transparent; }
+    * { -webkit-tap-highlight-color: transparent; }
   }
 
   .cursor {
@@ -107,7 +113,7 @@
 
   /* HERO */
   .hero {
-    position: relative; min-height: 100vh;
+    position: relative; min-height: 100vh; min-height: 100svh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; padding: 120px 40px 80px;
@@ -124,7 +130,7 @@
     width: 440px; height: 440px;
     top: -90px; right: -70px;
     animation: moonFloat 8s ease-in-out infinite;
-    filter: drop-shadow(0 0 40px rgba(77,159,255,0.45)) drop-shadow(0 0 100px rgba(26,74,138,0.3));
+    filter: drop-shadow(0 0 40px rgba(77,159,255,0.55)) drop-shadow(0 0 100px rgba(26,74,138,0.4));
   }
   @keyframes moonFloat {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -222,6 +228,21 @@
   /* MENU TABS — scrollable row */
   .menu-tabs-wrapper {
     margin-bottom: 60px;
+  }
+  @media (max-width: 768px) {
+    .menu-tabs-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-left: -16px; margin-right: -16px;
+      padding: 0 16px 8px;
+      scrollbar-width: none;
+    }
+    .menu-tabs-wrapper::-webkit-scrollbar { display: none; }
+    .menu-tabs {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      width: max-content;
+    }
   }
   .menu-tabs {
     display: flex; flex-wrap: wrap; gap: 8px;
@@ -687,6 +708,19 @@
   /* SHOWS */
   .shows-section { padding: 120px 60px; max-width: 1100px; margin: 0 auto; }
   .shows-filter { display: flex; gap: 12px; justify-content: center; margin-bottom: 60px; flex-wrap: wrap; }
+  @media (max-width: 768px) {
+    .shows-filter {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      justify-content: flex-start;
+      margin-left: -20px; margin-right: -20px;
+      padding: 0 20px 8px;
+      scrollbar-width: none;
+    }
+    .shows-filter::-webkit-scrollbar { display: none; }
+    .filter-btn { flex-shrink: 0; }
+  }
   .filter-btn {
     padding: 10px 28px; background: transparent;
     border: 1px solid rgba(77,159,255,0.25); color: rgba(255, 255, 255);
@@ -714,6 +748,26 @@
   .show-card:hover::before { opacity: 1; }
   .show-card.destaque { background: linear-gradient(135deg, rgba(10,31,61,0.8), rgba(26,74,138,0.25)); border-color: rgba(77,159,255,0.3); box-shadow: 0 4px 30px rgba(77,159,255,0.08); }
   .show-card.destaque::before { opacity: 1; }
+
+  /* ── Show encerrado ── */
+  .show-card.encerrado {
+    opacity: 0.45;
+    filter: grayscale(0.7);
+    pointer-events: none;
+  }
+  .show-card.encerrado .show-date-block {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .show-card.encerrado .show-day { color: rgba(200,216,240,0.4); }
+  .show-encerrado-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(200,216,240,0.55);
+    font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 10px; border-radius: 20px; margin-bottom: 8px;
+  }
   .show-date-block { text-align: center; background: rgba(77,159,255,0.08); border: 1px solid rgba(77,159,255,0.15); padding: 12px 8px; border-radius: 2px; }
   .show-day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--glow); display: block; line-height: 1; }
   .show-weekday { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255, 255, 255); display: block; margin-top: 4px; }
@@ -775,7 +829,7 @@
 
   /* ── Sidebar Carrinho ── */
   .cart-sidebar {
-    position: fixed; top: 0; right: -480px; width: 100%; max-width: 460px; height: 100vh;
+    position: fixed; top: 0; right: -480px; width: 100%; max-width: 460px; height: 100vh; height: 100dvh;
     background: linear-gradient(180deg, #091428 0%, #050d1a 100%);
     border-left: 1px solid rgba(77,159,255,0.2);
     z-index: 600; display: flex; flex-direction: column;
@@ -1109,7 +1163,7 @@
   .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE — 768px (tablets e celulares grandes) */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .nav-hamburger { display: flex; }
@@ -1126,56 +1180,165 @@
       letter-spacing: 0.2em; border-bottom: 1px solid rgba(77,159,255,0.08);
     }
     .nav-links a::after { display: none; }
-    .hero { padding: 90px 20px 60px; }
-    .hero-moon { width: 200px; height: 200px; top: -10px; right: -20px; }
-    .hero-title { font-size: clamp(2.6rem, 10vw, 4.5rem); }
-    .hero-sub { font-size: 1.1rem; }
-    .btn-primary, .btn-outline { padding: 14px 28px; font-size: 0.7rem; }
-    .about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
+
+    /* Hero */
+    .hero {
+      padding: 100px 24px 80px;
+      min-height: 100svh;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-bg { background:
+      radial-gradient(ellipse 100% 60% at 50% 40%, rgba(26,74,138,0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 40% at 50% 70%, rgba(77,159,255,0.12) 0%, transparent 60%);
+    }
+    .hero-moon {
+      width: 220px; height: 220px;
+      top: 60px; right: -40px;
+      opacity: 0.55;
+    }
+    .hero-content { max-width: 100%; }
+    .hero-title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
+    .hero-sub { font-size: 1.05rem; margin: 18px 0 36px; }
+    .hero-cta { gap: 12px; }
+    .btn-primary, .btn-outline {
+      padding: 14px 28px; font-size: 0.7rem;
+      width: 100%; text-align: center; display: block;
+    }
+
+    /* About */
+    .about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
     .about-moon-big { width: 200px; height: 200px; }
+    .about-text { text-align: center; }
+
+    /* Specials */
+    .specials { padding: 60px 20px; }
     .specials-grid { grid-template-columns: 1fr; gap: 16px; }
     .special-card { padding: 36px 24px; }
+
+    /* Menu */
     .menu-section { padding: 60px 16px; }
-    .specials, .shows-section, .info-section { padding: 60px 20px; }
-    .section-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
-    .menu-tabs { gap: 6px; }
+    .menu-tabs { gap: 6px; justify-content: flex-start; flex-wrap: wrap; }
     .tab-btn { padding: 10px 14px; font-size: 0.62rem; }
     .tab-btn::before { font-size: 1rem; }
-    .pizza-modal-overlay, .burger-modal-overlay, .generic-modal-overlay { padding: 0; align-items: flex-end; }
-    .pizza-modal, .burger-modal, .generic-modal { border-radius: 16px 16px 0 0; max-height: 92vh; display: flex; flex-direction: column; }
+
+    /* Section */
+    .section-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+    .shows-section, .info-section { padding: 60px 20px; }
+
+    /* Modais — sobem de baixo em mobile */
+    .pizza-modal-overlay,
+    .burger-modal-overlay,
+    .generic-modal-overlay {
+      padding: 0;
+      align-items: flex-end;
+    }
+    .pizza-modal,
+    .burger-modal,
+    .generic-modal {
+      border-radius: 20px 20px 0 0;
+      max-height: 92svh;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
     .pizza-modal-header, .pizza-modal-controls, .pizza-modal-body,
     .generic-modal-header, .generic-modal-search-wrap, .generic-modal-body,
     .burger-modal-header, .burger-subtabs-wrap, .burger-search-wrap, .burger-modal-body
     { padding-left: 16px; padding-right: 16px; }
-    .pizza-modal-header, .generic-modal-header, .burger-modal-header { padding-top: 20px; padding-bottom: 16px; }
-    .pizza-modal-title, .generic-modal-title, .burger-modal-title { font-size: 1.6rem; }
-    .pizza-modal-body, .generic-modal-body, .burger-modal-body { max-height: 55vh; flex: 1; }
+    .pizza-modal-header,
+    .generic-modal-header,
+    .burger-modal-header { padding-top: 24px; padding-bottom: 16px; }
+    .pizza-modal-title,
+    .generic-modal-title,
+    .burger-modal-title { font-size: 1.6rem; }
+    .pizza-modal-body,
+    .generic-modal-body,
+    .burger-modal-body { max-height: 55svh; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .pizza-modal-controls { flex-direction: column; gap: 10px; }
     .pizza-card { grid-template-columns: 1fr; }
     .pizza-card-prices { grid-column: 1; grid-row: auto; flex-direction: row; justify-content: flex-start; gap: 12px; }
-    .cart-fab { bottom: 16px; right: 14px; padding: 12px 16px; font-size: 0.75rem; gap: 8px; }
-    .cart-notif { bottom: 86px; right: 14px; left: 14px; text-align: center; }
+
+    /* Carrinho */
+    .cart-fab { bottom: max(16px, env(safe-area-inset-bottom)); right: 14px; padding: 12px 16px; font-size: 0.75rem; gap: 8px; }
+    .cart-notif { bottom: max(86px, calc(env(safe-area-inset-bottom) + 70px)); right: 14px; left: 14px; text-align: center; }
     .cart-sidebar { max-width: 100%; right: -100%; }
     .cart-header { padding: 18px 16px 14px; }
-    .cart-items { padding: 10px 16px; }
-    .cart-footer { padding: 14px 16px 24px; }
+    .cart-items { padding: 10px 16px; -webkit-overflow-scrolling: touch; }
+    .cart-footer { padding: 14px 16px max(24px, env(safe-area-inset-bottom)); }
+
+    /* Checkout */
     .checkout-overlay { padding: 0; align-items: flex-end; }
-    .checkout-modal { max-width: 100%; border-radius: 16px 16px 0 0; max-height: 92vh; overflow-y: auto; }
+    .checkout-modal {
+      max-width: 100%; border-radius: 20px 20px 0 0;
+      max-height: 92svh; overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .checkout-header { padding: 18px 18px 14px; }
-    .checkout-body { padding: 16px 18px 32px; }
+    .checkout-body { padding: 16px 18px max(32px, env(safe-area-inset-bottom)); }
     .pay-opt { min-width: 70px; padding: 10px 6px; font-size: 0.6rem; }
+
+    /* Shows */
     .show-card { grid-template-columns: 58px 1fr; gap: 14px; padding: 14px 14px; }
     .show-day { font-size: 1.5rem; }
-    footer { padding: 40px 20px; }
+
+    /* Footer */
+    footer { padding: max(40px, env(safe-area-inset-bottom)) 20px 40px; }
     .footer-links { gap: 16px; flex-wrap: wrap; }
   }
+
+  /* RESPONSIVE — 480px (celulares pequenos) */
   @media (max-width: 480px) {
-    .hero-moon { width: 150px; height: 150px; top: -5px; right: -15px; }
-    .hero-title { font-size: clamp(2.2rem, 11vw, 3rem); }
+    .hero { padding: 90px 20px 70px; }
+    .hero-moon { width: 160px; height: 160px; top: 55px; right: -30px; opacity: 0.45; }
+    .hero-title { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+    .hero-sub { font-size: 0.95rem; }
     .about-moon-big { width: 160px; height: 160px; }
     .pizza-size-btn { min-width: 55px; padding: 6px 8px; }
     .cart-fab-total { display: none; }
-  }  .gli-price-inline {
+    .tab-btn { padding: 8px 10px; font-size: 0.58rem; }
+    .section-title { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+    .show-card { grid-template-columns: 48px 1fr; gap: 10px; padding: 12px; }
+    .show-day { font-size: 1.3rem; }
+    .show-name { font-size: 1rem; }
+    .show-desc { font-size: 0.88rem; }
+    .checkout-payment-options { gap: 6px; }
+    .pay-opt { min-width: 60px; padding: 8px 4px; font-size: 0.58rem; }
+    .choose-opt { font-size: 0.72rem; padding: 7px 10px; }
+    .portion-btn { padding: 8px 10px; }
+  }
+
+  /* RESPONSIVE — 360px (celulares muito pequenos) */
+  @media (max-width: 360px) {
+    .hero-title { font-size: clamp(2rem, 13vw, 2.8rem); }
+    .hero-moon { width: 130px; height: 130px; top: 50px; right: -20px; }
+    .tab-btn { padding: 7px 8px; font-size: 0.55rem; }
+  }
+
+  /* ── Previne zoom automático do iOS em inputs ── */
+  @media (max-width: 768px) {
+    input, select, textarea,
+    .pizza-search, .generic-search, .burger-search,
+    .checkout-input, .checkout-textarea, .cart-item-note-input {
+      font-size: 16px !important;
+    }
+  }
+
+  /* ── Scroll suave em listas dentro de modais (iOS) ── */
+  .pizza-modal-body,
+  .generic-modal-body,
+  .burger-modal-body,
+  .cart-items {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* ── Evita conteúdo sob a home bar do iPhone ── */
+  .cart-fab {
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+  }
+
+  .gli-price-inline {
     font-family: 'Playfair Display', serif;
     font-size: 0.88rem; font-weight: 700;
     color: var(--gold-light); white-space: nowrap;
@@ -1253,7 +1416,6 @@
   <div class="hero-moon">
     <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
       <defs>
-        <!-- Base moon sphere shading: light from top-left, blue tint -->
         <radialGradient id="hm-base" cx="38%" cy="32%" r="65%" fx="38%" fy="32%">
           <stop offset="0%"   stop-color="#a8d4ff"/>
           <stop offset="18%"  stop-color="#5ba3e8"/>
@@ -1262,86 +1424,55 @@
           <stop offset="80%"  stop-color="#061840"/>
           <stop offset="100%" stop-color="#020c22"/>
         </radialGradient>
-        <!-- Terminator shadow (dark side) -->
         <radialGradient id="hm-dark" cx="72%" cy="62%" r="62%">
           <stop offset="30%" stop-color="transparent"/>
           <stop offset="100%" stop-color="#010810" stop-opacity="0.72"/>
         </radialGradient>
-        <!-- Atmospheric rim glow -->
         <radialGradient id="hm-rim" cx="50%" cy="50%" r="50%">
           <stop offset="82%" stop-color="transparent"/>
           <stop offset="94%" stop-color="#4d9fff" stop-opacity="0.18"/>
           <stop offset="100%" stop-color="#2563d4" stop-opacity="0.35"/>
         </radialGradient>
-        <!-- Highlight sheen top-left -->
         <radialGradient id="hm-shine" cx="30%" cy="25%" r="35%">
           <stop offset="0%"  stop-color="#d0eaff" stop-opacity="0.28"/>
           <stop offset="100%" stop-color="transparent"/>
         </radialGradient>
         <clipPath id="hm-clip"><circle cx="220" cy="220" r="200"/></clipPath>
       </defs>
-
-      <!-- Base sphere -->
       <circle cx="220" cy="220" r="200" fill="url(#hm-base)"/>
-
-      <!-- Terrain texture: large dark maria (seas) -->
       <g clip-path="url(#hm-clip)" opacity="0.55">
-        <!-- Mare Imbrium-style large dark patch top-left area -->
         <ellipse cx="155" cy="155" rx="68" ry="55" fill="#0a2350" opacity="0.7"/>
-        <!-- Mare Serenitatis -->
         <ellipse cx="210" cy="130" rx="42" ry="36" fill="#0d2a5c" opacity="0.6"/>
-        <!-- Mare Tranquillitatis / Nectaris lower right of center -->
         <ellipse cx="265" cy="200" rx="55" ry="40" fill="#081e44" opacity="0.55"/>
-        <!-- Oceanus Procellarum wide sweep -->
         <ellipse cx="130" cy="220" rx="52" ry="80" fill="#0a2248" opacity="0.5"/>
-        <!-- Small dark patch lower -->
         <ellipse cx="200" cy="300" rx="35" ry="25" fill="#091a3e" opacity="0.45"/>
-        <!-- Mare Humorum -->
         <ellipse cx="150" cy="295" rx="30" ry="22" fill="#0b2040" opacity="0.5"/>
       </g>
-
-      <!-- Highland texture: subtle lighter patches (bright highlands) -->
       <g clip-path="url(#hm-clip)" opacity="0.3">
         <ellipse cx="295" cy="140" rx="48" ry="38" fill="#4a82c8" opacity="0.4"/>
         <ellipse cx="310" cy="270" rx="38" ry="45" fill="#3a6daf" opacity="0.35"/>
         <ellipse cx="220" cy="340" rx="55" ry="30" fill="#4080c0" opacity="0.3"/>
         <ellipse cx="170" cy="380" rx="40" ry="22" fill="#355e9a" opacity="0.3"/>
       </g>
-
-      <!-- Craters — various sizes, realistic with rim highlight and shadow floor -->
       <g clip-path="url(#hm-clip)">
-        <!-- Large crater 1 (Tycho-style, lower center-right) -->
         <ellipse cx="285" cy="295" rx="28" ry="27" fill="#04122e" opacity="0.75"/>
         <ellipse cx="279" cy="289" rx="28" ry="27" fill="none" stroke="#5590d0" stroke-width="2.5" opacity="0.35"/>
         <ellipse cx="281" cy="291" rx="10" ry="9" fill="#0c2a5a" opacity="0.6"/>
-
-        <!-- Large crater 2 (Copernicus-style, center-left) -->
         <ellipse cx="168" cy="198" rx="22" ry="21" fill="#05152e" opacity="0.8"/>
         <ellipse cx="163" cy="194" rx="22" ry="21" fill="none" stroke="#4a80bf" stroke-width="2" opacity="0.4"/>
         <ellipse cx="165" cy="196" rx="7" ry="7" fill="#0a2245" opacity="0.7"/>
-
-        <!-- Medium crater A -->
         <ellipse cx="248" cy="155" rx="14" ry="13" fill="#04122e" opacity="0.7"/>
         <ellipse cx="245" cy="152" rx="14" ry="13" fill="none" stroke="#4a80bf" stroke-width="1.5" opacity="0.35"/>
-
-        <!-- Medium crater B -->
         <ellipse cx="195" cy="265" rx="12" ry="11" fill="#050f28" opacity="0.65"/>
         <ellipse cx="192" cy="262" rx="12" ry="11" fill="none" stroke="#4070ae" stroke-width="1.2" opacity="0.3"/>
-
-        <!-- Medium crater C (right side) -->
         <ellipse cx="318" cy="195" rx="16" ry="15" fill="#041028" opacity="0.7"/>
         <ellipse cx="314" cy="191" rx="16" ry="15" fill="none" stroke="#5088c8" stroke-width="1.5" opacity="0.35"/>
-
-        <!-- Small craters scattered -->
         <ellipse cx="130" cy="155" rx="8"  ry="7"  fill="#03102a" opacity="0.6"/>
         <ellipse cx="128" cy="153" rx="8"  ry="7"  fill="none" stroke="#3a6aaa" stroke-width="1" opacity="0.3"/>
-
         <ellipse cx="320" cy="320" rx="9"  ry="8"  fill="#040e28" opacity="0.6"/>
         <ellipse cx="318" cy="318" rx="9"  ry="8"  fill="none" stroke="#4070b0" stroke-width="1" opacity="0.3"/>
-
         <ellipse cx="240" cy="370" rx="7"  ry="6"  fill="#03102a" opacity="0.55"/>
         <ellipse cx="238" cy="368" rx="7"  ry="6"  fill="none" stroke="#3a68a8" stroke-width="1" opacity="0.28"/>
-
         <ellipse cx="350" cy="240" rx="6"  ry="6"  fill="#040f28" opacity="0.55"/>
         <ellipse cx="100" cy="280" rx="5"  ry="4"  fill="#030e26" opacity="0.5"/>
         <ellipse cx="200" cy="100" rx="5"  ry="5"  fill="#030f28" opacity="0.5"/>
@@ -1351,17 +1482,9 @@
         <ellipse cx="270" cy="90"  rx="4"  ry="4"  fill="#030d26" opacity="0.45"/>
         <ellipse cx="355" cy="295" rx="4"  ry="4"  fill="#04102a" opacity="0.45"/>
       </g>
-
-      <!-- Terminator shadow overlay (dark limb) -->
       <circle cx="220" cy="220" r="200" fill="url(#hm-dark)"/>
-
-      <!-- Atmospheric rim glow -->
       <circle cx="220" cy="220" r="200" fill="url(#hm-rim)"/>
-
-      <!-- Top-left specular shine -->
       <circle cx="220" cy="220" r="200" fill="url(#hm-shine)"/>
-
-      <!-- Subtle blue atmospheric haze at edge -->
       <circle cx="220" cy="220" r="200" fill="none" stroke="#4d9fff" stroke-width="3" opacity="0.12"/>
     </svg>
   </div>
@@ -1551,12 +1674,13 @@
     <button class="filter-btn" onclick="filterShows('março')">Março</button>
     <button class="filter-btn" onclick="filterShows('abril')">Abril</button>
     <button class="filter-btn" onclick="filterShows('maio')">Maio</button>
-    <button class="filter-btn" onclick="filterShows('junho')">Junho</button>
+    <button class="filter-btn" onclick="filterShows('Junho')">Junho</button>
+    <button class="filter-btn" onclick="filterShows('julho')">Julho</button>
   </div>
   <div class="shows-timeline">
     <div class="show-month-label" data-month="março"><span>🌒</span> Março 2026</div>
-    <div class="show-card" data-month="março">
-      <div class="show-date-block"><span class="show-day">28</span><span class="show-weekday">sábado</span></div>
+    <div class="show-card" data-month="março" data-date="2026-03-28">
+      <div class="show-date-block"><span class="show-day">28</span><span class="show-weekday">Sábado</span></div>
       <div class="show-info">
         <div class="show-badge jazz">Rock</div>
         <h3 class="show-name">Gabriel Soares</h3>
@@ -1564,25 +1688,25 @@
         <p class="show-desc">Uma viagem pelo Rock clássico, Pop Rock, MPB e Reggae - Uma noite inesquecível.</p>
       </div>
     </div>
-    <div class="show-card" data-month="abril">
-      <div class="show-date-block"><span class="show-day">05</span><span class="show-weekday">Sáb</span></div>
+    <div class="show-card" data-month="abril" data-date="2026-04-04">
+      <div class="show-date-block"><span class="show-day">04</span><span class="show-weekday">Sábado</span></div>
       <div class="show-info">
-        <div class="show-badge samba">Samba & Pagode</div>
-        <h3 class="show-name">Grupo Raiz da Lua</h3>
-        <div class="show-meta"><span>🕗 20h30</span><span>🎤 Palco Principal</span></div>
-        <p class="show-desc">Pagode raiz de verdade com tradição do samba-de-roda misturada com clássicos dos anos 90.</p>
+        <div class="show-badge samba">Rock</div>
+        <h3 class="show-name">Nando</h3>
+        <div class="show-meta"><span>🕗 21h00</span><span></span></div>
+        <p class="show-desc">Noite de Rock e Pop Rock com Nando — Só os maiores sucessos!</p>
       </div>
     </div>
-    <div class="show-card destaque" data-month="abril">
-      <div class="show-date-block"><span class="show-day">19</span><span class="show-weekday">Sáb</span></div>
+    <div class="show-card destaque" data-month="abril" data-date="2026-04-10">
+      <div class="show-date-block"><span class="show-day">10</span><span class="show-weekday">Sexta</span></div>
       <div class="show-info">
-        <div class="show-badge especial">✦ Especial</div>
-        <h3 class="show-name">Noite da Lua Azul</h3>
-        <div class="show-meta"><span>🕗 19h00 – 02h00</span><span>🎤 Salão Completo</span></div>
-        <p class="show-desc">Grande evento especial: show duplo com o Trio Eclético + DJ Set. Jantar harmonizado e decoração exclusiva temática.</p>
+        <div class="show-badge especial">Pagode ✦ Especial</div>
+        <h3 class="show-name">Grupo Tamo On</h3>
+        <div class="show-meta"><span>🕗 21h00</span><span>Taxa de entrada: R$ 5,00</span></div>
+        <p class="show-desc">Nesse dia tem pagode ao vivo 🎶🔥 e sorteio durante a noite! Música boa, vibe incrível e prêmios pra vocês 🍀</p>
       </div>
     </div>
-    <div class="show-card" data-month="abril">
+    <div class="show-card" data-month="abril" data-date="2026-04-25">
       <div class="show-date-block"><span class="show-day">25</span><span class="show-weekday">Sex</span></div>
       <div class="show-info">
         <div class="show-badge rock">Pop Rock · MPB</div>
@@ -1591,8 +1715,8 @@
         <p class="show-desc">Uma noite com o melhor do pop rock e MPB nacional — seleção especial de clássicos e músicas autorais.</p>
       </div>
     </div>
-    <div class="show-month-label" data-month="maio"><span>🌓</span> Maio 2025</div>
-    <div class="show-card" data-month="maio">
+    <div class="show-month-label" data-month="maio"><span>🌓</span> Maio 2026</div>
+    <div class="show-card" data-month="maio" data-date="2026-05-02">
       <div class="show-date-block"><span class="show-day">02</span><span class="show-weekday">Sex</span></div>
       <div class="show-info">
         <div class="show-badge rock">Rock Acústico</div>
@@ -1601,7 +1725,7 @@
         <p class="show-desc">Os maiores sucessos de Renato Russo em versões acústicas intimistas e emocionantes.</p>
       </div>
     </div>
-    <div class="show-card destaque" data-month="maio">
+    <div class="show-card destaque" data-month="maio" data-date="2026-05-10">
       <div class="show-date-block"><span class="show-day">10</span><span class="show-weekday">Sáb</span></div>
       <div class="show-info">
         <div class="show-badge especial">✦ Especial</div>
@@ -1610,8 +1734,8 @@
         <p class="show-desc">DJ de alta rotatividade tocando os grandes hits das décadas de ouro. Muita nostalgia e animação!</p>
       </div>
     </div>
-    <div class="show-month-label" data-month="junho"><span>🌕</span> Junho 2025</div>
-    <div class="show-card destaque" data-month="junho">
+    <div class="show-month-label" data-month="junho"><span>🌕</span> Junho 2026</div>
+    <div class="show-card destaque" data-month="junho" data-date="2026-06-07">
       <div class="show-date-block"><span class="show-day">07</span><span class="show-weekday">Sáb</span></div>
       <div class="show-info">
         <div class="show-badge especial">✦ 1º Aniversário</div>
@@ -1620,7 +1744,7 @@
         <p class="show-desc">Celebramos 1 ano do Blue Moon com festival épico: 3 atrações ao vivo, open bar premium e surpresas especiais!</p>
       </div>
     </div>
-    <div class="show-card" data-month="junho">
+    <div class="show-card" data-month="junho" data-date="2026-06-20">
       <div class="show-date-block"><span class="show-day">20</span><span class="show-weekday">Sex</span></div>
       <div class="show-info">
         <div class="show-badge samba">Forró · Baião · Xote</div>
@@ -1931,8 +2055,11 @@
     <!-- WhatsApp -->
     <a class="social-btn" href="https://wa.me/5543998468440" target="_blank" title="WhatsApp">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52 -.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5 -.669 -.51a12.8 12.8 0 00 -.57 -.01c -.198 0 -.52 .074 -.792 .372 -.272 .297 -1.04 1.016 -1.04 2.479 0 1.462 1.065 2.875 1.2１３ 3.0７４ .１４９ .１９８ ２.０９６ ３.２ ５.０７７ ４.４８７ .７０９ .３０６ １.２６２ .４８９ １.６９４ .６２５ .７１２ .２２７ １.３６ .１９５ １.８７１ .１１８ .５７１ -.０８５ １.７５８ -.７１９ ２.００６ -₁₄₁₃ .₂₄₈ -․₆₉₄ .₂₄₈ -₁₂₈₉ .₁₇₃ -₁₄₁₃ -․₀₇₄ -․₁₂₄ -․₂₇₂ -․₁₉₈ -․５７ -․³⁴⁷m -⁵․⁴²¹ ⁷․⁴⁰³h -․₀₀⁴a ⁹․⁸⁷ ⁹․⁸⁷ ₀ ₀¹ -⁵․₀³¹ -¹․³⁷⁸l -․³⁶¹ -․²¹⁴ -³․⁷⁴¹ .⁹⁸² .⁹⁹⁸ -³․⁶⁴⁸ -․²³⁵ -․³⁷⁴a ⁹․⁸𝟔 ⁹․⁸𝟔 ₀ ₀¹ -¹․៥¹ -៥․²𝟔c .₀𝟎𝟏 -៥․𝟒𝟓 𝟒.…
-  <p class="footer-copy">© 2026 Blue Moon Lounge Bar. Todos os direitos reservados.</p>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.01c-1.784 0-3.535-.48-5.065-1.388l-.364-.214-3.741.982.998-3.648-.235-.374A9.86 9.86 0 012.1 11.97c.004-5.45 4.437-9.884 9.893-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.89 9.884zm8.413-18.3A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+    <p class="footer-copy">© 2026 Blue Moon Lounge Bar. Todos os direitos reservados.</p>
 </footer>
 
 <script>
@@ -2775,6 +2902,32 @@ function filterShows(month) {
     el.style.display = (month === 'todos' || el.dataset.month === month) ? '' : 'none';
   });
 }
+
+// ── Marcar shows encerrados automaticamente ──
+function marcarShowsEncerrados() {
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // início do dia de hoje
+
+  document.querySelectorAll('.show-card[data-date]').forEach(card => {
+    const [ano, mes, dia] = card.dataset.date.split('-').map(Number);
+    const dataShow = new Date(ano, mes - 1, dia);
+    dataShow.setHours(0, 0, 0, 0);
+
+    if (dataShow < hoje) {
+      card.classList.add('encerrado');
+      // Inserir badge "Encerrado" se ainda não tiver
+      const infoEl = card.querySelector('.show-info');
+      if (infoEl && !infoEl.querySelector('.show-encerrado-badge')) {
+        const badge = document.createElement('div');
+        badge.className = 'show-encerrado-badge';
+        badge.innerHTML = '✕ Encerrado';
+        infoEl.insertBefore(badge, infoEl.firstChild);
+      }
+    }
+  });
+}
+
+marcarShowsEncerrados();
 
 // ── Item note ──
 function toggleItemNote(btn) {

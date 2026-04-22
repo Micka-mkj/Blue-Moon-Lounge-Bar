@@ -1023,6 +1023,51 @@
   .checkout-troco-wrap { margin-top: 12px; display: none; }
   .checkout-troco-wrap.visible { display: block; }
 
+  /* ── Entrega ── */
+  .delivery-zone-opts {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .delivery-zone-btn {
+    flex: 1; min-width: 120px;
+    padding: 12px 10px; border-radius: 8px;
+    border: 1px solid rgba(77,159,255,0.2);
+    background: rgba(10,31,61,0.5);
+    color: rgba(200,216,240,0.7);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; transition: all 0.2s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .delivery-zone-btn .dz-icon { font-size: 1.4rem; }
+  .delivery-zone-btn .dz-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; font-weight: 700; color: var(--glow);
+  }
+  .delivery-zone-btn:hover { border-color: rgba(77,159,255,0.4); color: var(--silver); }
+  .delivery-zone-btn.selected {
+    background: rgba(77,159,255,0.12);
+    border-color: var(--glow); color: var(--white);
+  }
+  .delivery-outside-select {
+    width: 100%; padding: 12px 14px;
+    background: rgba(10,31,61,0.7);
+    border: 1px solid rgba(77,159,255,0.2);
+    border-radius: 8px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; cursor: none;
+    margin-bottom: 10px; display: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .delivery-outside-select.visible { display: block; }
+  .delivery-outside-select:focus { border-color: var(--glow); }
+  .delivery-outside-select option { background: #091428; color: var(--white); }
+  .delivery-fee-info {
+    font-size: 0.72rem; color: rgba(200,216,240,0.5);
+    letter-spacing: 0.05em; margin-top: 4px; display: none;
+  }
+  .delivery-fee-info.visible { display: block; }
+  .delivery-fee-info strong { color: var(--glow); }
+
   .checkout-send-btn {
     width: 100%; padding: 16px; margin-top: 24px;
     background: linear-gradient(135deg, #25d366, #128C7E);
@@ -1861,8 +1906,36 @@
         <input class="checkout-input" id="checkoutName" type="text" placeholder="Como devemos te chamar?">
       </div>
       <div class="checkout-field">
-        <label class="checkout-label">Endereço de Entrega *</label>
-        <input class="checkout-input" id="checkoutAddr" type="text" placeholder="Rua, número e bairro">
+        <label class="checkout-label">Zona de Entrega *</label>
+        <div class="delivery-zone-opts">
+          <button class="delivery-zone-btn" id="dzCity" onclick="selectDeliveryZone('cidade')">
+            <span class="dz-icon">🏙️</span>
+            <span>Dentro da Cidade</span>
+            <span class="dz-price">+ R$ 7,00</span>
+          </button>
+          <button class="delivery-zone-btn" id="dzOut" onclick="selectDeliveryZone('fora')">
+            <span class="dz-icon">🌄</span>
+            <span>Fora da Cidade</span>
+            <span class="dz-price">Ver locais</span>
+          </button>
+        </div>
+        <select class="delivery-outside-select" id="deliveryOutsideSelect" onchange="onOutsideLocationChange()">
+          <option value="">— Selecione o local —</option>
+          <option value="Pousada Vale Verde|15">Pousada Vale Verde — R$ 15,00</option>
+          <option value="Pousada Recanto da Lua|15">Pousada Recanto da Lua — R$ 15,00</option>
+          <option value="Fazenda São João|20">Fazenda São João — R$ 20,00</option>
+          <option value="Fazenda Boa Vista|20">Fazenda Boa Vista — R$ 20,00</option>
+          <option value="Fazenda Santa Clara|25">Fazenda Santa Clara — R$ 25,00</option>
+          <option value="Sítio dos Ipês|18">Sítio dos Ipês — R$ 18,00</option>
+          <option value="Sítio Recanto Verde|18">Sítio Recanto Verde — R$ 18,00</option>
+          <option value="Clube/Chácara|20">Clube / Chácara — R$ 20,00</option>
+          <option value="Outro local|25">Outro local — R$ 25,00</option>
+        </select>
+        <div class="delivery-fee-info" id="deliveryFeeInfo"></div>
+      </div>
+      <div class="checkout-field">
+        <label class="checkout-label">Endereço / Referência *</label>
+        <input class="checkout-input" id="checkoutAddr" type="text" placeholder="Rua, número, bairro ou referência do local">
       </div>
       <div class="checkout-field">
         <label class="checkout-label">Detalhes da entrega (observações)</label>
@@ -2251,6 +2324,59 @@ function makeAddBtn(name, price) {
 // ══════════════════════════════════════════
 let selectedPayment = '';
 
+let selectedDeliveryZone = ''; // 'cidade' | 'fora'
+let deliveryFee = 0;
+let deliveryLabel = '';
+
+function selectDeliveryZone(zone) {
+  selectedDeliveryZone = zone;
+  document.getElementById('dzCity').classList.toggle('selected', zone === 'cidade');
+  document.getElementById('dzOut').classList.toggle('selected',  zone === 'fora');
+  const sel  = document.getElementById('deliveryOutsideSelect');
+  const info = document.getElementById('deliveryFeeInfo');
+  if (zone === 'cidade') {
+    deliveryFee   = 7;
+    deliveryLabel = 'Dentro da Cidade';
+    sel.classList.remove('visible');
+    sel.value = '';
+    info.className = 'delivery-fee-info visible';
+    info.innerHTML = '🛵 Taxa de entrega: <strong>R$ 7,00</strong>';
+    updateCheckoutTotal();
+  } else {
+    deliveryFee   = 0;
+    deliveryLabel = '';
+    sel.classList.add('visible');
+    info.className = 'delivery-fee-info';
+    info.innerHTML = '';
+    updateCheckoutTotal();
+  }
+}
+
+function onOutsideLocationChange() {
+  const sel = document.getElementById('deliveryOutsideSelect');
+  const info = document.getElementById('deliveryFeeInfo');
+  if (!sel.value) { deliveryFee = 0; deliveryLabel = ''; info.className = 'delivery-fee-info'; updateCheckoutTotal(); return; }
+  const [label, fee] = sel.value.split('|');
+  deliveryFee   = parseFloat(fee);
+  deliveryLabel = label;
+  info.className = 'delivery-fee-info visible';
+  info.innerHTML = `📍 ${label} — Taxa: <strong>R$ ${parseFloat(fee).toFixed(2).replace('.',',')}</strong>`;
+  updateCheckoutTotal();
+}
+
+function updateCheckoutTotal() {
+  const feeRow = document.getElementById('checkoutFeeRow');
+  const totalVal = document.getElementById('checkoutTotalVal');
+  if (!feeRow || !totalVal) return;
+  if (deliveryFee > 0) {
+    feeRow.style.display = '';
+    feeRow.querySelector('.val').textContent = '+ ' + fmtPrice(deliveryFee);
+  } else {
+    feeRow.style.display = 'none';
+  }
+  totalVal.textContent = fmtPrice(cartTotal() + deliveryFee);
+}
+
 function openCheckout() {
   if (cart.length === 0) return;
   closeCart();
@@ -2267,8 +2393,23 @@ function openCheckout() {
   });
   const totalRow = document.createElement('div');
   totalRow.className = 'checkout-total-row';
-  totalRow.innerHTML = `<span>Total</span><span class="checkout-total-val">${fmtPrice(cartTotal())}</span>`;
+  totalRow.innerHTML = `<span>Subtotal</span><span class="checkout-total-val">${fmtPrice(cartTotal())}</span>`;
   sum.appendChild(totalRow);
+
+  // Taxa de entrega (dinâmica)
+  const feeRow = document.createElement('div');
+  feeRow.className = 'checkout-order-row';
+  feeRow.id = 'checkoutFeeRow';
+  feeRow.style.display = 'none';
+  feeRow.innerHTML = `<span class="name" style="color:rgba(77,159,255,0.8)">🛵 Taxa de entrega</span><span class="val" style="color:var(--glow)"></span>`;
+  sum.appendChild(feeRow);
+
+  const grandRow = document.createElement('div');
+  grandRow.className = 'checkout-total-row';
+  grandRow.style.borderTop = '1px solid rgba(77,159,255,0.2)';
+  grandRow.style.marginTop = '8px';
+  grandRow.innerHTML = `<span>Total</span><span class="checkout-total-val" id="checkoutTotalVal">${fmtPrice(cartTotal())}</span>`;
+  sum.appendChild(grandRow);
 
   // reset
   document.getElementById('checkoutName').value = '';
@@ -2276,7 +2417,12 @@ function openCheckout() {
   document.getElementById('checkoutObs').value = '';
   document.getElementById('checkoutTroco').value = '';
   selectedPayment = '';
+  selectedDeliveryZone = ''; deliveryFee = 0; deliveryLabel = '';
   document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.delivery-zone-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('deliveryOutsideSelect').classList.remove('visible');
+  document.getElementById('deliveryOutsideSelect').value = '';
+  document.getElementById('deliveryFeeInfo').className = 'delivery-fee-info';
   document.getElementById('trocoWrap').classList.remove('visible');
 
   document.getElementById('checkoutOverlay').classList.add('open');
@@ -2302,14 +2448,18 @@ function sendToWhatsApp() {
   const troco = document.getElementById('checkoutTroco').value.trim();
 
   if (!name) { alert('Por favor, informe seu nome.'); return; }
-  if (!addr) { alert('Por favor, informe o endereço de entrega.'); return; }
+  if (!selectedDeliveryZone) { alert('Por favor, selecione a zona de entrega.'); return; }
+  if (selectedDeliveryZone === 'fora' && !deliveryLabel) { alert('Por favor, selecione o local de entrega fora da cidade.'); return; }
+  if (!addr) { alert('Por favor, informe o endereço / referência do local.'); return; }
   if (!selectedPayment) { alert('Por favor, selecione a forma de pagamento.'); return; }
 
   const payLabels = { pix:'Pix', cartao:'Cartão', dinheiro:'Dinheiro' };
+  const totalFinal = cartTotal() + deliveryFee;
 
   let msg = ` *PEDIDO — Blue Moon Lounge Bar*\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━\n`;
   msg += ` *Cliente:* ${name}\n`;
+  msg += ` *Entrega:* ${deliveryLabel || 'Dentro da Cidade'}\n`;
   msg += ` *Endereço:* ${addr}\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━\n`;
   msg += ` *Itens do Pedido:*\n`;
@@ -2318,7 +2468,9 @@ function sendToWhatsApp() {
     if (item.note) msg += `    _↳ Obs: ${item.note}_\n`;
   });
   msg += `━━━━━━━━━━━━━━━━━━━━\n`;
-  msg += ` *Total: ${fmtPrice(cartTotal())}*\n`;
+  msg += ` *Subtotal: ${fmtPrice(cartTotal())}*\n`;
+  msg += ` *Taxa de entrega: ${fmtPrice(deliveryFee)}*\n`;
+  msg += ` *Total: ${fmtPrice(totalFinal)}*\n`;
   msg += ` *Pagamento:* ${payLabels[selectedPayment]}`;
   if (selectedPayment === 'dinheiro' && troco) msg += ` (troco para ${troco})`;
   msg += `\n`;
@@ -2944,17 +3096,16 @@ function filterShows(month) {
 
 // ── Marcar shows encerrados automaticamente ──
 function marcarShowsEncerrados() {
-  const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0); // início do dia de hoje
+  const agora = new Date();
+  const hojeStr = `${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,'0')}-${String(agora.getDate()).padStart(2,'0')}`;
 
   document.querySelectorAll('.show-card[data-date]').forEach(card => {
-    const [ano, mes, dia] = card.dataset.date.split('-').map(Number);
-    const dataShow = new Date(ano, mes - 1, dia);
-    dataShow.setHours(0, 0, 0, 0);
+    const dataShow = card.dataset.date; // formato YYYY-MM-DD
+    const encerrado = dataShow < hojeStr; // comparação de string funciona pois formato é YYYY-MM-DD
 
-    if (dataShow < hoje) {
+    if (encerrado) {
       card.classList.add('encerrado');
-      // Inserir badge "Encerrado" se ainda não tiver
+      card.classList.remove('destaque');
       const infoEl = card.querySelector('.show-info');
       if (infoEl && !infoEl.querySelector('.show-encerrado-badge')) {
         const badge = document.createElement('div');
@@ -2962,11 +3113,29 @@ function marcarShowsEncerrados() {
         badge.innerHTML = '✕ Encerrado';
         infoEl.insertBefore(badge, infoEl.firstChild);
       }
+    } else {
+      // garante que shows futuros nunca fiquem marcados
+      card.classList.remove('encerrado');
+      const badge = card.querySelector('.show-encerrado-badge');
+      if (badge) badge.remove();
     }
   });
 }
 
+// Roda imediatamente ao carregar
 marcarShowsEncerrados();
+
+// Agenda re-execução exatamente à meia-noite para atualizar sem recarregar a página
+function agendarMeiaNotte() {
+  const agora = new Date();
+  const meiaNotte = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + 1, 0, 0, 5);
+  const msAteMeiaNotte = meiaNotte - agora;
+  setTimeout(() => {
+    marcarShowsEncerrados();
+    agendarMeiaNotte(); // reagenda para a próxima meia-noite
+  }, msAteMeiaNotte);
+}
+agendarMeiaNotte();
 
 // ── Item note ──
 function toggleItemNote(btn) {
